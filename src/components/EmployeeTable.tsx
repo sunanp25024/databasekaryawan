@@ -44,12 +44,12 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
       {/* Mobile Card View */}
       <div className="block lg:hidden">
         <div className="divide-y divide-gray-200">
           {employees.map((employee) => (
-            <div key={employee.id} className="p-4 hover:bg-gray-50">
+            <div key={employee.id} className="p-4 hover:bg-gray-50 transition-colors duration-200">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1 min-w-0">
                   <h3 className="text-sm font-medium text-gray-900 truncate">{employee.namaKaryawan}</h3>
@@ -59,21 +59,21 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                 <div className="flex items-center space-x-2 ml-2">
                   <button
                     onClick={() => onView(employee)}
-                    className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors duration-200"
+                    className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
                     title="View Details"
                   >
                     <Eye className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => onEdit(employee)}
-                    className="p-1.5 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded transition-colors duration-200"
+                    className="p-1.5 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200"
                     title="Edit"
                   >
                     <Edit className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => onDelete(employee.id)}
-                    className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors duration-200"
+                    className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
                     title="Delete"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -132,7 +132,7 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {employees.map((employee) => (
-              <tr key={employee.id} className="hover:bg-gray-50">
+              <tr key={employee.id} className="hover:bg-gray-50 transition-colors duration-200">
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900 sticky left-0 bg-white z-10">{employee.no}</td>
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.klien}</td>
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.namaPic}</td>

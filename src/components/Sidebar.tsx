@@ -26,7 +26,7 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
   };
 
   return (
-    <div className="w-64 lg:w-72 bg-white shadow-lg lg:shadow-sm border-r border-gray-200 h-screen flex flex-col">
+    <div className="w-64 lg:w-64 xl:w-72 bg-white shadow-xl border-r border-gray-200 h-screen flex flex-col">
       {/* Mobile close button */}
       <div className="lg:hidden flex items-center justify-between p-4 border-b border-gray-200">
         <h2 className="text-lg font-semibold text-gray-900">Menu</h2>
@@ -39,7 +39,7 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
       </div>
       
       <div className="flex-1 overflow-y-auto p-4">
-        <h2 className="hidden lg:block text-lg font-semibold text-gray-900 mb-4">Database Klien</h2>
+        <h2 className="hidden lg:block text-lg font-semibold text-gray-900 mb-6">Database Klien</h2>
         
         {/* All Database */}
         <button
@@ -49,12 +49,12 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
           }}
           className={`w-full flex items-center justify-between p-3 rounded-lg mb-2 transition-colors duration-200 ${
             selectedKlien === '' 
-              ? 'bg-blue-50 text-blue-700 border border-blue-200' 
-              : 'text-gray-700 hover:bg-gray-50'
+              ? 'bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 border border-blue-200 shadow-sm' 
+              : 'text-gray-700 hover:bg-gray-50 hover:shadow-sm'
           }`}
         >
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gray-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-br from-gray-600 to-gray-700 rounded-lg flex items-center justify-center shadow-sm">
               <Database className="w-4 h-4 text-white" />
             </div>
             <span className="font-medium">All Database</span>
@@ -79,12 +79,12 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
               }}
               className={`w-full flex items-center justify-between p-3 rounded-lg transition-colors duration-200 ${
                 selectedKlien === klien 
-                  ? 'bg-blue-50 text-blue-700 border border-blue-200' 
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 border border-blue-200 shadow-sm' 
+                  : 'text-gray-700 hover:bg-gray-50 hover:shadow-sm'
               }`}
             >
               <div className="flex items-center space-x-3">
-                <div className={`w-8 h-8 ${getKlienColor(klien)} rounded-lg flex items-center justify-center`}>
+                <div className={`w-8 h-8 ${getKlienColor(klien)} rounded-lg flex items-center justify-center shadow-sm`}>
                   <Building2 className="w-4 h-4 text-white" />
                 </div>
                 <span className="font-medium">{klien}</span>
@@ -101,19 +101,19 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
         </div>
 
         {/* Quick Stats */}
-        <div className="mt-6 p-3 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg">
+        <div className="mt-6 p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200 shadow-sm">
           <h3 className="text-sm font-medium text-gray-700 mb-2 flex items-center">
             <Users className="w-4 h-4 mr-2" />
             Quick Stats
           </h3>
-          <div className="space-y-1 text-xs text-gray-600">
+          <div className="space-y-2 text-xs text-gray-600">
             <div className="flex justify-between">
               <span>Total Karyawan:</span>
-              <span className="font-medium">{totalEmployees}</span>
+              <span className="font-semibold text-gray-800">{totalEmployees}</span>
             </div>
             <div className="flex justify-between">
               <span>Total Klien:</span>
-              <span className="font-medium">{klienList.length}</span>
+              <span className="font-semibold text-gray-800">{klienList.length}</span>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Database, Plus, Download, Upload, Menu } from 'lucide-react';
+import { Users, Database, Plus, Download, Upload, Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   onAddEmployee: () => void;
@@ -17,18 +17,18 @@ export function Navbar({ onAddEmployee, onExport, onImport, onToggleSidebar, sid
           {/* Mobile menu button */}
           <button
             onClick={onToggleSidebar}
-            className="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
           >
-            <Menu className="w-5 h-5" />
+            {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
           
           <div className="flex items-center space-x-3">
             <div className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 bg-blue-600 rounded-lg">
               <Database className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
             </div>
-            <div className="hidden sm:block">
+            <div>
               <h1 className="text-lg lg:text-xl font-bold text-gray-900">Database Karyawan</h1>
-              <p className="text-xs lg:text-sm text-gray-500">Manajemen Data Karyawan Multi-Divisi</p>
+              <p className="hidden sm:block text-xs lg:text-sm text-gray-500">Manajemen Data Karyawan Multi-Divisi</p>
             </div>
           </div>
           
