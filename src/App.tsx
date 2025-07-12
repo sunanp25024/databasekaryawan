@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { Sidebar } from './components/Sidebar';
-import { Sidebar } from './components/Sidebar';
 import { Navbar } from './components/Navbar';
 import { Dashboard } from './components/Dashboard';
 import { FilterBar } from './components/FilterBar';
@@ -14,7 +13,6 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 function App() {
   const [employees, setEmployees] = useLocalStorage<Employee[]>('employees', mockEmployees);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedKlien, setSelectedKlien] = useState('');
   const [selectedKlien, setSelectedKlien] = useState('');
   const [filters, setFilters] = useState<FilterOptions>({
     klien: '',
@@ -51,15 +49,6 @@ function App() {
       return matchesSearch && matchesKlien && matchesSentra && matchesCabang && matchesStatusI && matchesStatusII;
     });
   }, [employees, searchTerm, filters, selectedKlien]);
-
-  // Calculate employee counts per client
-  const employeeCounts = useMemo(() => {
-    const counts: { [key: string]: number } = {};
-    employees.forEach(emp => {
-      counts[emp.klien] = (counts[emp.klien] || 0) + 1;
-    });
-    return counts;
-  }, [employees]);
 
   // Calculate employee counts per client
   const employeeCounts = useMemo(() => {
