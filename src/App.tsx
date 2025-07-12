@@ -215,7 +215,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 flex flex-col overflow-hidden">
       <Navbar 
         onAddEmployee={handleAddEmployee}
         onExport={handleExport}
@@ -224,20 +224,20 @@ function App() {
         sidebarOpen={sidebarOpen}
       />
       
-      <div className="flex flex-1 relative">
+      <div className="flex flex-1 relative min-h-0">
         {/* Mobile Sidebar Overlay */}
         {sidebarOpen && (
           <div 
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 lg:z-30"
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-30 lg:hidden"
             onClick={() => setSidebarOpen(false)}
           />
         )}
         
         {/* Sidebar */}
         <div className={`
-          fixed inset-y-0 left-0 z-50 lg:static lg:translate-x-0 lg:block
+          fixed inset-y-0 left-0 z-40 lg:static lg:translate-x-0 lg:block
           transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} 
-          transition-transform duration-300 ease-in-out
+          transition-transform duration-300 ease-in-out lg:flex-shrink-0
         `}>
           <Sidebar
             selectedKlien={selectedKlien}
@@ -249,8 +249,8 @@ function App() {
         </div>
         
         {/* Main Content */}
-        <div className="flex-1 flex flex-col min-w-0 overflow-hidden transition-all duration-300 ease-in-out lg:ml-72 xl:ml-80">
-          <div className="flex-1 px-6 lg:px-8 py-8 overflow-auto">
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+          <div className="flex-1 px-3 sm:px-4 lg:px-6 xl:px-8 py-4 lg:py-6 xl:py-8 overflow-auto">
             <Dashboard employees={selectedKlien ? employees.filter(emp => emp.klien === selectedKlien) : employees} />
           
             <FilterBar
