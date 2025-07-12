@@ -39,7 +39,7 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
   };
 
   return (
-    <div className="w-72 lg:w-80 xl:w-84 bg-gradient-to-b from-white via-slate-50 to-blue-50/50 shadow-2xl border-r border-slate-200/50 h-screen flex flex-col backdrop-blur-sm">
+    <div className="w-72 lg:w-72 xl:w-80 bg-gradient-to-b from-white via-slate-50 to-blue-50/50 shadow-2xl border-r border-slate-200/50 h-screen flex flex-col backdrop-blur-sm">
       {/* Mobile close button */}
       <div className="lg:hidden flex items-center justify-between p-6 border-b border-slate-200/50 bg-white/90 backdrop-blur-sm">
         <h2 className="text-lg font-bold text-slate-800">Menu Navigasi</h2>

@@ -235,8 +235,8 @@ function App() {
         
         {/* Sidebar */}
         <div className={`
-          fixed inset-y-0 left-0 z-50 lg:z-40
-          transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
+          fixed inset-y-0 left-0 z-50 lg:static lg:translate-x-0 lg:block
+          transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} 
           transition-transform duration-300 ease-in-out
         `}>
           <Sidebar
@@ -249,9 +249,7 @@ function App() {
         </div>
         
         {/* Main Content */}
-        <div className={`flex-1 flex flex-col min-w-0 overflow-hidden transition-all duration-300 ease-in-out ${
-          sidebarOpen ? 'lg:ml-80 xl:ml-84' : 'ml-0'
-        }`}>
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden transition-all duration-300 ease-in-out lg:ml-72 xl:ml-80">
           <div className="flex-1 px-6 lg:px-8 py-8 overflow-auto">
             <Dashboard employees={selectedKlien ? employees.filter(emp => emp.klien === selectedKlien) : employees} />
           
