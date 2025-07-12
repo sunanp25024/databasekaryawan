@@ -1,5 +1,5 @@
 import React from 'react';
-import { Database, Building2, Users, X } from 'lucide-react';
+import { Database, Building2, Users, X, BarChart3 } from 'lucide-react';
 
 interface SidebarProps {
   selectedKlien: string;
@@ -15,79 +15,109 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
   const getKlienColor = (klien: string) => {
     switch (klien) {
       case 'ADIRA':
-        return 'bg-blue-500';
+        return 'from-blue-500 to-blue-600';
       case 'MACF':
-        return 'bg-green-500';
+        return 'from-emerald-500 to-emerald-600';
       case 'SMSF':
-        return 'bg-purple-500';
+        return 'from-purple-500 to-purple-600';
       default:
-        return 'bg-gray-500';
+        return 'from-gray-500 to-gray-600';
+    }
+  };
+
+  const getKlienAccent = (klien: string) => {
+    switch (klien) {
+      case 'ADIRA':
+        return 'border-blue-200 bg-blue-50 text-blue-700';
+      case 'MACF':
+        return 'border-emerald-200 bg-emerald-50 text-emerald-700';
+      case 'SMSF':
+        return 'border-purple-200 bg-purple-50 text-purple-700';
+      default:
+        return 'border-gray-200 bg-gray-50 text-gray-700';
     }
   };
 
   return (
-    <div className="w-64 lg:w-64 xl:w-72 bg-white shadow-xl border-r border-gray-200 h-screen flex flex-col">
+    <div className="w-64 lg:w-72 xl:w-80 bg-gradient-to-b from-slate-50 to-blue-50/30 shadow-2xl border-r border-blue-200/50 h-screen flex flex-col backdrop-blur-sm">
       {/* Mobile close button */}
-      <div className="lg:hidden flex items-center justify-between p-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-900">Menu</h2>
+      <div className="lg:hidden flex items-center justify-between p-5 border-b border-blue-200/50 bg-white/80 backdrop-blur-sm">
+        <h2 className="text-lg font-bold text-slate-800">Menu Navigasi</h2>
         <button
           onClick={onClose}
-          className="p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+          className="p-2 rounded-xl text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-all duration-200"
         >
           <X className="w-5 h-5" />
         </button>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-4">
-        <div className="hidden lg:block mb-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg shadow-md flex items-center justify-center">
+      <div className="flex-1 overflow-y-auto p-5">
+        {/* Enhanced Header */}
+        <div className="hidden lg:block mb-8">
+          <div className="flex items-center space-x-4 mb-3">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 rounded-2xl shadow-lg ring-2 ring-blue-300/50 flex items-center justify-center">
               <img 
                 src="/swapro.png" 
                 alt="Swapro Logo" 
-                className="w-5 h-5 object-contain"
+                className="w-7 h-7 object-contain filter brightness-110"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                   e.currentTarget.nextElementSibling?.classList.remove('hidden');
                 }}
               />
-              <Database className="w-4 h-4 text-white hidden" />
+              <Database className="w-6 h-6 text-white hidden" />
             </div>
-            <h2 className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-              Database Klien
-            </h2>
+            <div>
+              <h2 className="text-xl font-bold bg-gradient-to-r from-slate-800 to-blue-800 bg-clip-text text-transparent">
+                Database Klien
+              </h2>
+              <p className="text-sm text-slate-600 font-medium">Pilih klien untuk filter data</p>
+            </div>
           </div>
         </div>
         
-        {/* All Database */}
+        {/* All Database with enhanced styling */}
         <button
           onClick={() => {
             onKlienChange('');
             onClose();
           }}
-          className={`w-full flex items-center justify-between p-3 rounded-lg mb-2 transition-colors duration-200 ${
+          className={`w-full flex items-center justify-between p-4 rounded-2xl mb-4 transition-all duration-300 transform hover:scale-[1.02] ${
             selectedKlien === '' 
-              ? 'bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 border border-blue-200 shadow-sm' 
-              : 'text-gray-700 hover:bg-gray-50 hover:shadow-sm'
+              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-xl ring-2 ring-blue-300/50' 
+              : 'bg-white/80 text-slate-700 hover:bg-white hover:shadow-lg border border-slate-200/50'
           }`}
         >
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-gray-600 to-gray-700 rounded-lg flex items-center justify-center shadow-sm">
-              <Database className="w-4 h-4 text-white" />
+          <div className="flex items-center space-x-4">
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md ${
+              selectedKlien === '' 
+                ? 'bg-white/20 backdrop-blur-sm' 
+                : 'bg-gradient-to-br from-slate-600 to-slate-700'
+            }`}>
+              <Database className="w-5 h-5 text-white" />
             </div>
-            <span className="font-medium">All Database</span>
+            <div className="text-left">
+              <span className="font-bold text-base">All Database</span>
+              <p className={`text-xs ${selectedKlien === '' ? 'text-blue-100' : 'text-slate-500'}`}>
+                Semua data karyawan
+              </p>
+            </div>
           </div>
-          <span className={`px-2 py-1 rounded-full text-xs font-medium min-w-[24px] text-center ${
+          <div className={`px-3 py-2 rounded-xl text-sm font-bold min-w-[40px] text-center ${
             selectedKlien === '' 
-              ? 'bg-blue-100 text-blue-700' 
-              : 'bg-gray-100 text-gray-600'
+              ? 'bg-white/20 text-white backdrop-blur-sm' 
+              : 'bg-slate-100 text-slate-700'
           }`}>
             {totalEmployees}
-          </span>
+          </div>
         </button>
 
-        {/* Individual Clients */}
-        <div className="space-y-2">
+        {/* Individual Clients with enhanced cards */}
+        <div className="space-y-3">
+          <h3 className="text-sm font-bold text-slate-600 uppercase tracking-wider mb-4 flex items-center">
+            <Building2 className="w-4 h-4 mr-2" />
+            Klien Individual
+          </h3>
           {klienList.map((klien) => (
             <button
               key={klien}
@@ -95,43 +125,58 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
                 onKlienChange(klien);
                 onClose();
               }}
-              className={`w-full flex items-center justify-between p-3 rounded-lg transition-colors duration-200 ${
+              className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] ${
                 selectedKlien === klien 
-                  ? 'bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 border border-blue-200 shadow-sm' 
-                  : 'text-gray-700 hover:bg-gray-50 hover:shadow-sm'
+                  ? `bg-gradient-to-r ${getKlienColor(klien)} text-white shadow-xl ring-2 ring-opacity-50` 
+                  : 'bg-white/80 text-slate-700 hover:bg-white hover:shadow-lg border border-slate-200/50'
               }`}
             >
-              <div className="flex items-center space-x-3">
-                <div className={`w-8 h-8 ${getKlienColor(klien)} rounded-lg flex items-center justify-center shadow-sm`}>
-                  <Building2 className="w-4 h-4 text-white" />
+              <div className="flex items-center space-x-4">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md ${
+                  selectedKlien === klien 
+                    ? 'bg-white/20 backdrop-blur-sm' 
+                    : `bg-gradient-to-br ${getKlienColor(klien)}`
+                }`}>
+                  <Building2 className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-medium">{klien}</span>
+                <div className="text-left">
+                  <span className="font-bold text-base">{klien}</span>
+                  <p className={`text-xs ${selectedKlien === klien ? 'text-white/80' : 'text-slate-500'}`}>
+                    Karyawan aktif
+                  </p>
+                </div>
               </div>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium min-w-[24px] text-center ${
+              <div className={`px-3 py-2 rounded-xl text-sm font-bold min-w-[40px] text-center ${
                 selectedKlien === klien 
-                  ? 'bg-blue-100 text-blue-700' 
-                  : 'bg-gray-100 text-gray-600'
+                  ? 'bg-white/20 text-white backdrop-blur-sm' 
+                  : `${getKlienAccent(klien)}`
               }`}>
                 {employeeCounts[klien] || 0}
-              </span>
+              </div>
             </button>
           ))}
         </div>
 
-        {/* Quick Stats */}
-        <div className="mt-6 p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200 shadow-sm">
-          <h3 className="text-sm font-medium text-gray-700 mb-2 flex items-center">
-            <Users className="w-4 h-4 mr-2" />
-            Quick Stats
+        {/* Enhanced Quick Stats */}
+        <div className="mt-8 p-5 bg-gradient-to-br from-white/90 to-blue-50/90 rounded-2xl border border-blue-200/50 shadow-lg backdrop-blur-sm">
+          <h3 className="text-base font-bold text-slate-800 mb-4 flex items-center">
+            <BarChart3 className="w-5 h-5 mr-2 text-blue-600" />
+            Statistik Cepat
           </h3>
-          <div className="space-y-2 text-xs text-gray-600">
-            <div className="flex justify-between">
-              <span>Total Karyawan:</span>
-              <span className="font-semibold text-gray-800">{totalEmployees}</span>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center p-3 bg-white/60 rounded-xl border border-blue-100">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span className="text-sm font-medium text-slate-700">Total Karyawan</span>
+              </div>
+              <span className="font-bold text-slate-800 text-lg">{totalEmployees}</span>
             </div>
-            <div className="flex justify-between">
-              <span>Total Klien:</span>
-              <span className="font-semibold text-gray-800">{klienList.length}</span>
+            <div className="flex justify-between items-center p-3 bg-white/60 rounded-xl border border-emerald-100">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                <span className="text-sm font-medium text-slate-700">Total Klien</span>
+              </div>
+              <span className="font-bold text-slate-800 text-lg">{klienList.length}</span>
             </div>
           </div>
         </div>

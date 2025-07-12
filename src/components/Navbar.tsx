@@ -11,58 +11,60 @@ interface NavbarProps {
 
 export function Navbar({ onAddEmployee, onExport, onImport, onToggleSidebar, sidebarOpen }: NavbarProps) {
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-30">
-      <div className="max-w-full mx-auto px-3 sm:px-4 lg:px-6">
-        <div className="flex justify-between items-center h-14 lg:h-16">
+    <nav className="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 shadow-xl border-b border-blue-800/30 sticky top-0 z-30 backdrop-blur-sm">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 lg:h-18">
           {/* Mobile menu button */}
           <button
             onClick={onToggleSidebar}
-            className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
+            className="p-2.5 rounded-xl text-blue-200 hover:text-white hover:bg-blue-800/50 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 backdrop-blur-sm"
           >
             {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
           
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl shadow-lg">
+          <div className="flex items-center space-x-4">
+            {/* Enhanced Logo */}
+            <div className="flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-2xl shadow-lg ring-2 ring-blue-300/50 ring-offset-2 ring-offset-slate-900">
               <img 
                 src="/swapro.png" 
                 alt="Swapro Logo" 
-                className="w-5 h-5 lg:w-7 lg:h-7 object-contain"
+                className="w-8 h-8 lg:w-10 lg:h-10 object-contain filter brightness-110 contrast-110"
                 onError={(e) => {
-                  // Fallback to icon if logo fails to load
                   e.currentTarget.style.display = 'none';
                   e.currentTarget.nextElementSibling?.classList.remove('hidden');
                 }}
               />
-              <Database className="w-4 h-4 lg:w-6 lg:h-6 text-white hidden" />
+              <Database className="w-6 h-6 lg:w-8 lg:h-8 text-white hidden drop-shadow-sm" />
             </div>
-            <div>
-              <h1 className="text-lg lg:text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+            
+            {/* Enhanced Title */}
+            <div className="flex flex-col">
+              <h1 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent drop-shadow-sm">
                 Database Karyawan
               </h1>
-              <p className="hidden sm:block text-xs lg:text-sm text-gray-600 font-medium">
+              <p className="hidden sm:block text-sm lg:text-base text-blue-200/90 font-medium tracking-wide">
                 Manajemen Data Karyawan Multi-Divisi
               </p>
             </div>
           </div>
           
           <div className="flex items-center space-x-2 lg:space-x-3">
-            {/* Desktop buttons */}
+            {/* Desktop buttons with enhanced styling */}
             <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
-            <button
-              onClick={onImport}
-                className="inline-flex items-center px-2 lg:px-3 py-1.5 lg:py-2 bg-green-600 text-white text-xs lg:text-sm font-medium rounded-lg hover:bg-green-700 transition-colors duration-200"
-            >
-                <Upload className="w-3 h-3 lg:w-4 lg:h-4 mr-1 lg:mr-2" />
-              Import
-            </button>
-            <button
-              onClick={onExport}
-                className="inline-flex items-center px-2 lg:px-3 py-1.5 lg:py-2 bg-gray-600 text-white text-xs lg:text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors duration-200"
-            >
-                <Download className="w-3 h-3 lg:w-4 lg:h-4 mr-1 lg:mr-2" />
-              Export
-            </button>
+              <button
+                onClick={onImport}
+                className="inline-flex items-center px-4 lg:px-5 py-2.5 lg:py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-sm lg:text-base font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 ring-1 ring-emerald-500/20"
+              >
+                <Upload className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
+                Import
+              </button>
+              <button
+                onClick={onExport}
+                className="inline-flex items-center px-4 lg:px-5 py-2.5 lg:py-3 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-sm lg:text-base font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 ring-1 ring-amber-500/20"
+              >
+                <Download className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
+                Export
+              </button>
             </div>
             
             {/* Mobile action menu */}
@@ -73,7 +75,7 @@ export function Navbar({ onAddEmployee, onExport, onImport, onToggleSidebar, sid
                   if (e.target.value === 'export') onExport();
                   e.target.value = '';
                 }}
-                className="text-xs px-2 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="text-sm px-3 py-2 bg-slate-800/50 border border-blue-600/30 text-blue-100 rounded-lg focus:ring-2 focus:ring-blue-400 backdrop-blur-sm"
               >
                 <option value="">Actions</option>
                 <option value="import">Import</option>
@@ -83,9 +85,9 @@ export function Navbar({ onAddEmployee, onExport, onImport, onToggleSidebar, sid
             
             <button
               onClick={onAddEmployee}
-              className="inline-flex items-center px-2 lg:px-4 py-1.5 lg:py-2 bg-blue-600 text-white text-xs lg:text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
+              className="inline-flex items-center px-4 lg:px-6 py-2.5 lg:py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 text-white text-sm lg:text-base font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 ring-1 ring-blue-500/30"
             >
-              <Plus className="w-3 h-3 lg:w-4 lg:h-4 mr-1 lg:mr-2" />
+              <Plus className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
               <span className="hidden sm:inline">Tambah Karyawan</span>
               <span className="sm:hidden">Add</span>
             </button>
