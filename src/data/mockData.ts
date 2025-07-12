@@ -29,12 +29,7 @@ export const mockEmployees: Employee[] = [
     alamatEmail: 'ahmad.pratama@company.com',
     noTelp: '+62 812-3456-7890',
     kontrakKe: 1,
-    sp1Date: '',
-    sp1Reason: '',
-    sp2Date: '',
-    sp2Reason: '',
-    sp3Date: '',
-    sp3Reason: ''
+    suratPeringatan: []
   },
   {
     id: '2',
@@ -64,12 +59,15 @@ export const mockEmployees: Employee[] = [
     alamatEmail: 'sari.dewi@company.com',
     noTelp: '+62 821-9876-5432',
     kontrakKe: 1,
-    sp1Date: '2023-06-15',
-    sp1Reason: 'Terlambat berulang kali',
-    sp2Date: '',
-    sp2Reason: '',
-    sp3Date: '',
-    sp3Reason: ''
+    suratPeringatan: [
+      {
+        id: '1',
+        type: 'SP1',
+        date: '2023-06-15',
+        reason: 'Terlambat berulang kali',
+        photoUrl: ''
+      }
+    ]
   },
   {
     id: '3',
@@ -99,12 +97,22 @@ export const mockEmployees: Employee[] = [
     alamatEmail: 'budi.santoso@company.com',
     noTelp: '+62 813-2468-1357',
     kontrakKe: 1,
-    sp1Date: '2023-03-10',
-    sp1Reason: 'Tidak mengikuti prosedur',
-    sp2Date: '2023-07-20',
-    sp2Reason: 'Kinerja menurun',
-    sp3Date: '',
-    sp3Reason: ''
+    suratPeringatan: [
+      {
+        id: '1',
+        type: 'SP1',
+        date: '2023-03-10',
+        reason: 'Tidak mengikuti prosedur',
+        photoUrl: ''
+      },
+      {
+        id: '2',
+        type: 'SP2',
+        date: '2023-07-20',
+        reason: 'Kinerja menurun',
+        photoUrl: ''
+      }
+    ]
   },
   {
     id: '4',
@@ -134,12 +142,7 @@ export const mockEmployees: Employee[] = [
     alamatEmail: 'lisa.rahman@company.com',
     noTelp: '+62 856-7890-1234',
     kontrakKe: 2,
-    sp1Date: '',
-    sp1Reason: '',
-    sp2Date: '',
-    sp2Reason: '',
-    sp3Date: '',
-    sp3Reason: ''
+    suratPeringatan: []
   },
   {
     id: '5',
@@ -169,12 +172,7 @@ export const mockEmployees: Employee[] = [
     alamatEmail: 'deni.kurniawan@company.com',
     noTelp: '+62 878-5432-9876',
     kontrakKe: 1,
-    sp1Date: '',
-    sp1Reason: '',
-    sp2Date: '',
-    sp2Reason: '',
-    sp3Date: '',
-    sp3Reason: ''
+    suratPeringatan: []
   }
 ];
 

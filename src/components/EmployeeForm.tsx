@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Save } from 'lucide-react';
 import { Employee } from '../types/Employee';
+import { SPManager } from './SPManager';
 import { klienOptions, statusIOptions, statusIIOptions, sourceOptions, bankOptions } from '../data/mockData';
 
 interface EmployeeFormProps {
@@ -49,12 +50,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     alamatEmail: '',
     noTelp: '',
     kontrakKe: 1,
-    sp1Date: '',
-    sp1Reason: '',
-    sp2Date: '',
-    sp2Reason: '',
-    sp3Date: '',
-    sp3Reason: ''
+    suratPeringatan: []
   });
 
   useEffect(() => {
@@ -86,12 +82,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
         alamatEmail: employee.alamatEmail,
         noTelp: employee.noTelp,
         kontrakKe: employee.kontrakKe,
-        sp1Date: employee.sp1Date || '',
-        sp1Reason: employee.sp1Reason || '',
-        sp2Date: employee.sp2Date || '',
-        sp2Reason: employee.sp2Reason || '',
-        sp3Date: employee.sp3Date || '',
-        sp3Reason: employee.sp3Reason || ''
+        suratPeringatan: employee.suratPeringatan || []
       });
     }
   }, [employee]);
@@ -109,6 +100,12 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     }));
   };
 
+  const handleSPChange = (suratPeringatan: any[]) => {
+    setFormData(prev => ({
+      ...prev,
+      suratPeringatan
+    }));
+  };
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-xl shadow-xl max-w-6xl w-full max-h-[95vh] lg:max-h-screen overflow-y-auto">
@@ -481,76 +478,12 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
 
             {/* Surat Peringatan Information */}
             <div className="lg:col-span-3">
-              <h3 className="text-base lg:text-lg font-medium text-gray-900 mb-3 lg:mb-4 mt-4 lg:mt-6">Surat Peringatan (SP)</h3>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">SP1 - Tanggal</label>
-              <input
-                type="date"
-                name="sp1Date"
-                value={formData.sp1Date}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">SP1 - Alasan</label>
-              <input
-                type="text"
-                name="sp1Reason"
-                value={formData.sp1Reason}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Alasan SP1"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">SP2 - Tanggal</label>
-              <input
-                type="date"
-                name="sp2Date"
-                value={formData.sp2Date}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">SP2 - Alasan</label>
-              <input
-                type="text"
-                name="sp2Reason"
-                value={formData.sp2Reason}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Alasan SP2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">SP3 - Tanggal</label>
-              <input
-                type="date"
-                name="sp3Date"
-                value={formData.sp3Date}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">SP3 - Alasan</label>
-              <input
-                type="text"
-                name="sp3Reason"
-                value={formData.sp3Reason}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Alasan SP3"
-              />
+              <div className="mt-4 lg:mt-6">
+                <SPManager
+                  suratPeringatan={formData.suratPeringatan}
+                  onChange={handleSPChange}
+                />
+              </div>
             </div>
           </div>
 

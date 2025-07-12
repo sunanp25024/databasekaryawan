@@ -106,8 +106,7 @@ function App() {
         'NO', 'KLIEN', 'NAMA PIC', 'AREA', 'CABANG', 'NIK', 'NAMA KARYAWAN', 'POSISI', 'SOURCE',
         'TGL JOINT', 'TGL EOC', 'STATUS I', 'STATUS II', 'TGL RESIGN', 'REASON RESIGN', 'PKWT',
         'NO PKWT', 'BPJS KETENAGAKERJAAN', 'BPJS KESEHATAN', 'BANK', 'NO REKENING', 'UPDATE BANK',
-        'UPDATE NO REKENING', 'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE', 'SP1 DATE', 'SP1 REASON',
-        'SP2 DATE', 'SP2 REASON', 'SP3 DATE', 'SP3 REASON'
+        'UPDATE NO REKENING', 'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE', 'SURAT_PERINGATAN'
       ].join(','),
       // Data
       ...employees.map(emp => [
@@ -115,8 +114,7 @@ function App() {
         emp.posisi, emp.source, emp.tglJoint, emp.tglEoc, emp.statusI, emp.statusII,
         emp.tglResign, emp.reasonResign, emp.pkwt, emp.noPkwt, emp.bpjsKetenagakerjaan,
         emp.bpjsKesehatan, emp.bank, emp.noRekening, emp.updateBank, emp.updateNoRekening,
-        emp.alamatEmail, emp.noTelp, emp.kontrakKe, emp.sp1Date || '', emp.sp1Reason || '',
-        emp.sp2Date || '', emp.sp2Reason || '', emp.sp3Date || '', emp.sp3Reason || ''
+        emp.alamatEmail, emp.noTelp, emp.kontrakKe, JSON.stringify(emp.suratPeringatan || [])
       ].join(','))
     ].join('\n');
 
@@ -174,12 +172,7 @@ function App() {
               alamatEmail: values[23] || '',
               noTelp: values[24] || '',
               kontrakKe: parseInt(values[25]) || 1,
-              sp1Date: values[26] || '',
-              sp1Reason: values[27] || '',
-              sp2Date: values[28] || '',
-              sp2Reason: values[29] || '',
-              sp3Date: values[30] || '',
-              sp3Reason: values[31] || ''
+              suratPeringatan: values[26] ? JSON.parse(values[26]) : []
             } as Employee;
           });
           setEmployees(prev => [...prev, ...data]);

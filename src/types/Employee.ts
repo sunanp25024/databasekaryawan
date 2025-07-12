@@ -1,3 +1,12 @@
+export interface SuratPeringatan {
+  id: string;
+  type: 'SP1' | 'SP2' | 'SP3';
+  date: string;
+  reason: string;
+  photoUrl?: string;
+  photoFile?: File;
+}
+
 export interface Employee {
   id: string;
   no: number;
@@ -26,12 +35,7 @@ export interface Employee {
   alamatEmail: string;
   noTelp: string;
   kontrakKe: number;
-  sp1Date?: string;
-  sp1Reason?: string;
-  sp2Date?: string;
-  sp2Reason?: string;
-  sp3Date?: string;
-  sp3Reason?: string;
+  suratPeringatan: SuratPeringatan[];
 }
 
 export interface FilterOptions {
