@@ -194,9 +194,19 @@ function App() {
     setSearchTerm('');
   };
 
+  // Listen for custom event from empty state button
+  React.useEffect(() => {
+    const handleAddEmployee = () => {
+      setEditingEmployee(undefined);
+      setShowForm(true);
+    };
+
+    window.addEventListener('addEmployee', handleAddEmployee);
+    return () => window.removeEventListener('addEmployee', handleAddEmployee);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
       <Navbar 
         onAddEmployee={handleAddEmployee}
         onExport={handleExport}
@@ -209,7 +219,7 @@ function App() {
         {/* Mobile Sidebar Overlay */}
         {sidebarOpen && (
           <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:z-30"
+            className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 lg:z-30"
             onClick={() => setSidebarOpen(false)}
           />
         )}
@@ -233,7 +243,7 @@ function App() {
         <div className={`flex-1 flex flex-col min-w-0 overflow-hidden transition-all duration-300 ease-in-out ${
           sidebarOpen ? 'lg:ml-64 xl:ml-72' : 'ml-0'
         }`}>
-          <div className="flex-1 px-3 sm:px-4 lg:px-6 py-4 lg:py-6 overflow-auto bg-gray-50">
+          <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6 lg:py-8 overflow-auto">
             <Dashboard employees={selectedKlien ? employees.filter(emp => emp.klien === selectedKlien) : employees} />
           
             <FilterBar

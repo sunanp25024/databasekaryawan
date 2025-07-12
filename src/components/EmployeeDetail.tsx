@@ -47,28 +47,30 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[95vh] lg:max-h-screen overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white z-10">
-          <h2 className="text-lg lg:text-xl font-semibold text-gray-900">Detail Karyawan</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[95vh] lg:max-h-screen overflow-y-auto border border-gray-200">
+        <div className="flex items-center justify-between p-6 lg:p-8 border-b border-gray-200 sticky top-0 bg-white z-10 rounded-t-2xl">
+          <h2 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+            Detail Karyawan
+          </h2>
           <button
             onClick={onClose}
-            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-xl transition-all duration-200 hover:scale-110"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="p-4 lg:p-6 space-y-6 lg:space-y-8">
+        <div className="p-6 lg:p-8 space-y-8 lg:space-y-10">
           {/* Header */}
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 lg:w-16 lg:h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-lg lg:text-xl font-bold">
+          <div className="flex items-center space-x-5">
+            <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center text-white text-xl lg:text-2xl font-bold shadow-lg">
               {employee.namaKaryawan.split(' ').map(n => n[0]).join('').toUpperCase()}
             </div>
             <div>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-900">{employee.namaKaryawan}</h3>
-              <p className="text-base lg:text-lg text-gray-600">{employee.posisi}</p>
-              <div className="flex items-center space-x-3 mt-2">
+              <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">{employee.namaKaryawan}</h3>
+              <p className="text-lg lg:text-xl text-gray-600 font-medium mb-3">{employee.posisi}</p>
+              <div className="flex items-center space-x-3">
                 <span className={getStatusBadge(employee.statusI, 'primary')}>{employee.statusI}</span>
                 <span className={getStatusBadge(employee.statusII, 'secondary')}>{employee.statusII}</span>
               </div>
@@ -77,11 +79,11 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
 
           {/* Basic Information */}
           <div>
-            <h4 className="text-base lg:text-lg font-semibold text-gray-900 mb-3 lg:mb-4 flex items-center">
+            <h4 className="text-lg lg:text-xl font-bold text-gray-900 mb-4 lg:mb-5 flex items-center pb-2 border-b border-gray-200">
               <User className="w-5 h-5 mr-2" />
               Informasi Dasar
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
               <div>
                 <label className="block text-xs lg:text-sm font-medium text-gray-500">No</label>
                 <p className="text-sm lg:text-base text-gray-900">{employee.no}</p>

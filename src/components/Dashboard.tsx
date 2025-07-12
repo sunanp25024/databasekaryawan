@@ -60,16 +60,20 @@ export function Dashboard({ employees }: DashboardProps) {
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4 mb-6">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6 mb-8">
       {stats.map((stat) => (
-        <div key={stat.name} className="bg-white rounded-xl shadow-sm border border-gray-200 p-3 lg:p-4 hover:shadow-lg transition-all duration-300 hover:scale-105 hover:border-gray-300">
-          <div className="flex items-center justify-between">
+        <div key={stat.name} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 lg:p-5 hover:shadow-xl hover:shadow-blue-50 transition-all duration-300 hover:scale-105 hover:border-blue-200 group">
+          <div className="flex items-center justify-between h-full">
             <div>
-              <p className="text-xs font-medium text-gray-600 mb-1 leading-tight">{stat.name}</p>
-              <p className={`text-xl lg:text-2xl font-bold ${stat.textColor}`}>{stat.value}</p>
+              <p className="text-xs lg:text-sm font-semibold text-gray-600 mb-2 leading-tight group-hover:text-gray-700 transition-colors">
+                {stat.name}
+              </p>
+              <p className={`text-2xl lg:text-3xl font-bold ${stat.textColor} group-hover:scale-110 transition-transform duration-300`}>
+                {stat.value}
+              </p>
             </div>
-            <div className={`${stat.color} rounded-xl p-1.5 lg:p-2 flex-shrink-0 shadow-sm`}>
-              <stat.icon className="w-3 h-3 lg:w-4 lg:h-4 text-white" />
+            <div className={`${stat.color} rounded-2xl p-2 lg:p-3 flex-shrink-0 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300`}>
+              <stat.icon className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
             </div>
           </div>
         </div>

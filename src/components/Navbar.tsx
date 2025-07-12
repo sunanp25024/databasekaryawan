@@ -23,12 +23,26 @@ export function Navbar({ onAddEmployee, onExport, onImport, onToggleSidebar, sid
           </button>
           
           <div className="flex items-center space-x-3">
-            <div className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 bg-blue-600 rounded-lg">
-              <Database className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
+            <div className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl shadow-lg">
+              <img 
+                src="/swapro.png" 
+                alt="Swapro Logo" 
+                className="w-5 h-5 lg:w-7 lg:h-7 object-contain"
+                onError={(e) => {
+                  // Fallback to icon if logo fails to load
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                }}
+              />
+              <Database className="w-4 h-4 lg:w-6 lg:h-6 text-white hidden" />
             </div>
             <div>
-              <h1 className="text-lg lg:text-xl font-bold text-gray-900">Database Karyawan</h1>
-              <p className="hidden sm:block text-xs lg:text-sm text-gray-500">Manajemen Data Karyawan Multi-Divisi</p>
+              <h1 className="text-lg lg:text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                Database Karyawan
+              </h1>
+              <p className="hidden sm:block text-xs lg:text-sm text-gray-600 font-medium">
+                Manajemen Data Karyawan Multi-Divisi
+              </p>
             </div>
           </div>
           

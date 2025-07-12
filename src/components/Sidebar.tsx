@@ -39,7 +39,25 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
       </div>
       
       <div className="flex-1 overflow-y-auto p-4">
-        <h2 className="hidden lg:block text-lg font-semibold text-gray-900 mb-6">Database Klien</h2>
+        <div className="hidden lg:block mb-6">
+          <div className="flex items-center space-x-3 mb-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg shadow-md flex items-center justify-center">
+              <img 
+                src="/swapro.png" 
+                alt="Swapro Logo" 
+                className="w-5 h-5 object-contain"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                }}
+              />
+              <Database className="w-4 h-4 text-white hidden" />
+            </div>
+            <h2 className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              Database Klien
+            </h2>
+          </div>
+        </div>
         
         {/* All Database */}
         <button

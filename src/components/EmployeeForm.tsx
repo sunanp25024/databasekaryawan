@@ -107,48 +107,50 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     }));
   };
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl shadow-xl max-w-6xl w-full max-h-[95vh] lg:max-h-screen overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white z-10">
-          <h2 className="text-lg lg:text-xl font-semibold text-gray-900">
+    <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[95vh] lg:max-h-screen overflow-y-auto border border-gray-200">
+        <div className="flex items-center justify-between p-6 lg:p-8 border-b border-gray-200 sticky top-0 bg-white z-10 rounded-t-2xl">
+          <h2 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
             {employee ? 'Edit Data Karyawan' : 'Tambah Karyawan Baru'}
           </h2>
           <button
             onClick={onCancel}
-            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-xl transition-all duration-200 hover:scale-110"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-4 lg:p-6 space-y-4 lg:space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+        <form onSubmit={handleSubmit} className="p-6 lg:p-8 space-y-6 lg:space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-7">
             {/* Basic Information */}
             <div className="lg:col-span-3">
-              <h3 className="text-base lg:text-lg font-medium text-gray-900 mb-3 lg:mb-4">Informasi Dasar</h3>
+              <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4 lg:mb-5 pb-2 border-b border-gray-200">
+                Informasi Dasar
+              </h3>
             </div>
             
             <div>
-              <label className="block text-xs lg:text-sm font-medium text-gray-700 mb-1 lg:mb-2">No</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">No</label>
               <input
                 type="number"
                 name="no"
                 value={formData.no}
                 readOnly
                 required
-                className="w-full px-2 lg:px-3 py-1.5 lg:py-2 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl bg-gray-50 text-gray-500 cursor-not-allowed font-medium"
                 title="Nomor otomatis terisi"
               />
             </div>
 
             <div>
-              <label className="block text-xs lg:text-sm font-medium text-gray-700 mb-1 lg:mb-2">Klien</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Klien</label>
               <select
                 name="klien"
                 value={formData.klien}
                 onChange={handleChange}
                 required
-                className="w-full px-2 lg:px-3 py-1.5 lg:py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
               >
                 <option value="">Pilih Klien</option>
                 {klienOptions.map((klien) => (
@@ -158,14 +160,14 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
             </div>
 
             <div>
-              <label className="block text-xs lg:text-sm font-medium text-gray-700 mb-1 lg:mb-2">Nama PIC</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Nama PIC</label>
               <input
                 type="text"
                 name="namaPic"
                 value={formData.namaPic}
                 onChange={handleChange}
                 required
-                className="w-full px-2 lg:px-3 py-1.5 lg:py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="Nama Person In Charge"
               />
             </div>
@@ -178,7 +180,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 value={formData.area}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="Masukkan area"
               />
             </div>
@@ -191,7 +193,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 value={formData.cabang}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="Masukkan cabang"
               />
             </div>
@@ -204,14 +206,16 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 value={formData.nik}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="Nomor Induk Kependudukan"
               />
             </div>
 
             {/* Employee Details */}
             <div className="lg:col-span-3">
-              <h3 className="text-base lg:text-lg font-medium text-gray-900 mb-3 lg:mb-4 mt-4 lg:mt-6">Detail Karyawan</h3>
+              <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4 lg:mb-5 mt-6 lg:mt-8 pb-2 border-b border-gray-200">
+                Detail Karyawan
+              </h3>
             </div>
 
             <div>
@@ -222,7 +226,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 value={formData.namaKaryawan}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="Nama lengkap karyawan"
               />
             </div>
@@ -235,7 +239,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 value={formData.posisi}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="Jabatan/posisi"
               />
             </div>
@@ -247,7 +251,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 value={formData.source}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
               >
                 <option value="">Pilih Source</option>
                 {sourceOptions.map((source) => (
@@ -264,7 +268,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 value={formData.tglJoint}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
               />
             </div>
 
@@ -276,7 +280,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 value={formData.tglEoc}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
               />
             </div>
 
@@ -286,7 +290,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="statusI"
                 value={formData.statusI}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
               >
                 {statusIOptions.map((status) => (
                   <option key={status} value={status}>{status}</option>
@@ -300,7 +304,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="statusII"
                 value={formData.statusII}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
               >
                 {statusIIOptions.map((status) => (
                   <option key={status} value={status}>{status}</option>
@@ -315,7 +319,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="tglResign"
                 value={formData.tglResign}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
               />
             </div>
 
@@ -326,14 +330,16 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="reasonResign"
                 value={formData.reasonResign}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="Alasan resign"
               />
             </div>
 
             {/* Contract Information */}
             <div className="lg:col-span-3">
-              <h3 className="text-base lg:text-lg font-medium text-gray-900 mb-3 lg:mb-4 mt-4 lg:mt-6">Informasi Kontrak & BPJS</h3>
+              <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4 lg:mb-5 mt-6 lg:mt-8 pb-2 border-b border-gray-200">
+                Informasi Kontrak & BPJS
+              </h3>
             </div>
 
             <div>
@@ -343,7 +349,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="pkwt"
                 value={formData.pkwt}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="Jenis PKWT"
               />
             </div>
@@ -355,7 +361,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="noPkwt"
                 value={formData.noPkwt}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="Nomor PKWT"
               />
             </div>
@@ -367,7 +373,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="bpjsKetenagakerjaan"
                 value={formData.bpjsKetenagakerjaan}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="Nomor BPJS Ketenagakerjaan"
               />
             </div>
@@ -379,14 +385,16 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="bpjsKesehatan"
                 value={formData.bpjsKesehatan}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="Nomor BPJS Kesehatan"
               />
             </div>
 
             {/* Banking Information */}
             <div className="lg:col-span-3">
-              <h3 className="text-base lg:text-lg font-medium text-gray-900 mb-3 lg:mb-4 mt-4 lg:mt-6">Informasi Bank & Kontak</h3>
+              <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-4 lg:mb-5 mt-6 lg:mt-8 pb-2 border-b border-gray-200">
+                Informasi Bank & Kontak
+              </h3>
             </div>
 
             <div>
@@ -395,7 +403,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="bank"
                 value={formData.bank}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
               >
                 <option value="">Pilih Bank</option>
                 {bankOptions.map((bank) => (
@@ -411,7 +419,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="noRekening"
                 value={formData.noRekening}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="Nomor rekening"
               />
             </div>
@@ -423,7 +431,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="updateBank"
                 value={formData.updateBank}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
               />
             </div>
 
@@ -434,7 +442,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="updateNoRekening"
                 value={formData.updateNoRekening}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
               />
             </div>
 
@@ -446,7 +454,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 value={formData.alamatEmail}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="alamat@email.com"
               />
             </div>
@@ -459,7 +467,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 value={formData.noTelp}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
                 placeholder="+62 812-3456-7890"
               />
             </div>
@@ -472,7 +480,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 value={formData.kontrakKe}
                 onChange={handleChange}
                 min="1"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
               />
             </div>
 
@@ -487,17 +495,17 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-end space-y-2 sm:space-y-0 sm:space-x-3 pt-4 lg:pt-6 border-t border-gray-200 sticky bottom-0 bg-white">
+          <div className="flex flex-col sm:flex-row items-center justify-end space-y-3 sm:space-y-0 sm:space-x-4 pt-6 lg:pt-8 border-t border-gray-200 sticky bottom-0 bg-white rounded-b-2xl">
             <button
               type="button"
               onClick={onCancel}
-              className="w-full sm:w-auto px-3 lg:px-4 py-2 text-sm lg:text-base text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200"
+              className="w-full sm:w-auto px-6 py-3 text-sm lg:text-base text-gray-700 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 rounded-xl transition-all duration-200 font-semibold shadow-sm hover:shadow-md"
             >
               Batal
             </button>
             <button
               type="submit"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-3 lg:px-4 py-2 text-sm lg:text-base bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 text-sm lg:text-base bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl"
             >
               <Save className="w-3 h-3 lg:w-4 lg:h-4 mr-2" />
               {employee ? 'Update' : 'Simpan'} Data
