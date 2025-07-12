@@ -16,7 +16,7 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
   };
 
   const getStatusBadge = (status: string, type: 'primary' | 'secondary' = 'primary') => {
-    const baseClasses = "px-2 py-1 rounded-full text-xs font-medium";
+    const baseClasses = "px-2.5 py-1.5 rounded-full text-xs font-medium";
     
     if (type === 'primary') {
       switch (status) {
@@ -100,76 +100,76 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-3 lg:px-4 py-3 lg:py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider sticky left-0 bg-gray-50 z-20 border-r border-gray-200">No</th>
-              <th className="px-3 lg:px-4 py-3 lg:py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider border-r border-gray-100">Klien</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama PIC</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Area</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cabang</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NIK</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Karyawan</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Posisi</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Source</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl Joint</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl EOC</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status I</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status II</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl Resign</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason Resign</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PKWT</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No PKWT</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">BPJS Ketenagakerjaan</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">BPJS Kesehatan</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bank</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Rekening</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Update Bank</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Update No Rekening</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Telp</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kontrak Ke</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Surat Peringatan</th>
-              <th className="px-3 lg:px-4 py-3 lg:py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider sticky right-0 bg-gray-50 z-20 border-l border-gray-200">Actions</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-bold text-gray-600 uppercase tracking-wider sticky left-0 bg-gray-50 z-20 border-r border-gray-200">No</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-bold text-gray-600 uppercase tracking-wider border-r border-gray-100">Klien</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[120px]">Nama PIC</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Area</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Cabang</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[140px]">NIK</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[150px]">Nama Karyawan</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[130px]">Posisi</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Source</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[100px]">Tgl Joint</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[100px]">Tgl EOC</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Status I</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Status II</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[110px]">Tgl Resign</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[130px]">Reason Resign</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">PKWT</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[120px]">No PKWT</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[160px]">BPJS Ketenagakerjaan</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[140px]">BPJS Kesehatan</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Bank</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[130px]">No Rekening</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[120px]">Update Bank</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[150px]">Update No Rekening</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[180px]">Email</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[130px]">No Telp</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[100px]">Kontrak Ke</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider min-w-[140px]">Surat Peringatan</th>
+              <th className="px-3 lg:px-4 py-4 lg:py-5 text-left text-sm font-bold text-gray-600 uppercase tracking-wider sticky right-0 bg-gray-50 z-20 border-l border-gray-200">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-100">
             {employees.map((employee, index) => (
               <tr key={employee.id} className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200 hover:shadow-sm`}>
                 <td className={`px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm font-semibold text-gray-900 sticky left-0 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} z-10 border-r border-gray-200 hover:bg-blue-50`}>{employee.no}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.klien}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.namaPic}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.area}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.cabang}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900 font-mono">{employee.nik}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm font-medium text-gray-900">{employee.namaKaryawan}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.posisi}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.source}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{formatDate(employee.tglJoint)}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{formatDate(employee.tglEoc)}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap">
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm font-medium text-gray-900">{employee.klien}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{employee.namaPic}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{employee.area}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{employee.cabang}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900 font-mono">{employee.nik}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm font-semibold text-gray-900">{employee.namaKaryawan}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{employee.posisi}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{employee.source}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{formatDate(employee.tglJoint)}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{formatDate(employee.tglEoc)}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap">
                   <span className={getStatusBadge(employee.statusI, 'primary')}>{employee.statusI}</span>
                 </td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap">
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap">
                   <span className={getStatusBadge(employee.statusII, 'secondary')}>{employee.statusII}</span>
                 </td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{formatDate(employee.tglResign)}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.reasonResign || '-'}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.pkwt}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900 font-mono">{employee.noPkwt}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900 font-mono">{employee.bpjsKetenagakerjaan}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900 font-mono">{employee.bpjsKesehatan}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.bank}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900 font-mono">{employee.noRekening}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{formatDate(employee.updateBank)}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{formatDate(employee.updateNoRekening)}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.alamatEmail}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.noTelp}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.kontrakKe}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{formatDate(employee.tglResign)}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{employee.reasonResign || '-'}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{employee.pkwt}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900 font-mono">{employee.noPkwt}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900 font-mono">{employee.bpjsKetenagakerjaan}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900 font-mono">{employee.bpjsKesehatan}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{employee.bank}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900 font-mono">{employee.noRekening}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{formatDate(employee.updateBank)}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{formatDate(employee.updateNoRekening)}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{employee.alamatEmail}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{employee.noTelp}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">{employee.kontrakKe}</td>
+                <td className="px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-900">
                   {employee.suratPeringatan && employee.suratPeringatan.length > 0 ? (
                     <div className="flex flex-wrap gap-1">
                       {employee.suratPeringatan.map((sp) => (
                         <span
                           key={sp.id}
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${
+                          className={`px-2.5 py-1.5 rounded-full text-xs font-medium ${
                             sp.type === 'SP1'
                               ? 'bg-orange-100 text-orange-800'
                               : sp.type === 'SP2'
@@ -185,28 +185,28 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                     '-'
                   )}
                 </td>
-                <td className={`px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-xs lg:text-sm text-gray-500 sticky right-0 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} z-10 border-l border-gray-200 hover:bg-blue-50`}>
+                <td className={`px-3 lg:px-4 py-4 lg:py-5 whitespace-nowrap text-sm text-gray-500 sticky right-0 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} z-10 border-l border-gray-200 hover:bg-blue-50`}>
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => onView(employee)}
                       className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-100 rounded-xl transition-all duration-200 hover:scale-110 hover:shadow-sm"
                       title="View Details"
                     >
-                      <Eye className="w-3 h-3 lg:w-4 lg:h-4" />
+                      <Eye className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => onEdit(employee)}
                       className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-100 rounded-xl transition-all duration-200 hover:scale-110 hover:shadow-sm"
                       title="Edit"
                     >
-                      <Edit className="w-3 h-3 lg:w-4 lg:h-4" />
+                      <Edit className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => onDelete(employee.id)}
                       className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-100 rounded-xl transition-all duration-200 hover:scale-110 hover:shadow-sm"
                       title="Delete"
                     >
-                      <Trash2 className="w-3 h-3 lg:w-4 lg:h-4" />
+                      <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 </td>
