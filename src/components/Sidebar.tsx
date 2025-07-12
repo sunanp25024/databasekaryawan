@@ -55,7 +55,7 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
         {/* Enhanced Header */}
         <div className="hidden lg:block mb-8">
           <div className="flex items-center space-x-4 mb-3">
-            <div className="w-14 h-14 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 rounded-2xl shadow-lg ring-2 ring-blue-300/50 flex items-center justify-center">
+            <div className="w-14 h-14 bg-transparent rounded-2xl flex items-center justify-center">
               <img 
                 src="/swapro.png" 
                 alt="Swapro Logo" 
@@ -65,7 +65,7 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
                   e.currentTarget.nextElementSibling?.classList.remove('hidden');
                 }}
               />
-              <Database className="w-8 h-8 text-white hidden" />
+              <Database className="w-10 h-10 text-blue-600 hidden" />
             </div>
             <div className="ml-1">
               <h2 className="text-xl font-bold bg-gradient-to-r from-slate-800 to-blue-800 bg-clip-text text-transparent">

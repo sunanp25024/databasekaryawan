@@ -24,7 +24,7 @@ export function Navbar({ onAddEmployee, onExport, onImport, onToggleSidebar, sid
           
           <div className="flex items-center space-x-4">
             {/* Enhanced Logo */}
-            <div className="flex items-center justify-center w-14 h-14 lg:w-16 lg:h-16 bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-2xl shadow-lg ring-2 ring-blue-300/50 ring-offset-2 ring-offset-slate-900">
+            <div className="flex items-center justify-center w-14 h-14 lg:w-16 lg:h-16 bg-transparent rounded-2xl">
               <img 
                 src="/swapro.png" 
                 alt="Swapro Logo" 
@@ -34,7 +34,7 @@ export function Navbar({ onAddEmployee, onExport, onImport, onToggleSidebar, sid
                   e.currentTarget.nextElementSibling?.classList.remove('hidden');
                 }}
               />
-              <Database className="w-8 h-8 lg:w-10 lg:h-10 text-white hidden drop-shadow-sm" />
+              <Database className="w-10 h-10 lg:w-12 lg:h-12 text-blue-400 hidden drop-shadow-sm" />
             </div>
             
             {/* Enhanced Title */}
