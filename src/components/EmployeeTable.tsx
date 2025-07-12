@@ -1,5 +1,5 @@
 import React from 'react';
-import { Edit, Trash2, Eye } from 'lucide-react';
+import { Edit, Trash2, Eye, Users, Plus } from 'lucide-react';
 import { Employee } from '../types/Employee';
 
 interface EmployeeTableProps {
