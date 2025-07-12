@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, User, Building, Calendar, CreditCard, Phone, Mail } from 'lucide-react';
+import { X, User, Building, Calendar, CreditCard, Phone, Mail, AlertTriangle } from 'lucide-react';
 import { Employee } from '../types/Employee';
 
 interface EmployeeDetailProps {
@@ -98,8 +98,8 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
                 <p className="text-gray-900">{employee.namaPic}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500">Sentra</label>
-                <p className="text-gray-900">{employee.sentra}</p>
+                <label className="block text-sm font-medium text-gray-500">Area</label>
+                <p className="text-gray-900">{employee.area}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-500">Cabang</label>
@@ -215,6 +215,65 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
               </div>
             </div>
           </div>
+
+          {/* Surat Peringatan Information */}
+          {(employee.sp1Date || employee.sp2Date || employee.sp3Date) && (
+            <div>
+              <h4 className="text-base lg:text-lg font-semibold text-gray-900 mb-3 lg:mb-4 flex items-center">
+                <AlertTriangle className="w-5 h-5 mr-2 text-orange-500" />
+                Surat Peringatan (SP)
+              </h4>
+              <div className="space-y-4">
+                {employee.sp1Date && (
+                  <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                    <h5 className="font-medium text-orange-800 mb-2">SP 1</h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-sm font-medium text-orange-700">Tanggal</label>
+                        <p className="text-orange-900">{formatDate(employee.sp1Date)}</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-orange-700">Alasan</label>
+                        <p className="text-orange-900">{employee.sp1Reason || '-'}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {employee.sp2Date && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <h5 className="font-medium text-red-800 mb-2">SP 2</h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-sm font-medium text-red-700">Tanggal</label>
+                        <p className="text-red-900">{formatDate(employee.sp2Date)}</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-red-700">Alasan</label>
+                        <p className="text-red-900">{employee.sp2Reason || '-'}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {employee.sp3Date && (
+                  <div className="bg-red-100 border border-red-300 rounded-lg p-4">
+                    <h5 className="font-medium text-red-900 mb-2">SP 3</h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-sm font-medium text-red-800">Tanggal</label>
+                        <p className="text-red-900">{formatDate(employee.sp3Date)}</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-red-800">Alasan</label>
+                        <p className="text-red-900">{employee.sp3Reason || '-'}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ export function Dashboard({ employees }: DashboardProps) {
   const contractEmployees = employees.filter(emp => emp.statusII === 'Contract').length;
   const permanentEmployees = employees.filter(emp => emp.statusII === 'Permanent').length;
   const uniqueClients = new Set(employees.map(emp => emp.klien)).size;
-  const uniqueSentra = new Set(employees.map(emp => emp.sentra)).size;
+  const uniqueArea = new Set(employees.map(emp => emp.area)).size;
 
   const stats = [
     {
@@ -51,7 +51,7 @@ export function Dashboard({ employees }: DashboardProps) {
       textColor: 'text-purple-600'
     },
     {
-      name: 'Total Klien',
+      name: 'Total Area',
       value: uniqueClients,
       icon: Building2,
       color: 'bg-indigo-500',

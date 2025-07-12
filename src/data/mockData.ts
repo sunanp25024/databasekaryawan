@@ -6,7 +6,7 @@ export const mockEmployees: Employee[] = [
     no: 1,
     klien: 'ADIRA',
     namaPic: 'John Doe',
-    sentra: 'Jakarta Pusat',
+    area: 'Jakarta Pusat',
     cabang: 'Head Office',
     nik: '3171234567890001',
     namaKaryawan: 'Ahmad Pratama',
@@ -28,14 +28,20 @@ export const mockEmployees: Employee[] = [
     updateNoRekening: '2023-01-20',
     alamatEmail: 'ahmad.pratama@company.com',
     noTelp: '+62 812-3456-7890',
-    kontrakKe: 1
+    kontrakKe: 1,
+    sp1Date: '',
+    sp1Reason: '',
+    sp2Date: '',
+    sp2Reason: '',
+    sp3Date: '',
+    sp3Reason: ''
   },
   {
     id: '2',
     no: 2,
     klien: 'MACF',
     namaPic: 'Jane Smith',
-    sentra: 'Jakarta Selatan',
+    area: 'Jakarta Selatan',
     cabang: 'Branch A',
     nik: '3171234567890002',
     namaKaryawan: 'Sari Dewi',
@@ -57,14 +63,20 @@ export const mockEmployees: Employee[] = [
     updateNoRekening: '2023-02-15',
     alamatEmail: 'sari.dewi@company.com',
     noTelp: '+62 821-9876-5432',
-    kontrakKe: 1
+    kontrakKe: 1,
+    sp1Date: '2023-06-15',
+    sp1Reason: 'Terlambat berulang kali',
+    sp2Date: '',
+    sp2Reason: '',
+    sp3Date: '',
+    sp3Reason: ''
   },
   {
     id: '3',
     no: 3,
     klien: 'SMSF',
     namaPic: 'Robert Johnson',
-    sentra: 'Bandung',
+    area: 'Bandung',
     cabang: 'Branch B',
     nik: '3271234567890003',
     namaKaryawan: 'Budi Santoso',
@@ -86,14 +98,20 @@ export const mockEmployees: Employee[] = [
     updateNoRekening: '2022-11-25',
     alamatEmail: 'budi.santoso@company.com',
     noTelp: '+62 813-2468-1357',
-    kontrakKe: 1
+    kontrakKe: 1,
+    sp1Date: '2023-03-10',
+    sp1Reason: 'Tidak mengikuti prosedur',
+    sp2Date: '2023-07-20',
+    sp2Reason: 'Kinerja menurun',
+    sp3Date: '',
+    sp3Reason: ''
   },
   {
     id: '4',
     no: 4,
     klien: 'ADIRA',
     namaPic: 'Lisa Anderson',
-    sentra: 'Surabaya',
+    area: 'Surabaya',
     cabang: 'Branch C',
     nik: '3571234567890004',
     namaKaryawan: 'Lisa Rahman',
@@ -115,14 +133,20 @@ export const mockEmployees: Employee[] = [
     updateNoRekening: '2023-03-10',
     alamatEmail: 'lisa.rahman@company.com',
     noTelp: '+62 856-7890-1234',
-    kontrakKe: 2
+    kontrakKe: 2,
+    sp1Date: '',
+    sp1Reason: '',
+    sp2Date: '',
+    sp2Reason: '',
+    sp3Date: '',
+    sp3Reason: ''
   },
   {
     id: '5',
     no: 5,
     klien: 'MACF',
     namaPic: 'Michael Brown',
-    sentra: 'Medan',
+    area: 'Medan',
     cabang: 'Branch D',
     nik: '1271234567890005',
     namaKaryawan: 'Deni Kurniawan',
@@ -144,7 +168,13 @@ export const mockEmployees: Employee[] = [
     updateNoRekening: '2022-08-17',
     alamatEmail: 'deni.kurniawan@company.com',
     noTelp: '+62 878-5432-9876',
-    kontrakKe: 1
+    kontrakKe: 1,
+    sp1Date: '',
+    sp1Reason: '',
+    sp2Date: '',
+    sp2Reason: '',
+    sp3Date: '',
+    sp3Reason: ''
   }
 ];
 
@@ -152,22 +182,6 @@ export const klienOptions = [
   'ADIRA',
   'MACF',
   'SMSF'
-];
-
-export const sentraOptions = [
-  'Jakarta Pusat',
-  'Jakarta Selatan',
-  'Bandung',
-  'Surabaya',
-  'Medan'
-];
-
-export const cabangOptions = [
-  'Head Office',
-  'Branch A',
-  'Branch B', 
-  'Branch C',
-  'Branch D'
 ];
 
 export const statusIOptions = [

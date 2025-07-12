@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Save } from 'lucide-react';
 import { Employee } from '../types/Employee';
-import { klienOptions, sentraOptions, cabangOptions, statusIOptions, statusIIOptions, sourceOptions, bankOptions } from '../data/mockData';
+import { klienOptions, statusIOptions, statusIIOptions, sourceOptions, bankOptions } from '../data/mockData';
 
 interface EmployeeFormProps {
   employee?: Employee;
@@ -26,7 +26,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     no: employee?.no || getNextNo(),
     klien: employee?.klien || selectedKlien || '',
     namaPic: '',
-    sentra: '',
+    area: '',
     cabang: '',
     nik: '',
     namaKaryawan: '',
@@ -48,7 +48,13 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     updateNoRekening: '',
     alamatEmail: '',
     noTelp: '',
-    kontrakKe: 1
+    kontrakKe: 1,
+    sp1Date: '',
+    sp1Reason: '',
+    sp2Date: '',
+    sp2Reason: '',
+    sp3Date: '',
+    sp3Reason: ''
   });
 
   useEffect(() => {
@@ -57,7 +63,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
         no: employee.no,
         klien: employee.klien,
         namaPic: employee.namaPic,
-        sentra: employee.sentra,
+        area: employee.area,
         cabang: employee.cabang,
         nik: employee.nik,
         namaKaryawan: employee.namaKaryawan,
@@ -79,7 +85,13 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
         updateNoRekening: employee.updateNoRekening,
         alamatEmail: employee.alamatEmail,
         noTelp: employee.noTelp,
-        kontrakKe: employee.kontrakKe
+        kontrakKe: employee.kontrakKe,
+        sp1Date: employee.sp1Date || '',
+        sp1Reason: employee.sp1Reason || '',
+        sp2Date: employee.sp2Date || '',
+        sp2Reason: employee.sp2Reason || '',
+        sp3Date: employee.sp3Date || '',
+        sp3Reason: employee.sp3Reason || ''
       });
     }
   }, [employee]);
@@ -162,35 +174,29 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Sentra</label>
-              <select
-                name="sentra"
-                value={formData.sentra}
+              <label className="block text-sm font-medium text-gray-700 mb-2">Area</label>
+              <input
+                type="text"
+                name="area"
+                value={formData.area}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="">Pilih Sentra</option>
-                {sentraOptions.map((sentra) => (
-                  <option key={sentra} value={sentra}>{sentra}</option>
-                ))}
-              </select>
+                placeholder="Masukkan area"
+              />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Cabang</label>
-              <select
+              <input
+                type="text"
                 name="cabang"
                 value={formData.cabang}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="">Pilih Cabang</option>
-                {cabangOptions.map((cabang) => (
-                  <option key={cabang} value={cabang}>{cabang}</option>
-                ))}
-              </select>
+                placeholder="Masukkan cabang"
+              />
             </div>
 
             <div>
@@ -470,6 +476,80 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 onChange={handleChange}
                 min="1"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            {/* Surat Peringatan Information */}
+            <div className="lg:col-span-3">
+              <h3 className="text-base lg:text-lg font-medium text-gray-900 mb-3 lg:mb-4 mt-4 lg:mt-6">Surat Peringatan (SP)</h3>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">SP1 - Tanggal</label>
+              <input
+                type="date"
+                name="sp1Date"
+                value={formData.sp1Date}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">SP1 - Alasan</label>
+              <input
+                type="text"
+                name="sp1Reason"
+                value={formData.sp1Reason}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Alasan SP1"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">SP2 - Tanggal</label>
+              <input
+                type="date"
+                name="sp2Date"
+                value={formData.sp2Date}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">SP2 - Alasan</label>
+              <input
+                type="text"
+                name="sp2Reason"
+                value={formData.sp2Reason}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Alasan SP2"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">SP3 - Tanggal</label>
+              <input
+                type="date"
+                name="sp3Date"
+                value={formData.sp3Date}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">SP3 - Alasan</label>
+              <input
+                type="text"
+                name="sp3Reason"
+                value={formData.sp3Reason}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Alasan SP3"
               />
             </div>
           </div>

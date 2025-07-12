@@ -3,7 +3,7 @@ export interface Employee {
   no: number;
   klien: string;
   namaPic: string;
-  sentra: string;
+  area: string;
   cabang: string;
   nik: string;
   namaKaryawan: string;
@@ -26,11 +26,17 @@ export interface Employee {
   alamatEmail: string;
   noTelp: string;
   kontrakKe: number;
+  sp1Date?: string;
+  sp1Reason?: string;
+  sp2Date?: string;
+  sp2Reason?: string;
+  sp3Date?: string;
+  sp3Reason?: string;
 }
 
 export interface FilterOptions {
   klien: string;
-  sentra: string;
+  area: string;
   cabang: string;
   statusI: string;
   statusII: string;

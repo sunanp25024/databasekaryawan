@@ -54,7 +54,7 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                 <div className="flex-1 min-w-0">
                   <h3 className="text-sm font-medium text-gray-900 truncate">{employee.namaKaryawan}</h3>
                   <p className="text-xs text-gray-500 truncate">{employee.posisi}</p>
-                  <p className="text-xs text-gray-500">{employee.klien} • {employee.sentra}</p>
+                  <p className="text-xs text-gray-500">{employee.klien} • {employee.area}</p>
                 </div>
                 <div className="flex items-center space-x-2 ml-2">
                   <button
@@ -103,7 +103,7 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
               <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-10">No</th>
               <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Klien</th>
               <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama PIC</th>
-              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sentra</th>
+              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Area</th>
               <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cabang</th>
               <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NIK</th>
               <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Karyawan</th>
@@ -126,6 +126,12 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
               <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
               <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Telp</th>
               <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kontrak Ke</th>
+              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SP1 Date</th>
+              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SP1 Reason</th>
+              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SP2 Date</th>
+              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SP2 Reason</th>
+              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SP3 Date</th>
+              <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SP3 Reason</th>
               <th className="px-2 lg:px-3 py-2 lg:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky right-0 bg-gray-50 z-10">Actions</th>
             </tr>
           </thead>
@@ -135,7 +141,7 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900 sticky left-0 bg-white z-10">{employee.no}</td>
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.klien}</td>
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.namaPic}</td>
-                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.sentra}</td>
+                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.area}</td>
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.cabang}</td>
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900 font-mono">{employee.nik}</td>
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm font-medium text-gray-900">{employee.namaKaryawan}</td>
@@ -162,6 +168,12 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.alamatEmail}</td>
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.noTelp}</td>
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.kontrakKe}</td>
+                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{formatDate(employee.sp1Date || '')}</td>
+                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.sp1Reason || '-'}</td>
+                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{formatDate(employee.sp2Date || '')}</td>
+                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.sp2Reason || '-'}</td>
+                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{formatDate(employee.sp3Date || '')}</td>
+                <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">{employee.sp3Reason || '-'}</td>
                 <td className="px-2 lg:px-3 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-500 sticky right-0 bg-white z-10">
                   <div className="flex items-center space-x-2">
                     <button

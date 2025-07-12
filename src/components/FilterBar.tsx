@@ -1,7 +1,7 @@
 import React from 'react';
 import { Search, Filter, X } from 'lucide-react';
 import { FilterOptions } from '../types/Employee';
-import { klienOptions, sentraOptions, cabangOptions, statusIOptions, statusIIOptions } from '../data/mockData';
+import { klienOptions, statusIOptions, statusIIOptions } from '../data/mockData';
 
 interface FilterBarProps {
   searchTerm: string;
@@ -52,31 +52,25 @@ export function FilterBar({
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1 lg:mb-1.5">Sentra</label>
-            <select
-              value={filters.sentra}
-              onChange={(e) => onFilterChange({ ...filters, sentra: e.target.value })}
+            <label className="block text-xs font-medium text-gray-700 mb-1 lg:mb-1.5">Area</label>
+            <input
+              type="text"
+              placeholder="Filter berdasarkan area"
+              value={filters.area}
+              onChange={(e) => onFilterChange({ ...filters, area: e.target.value })}
               className="w-full px-2 lg:px-3 py-1.5 lg:py-2 text-xs lg:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">Semua Sentra</option>
-              {sentraOptions.map((sentra) => (
-                <option key={sentra} value={sentra}>{sentra}</option>
-              ))}
-            </select>
+            />
           </div>
 
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1 lg:mb-1.5">Cabang</label>
-            <select
+            <input
+              type="text"
+              placeholder="Filter berdasarkan cabang"
               value={filters.cabang}
               onChange={(e) => onFilterChange({ ...filters, cabang: e.target.value })}
               className="w-full px-2 lg:px-3 py-1.5 lg:py-2 text-xs lg:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">Semua Cabang</option>
-              {cabangOptions.map((cabang) => (
-                <option key={cabang} value={cabang}>{cabang}</option>
-              ))}
-            </select>
+            />
           </div>
 
           <div>

@@ -17,7 +17,7 @@ function App() {
   const [selectedKlien, setSelectedKlien] = useState('');
   const [filters, setFilters] = useState<FilterOptions>({
     klien: '',
-    sentra: '',
+    area: '',
     cabang: '',
     statusI: '',
     statusII: ''
@@ -43,12 +43,12 @@ function App() {
         employee.posisi.toLowerCase().includes(searchTerm.toLowerCase());
       
       const matchesKlien = filters.klien === '' || employee.klien === filters.klien;
-      const matchesSentra = filters.sentra === '' || employee.sentra === filters.sentra;
+      const matchesArea = filters.area === '' || employee.area === filters.area;
       const matchesCabang = filters.cabang === '' || employee.cabang === filters.cabang;
       const matchesStatusI = filters.statusI === '' || employee.statusI === filters.statusI;
       const matchesStatusII = filters.statusII === '' || employee.statusII === filters.statusII;
       
-      return matchesSearch && matchesKlien && matchesSentra && matchesCabang && matchesStatusI && matchesStatusII;
+      return matchesSearch && matchesKlien && matchesArea && matchesCabang && matchesStatusI && matchesStatusII;
     });
   }, [employees, searchTerm, filters, selectedKlien]);
 
@@ -103,18 +103,20 @@ function App() {
     const csvContent = [
       // Header
       [
-        'NO', 'KLIEN', 'NAMA PIC', 'SENTRA', 'CABANG', 'NIK', 'NAMA KARYAWAN', 'POSISI', 'SOURCE',
+        'NO', 'KLIEN', 'NAMA PIC', 'AREA', 'CABANG', 'NIK', 'NAMA KARYAWAN', 'POSISI', 'SOURCE',
         'TGL JOINT', 'TGL EOC', 'STATUS I', 'STATUS II', 'TGL RESIGN', 'REASON RESIGN', 'PKWT',
         'NO PKWT', 'BPJS KETENAGAKERJAAN', 'BPJS KESEHATAN', 'BANK', 'NO REKENING', 'UPDATE BANK',
-        'UPDATE NO REKENING', 'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE'
+        'UPDATE NO REKENING', 'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE', 'SP1 DATE', 'SP1 REASON',
+        'SP2 DATE', 'SP2 REASON', 'SP3 DATE', 'SP3 REASON'
       ].join(','),
       // Data
       ...employees.map(emp => [
-        emp.no, emp.klien, emp.namaPic, emp.sentra, emp.cabang, emp.nik, emp.namaKaryawan,
+        emp.no, emp.klien, emp.namaPic, emp.area, emp.cabang, emp.nik, emp.namaKaryawan,
         emp.posisi, emp.source, emp.tglJoint, emp.tglEoc, emp.statusI, emp.statusII,
         emp.tglResign, emp.reasonResign, emp.pkwt, emp.noPkwt, emp.bpjsKetenagakerjaan,
         emp.bpjsKesehatan, emp.bank, emp.noRekening, emp.updateBank, emp.updateNoRekening,
-        emp.alamatEmail, emp.noTelp, emp.kontrakKe
+        emp.alamatEmail, emp.noTelp, emp.kontrakKe, emp.sp1Date || '', emp.sp1Reason || '',
+        emp.sp2Date || '', emp.sp2Reason || '', emp.sp3Date || '', emp.sp3Reason || ''
       ].join(','))
     ].join('\n');
 
@@ -149,7 +151,7 @@ function App() {
               no: parseInt(values[0]) || 0,
               klien: values[1] || '',
               namaPic: values[2] || '',
-              sentra: values[3] || '',
+              area: values[3] || '',
               cabang: values[4] || '',
               nik: values[5] || '',
               namaKaryawan: values[6] || '',
@@ -171,7 +173,13 @@ function App() {
               updateNoRekening: values[22] || '',
               alamatEmail: values[23] || '',
               noTelp: values[24] || '',
-              kontrakKe: parseInt(values[25]) || 1
+              kontrakKe: parseInt(values[25]) || 1,
+              sp1Date: values[26] || '',
+              sp1Reason: values[27] || '',
+              sp2Date: values[28] || '',
+              sp2Reason: values[29] || '',
+              sp3Date: values[30] || '',
+              sp3Reason: values[31] || ''
             } as Employee;
           });
           setEmployees(prev => [...prev, ...data]);
@@ -185,7 +193,7 @@ function App() {
   const handleClearFilters = () => {
     setFilters({
       klien: '',
-      sentra: '',
+      area: '',
       cabang: '',
       statusI: '',
       statusII: ''
@@ -232,22 +240,22 @@ function App() {
         {/* Main Content */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <div className="flex-1 px-3 sm:px-4 lg:px-6 py-4 lg:py-6 overflow-auto">
-          <Dashboard employees={selectedKlien ? employees.filter(emp => emp.klien === selectedKlien) : employees} />
+            <Dashboard employees={selectedKlien ? employees.filter(emp => emp.klien === selectedKlien) : employees} />
           
-          <FilterBar
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            filters={filters}
-            onFilterChange={setFilters}
-            onClearFilters={handleClearFilters}
-          />
+            <FilterBar
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+              filters={filters}
+              onFilterChange={setFilters}
+              onClearFilters={handleClearFilters}
+            />
 
-          <EmployeeTable
-            employees={filteredEmployees}
-            onEdit={handleEditEmployee}
-            onDelete={handleDeleteEmployee}
-            onView={handleViewEmployee}
-          />
+            <EmployeeTable
+              employees={filteredEmployees}
+              onEdit={handleEditEmployee}
+              onDelete={handleDeleteEmployee}
+              onView={handleViewEmployee}
+            />
           </div>
         </div>
       </div>
