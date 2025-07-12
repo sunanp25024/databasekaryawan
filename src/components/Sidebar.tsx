@@ -55,19 +55,19 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
         {/* Enhanced Header */}
         <div className="hidden lg:block mb-8">
           <div className="flex items-center space-x-4 mb-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 rounded-2xl shadow-lg ring-2 ring-blue-300/50 flex items-center justify-center">
+            <div className="w-14 h-14 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 rounded-2xl shadow-lg ring-2 ring-blue-300/50 flex items-center justify-center">
               <img 
                 src="/swapro.png" 
                 alt="Swapro Logo" 
-                className="w-7 h-7 object-contain filter brightness-110"
+                className="w-10 h-10 object-contain"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                   e.currentTarget.nextElementSibling?.classList.remove('hidden');
                 }}
               />
-              <Database className="w-6 h-6 text-white hidden" />
+              <Database className="w-8 h-8 text-white hidden" />
             </div>
-            <div>
+            <div className="ml-1">
               <h2 className="text-xl font-bold bg-gradient-to-r from-slate-800 to-blue-800 bg-clip-text text-transparent">
                 Database Klien
               </h2>

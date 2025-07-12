@@ -24,21 +24,21 @@ export function Navbar({ onAddEmployee, onExport, onImport, onToggleSidebar, sid
           
           <div className="flex items-center space-x-4">
             {/* Enhanced Logo */}
-            <div className="flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-2xl shadow-lg ring-2 ring-blue-300/50 ring-offset-2 ring-offset-slate-900">
+            <div className="flex items-center justify-center w-14 h-14 lg:w-16 lg:h-16 bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-2xl shadow-lg ring-2 ring-blue-300/50 ring-offset-2 ring-offset-slate-900">
               <img 
                 src="/swapro.png" 
                 alt="Swapro Logo" 
-                className="w-8 h-8 lg:w-10 lg:h-10 object-contain filter brightness-110 contrast-110"
+                className="w-10 h-10 lg:w-12 lg:h-12 object-contain"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                   e.currentTarget.nextElementSibling?.classList.remove('hidden');
                 }}
               />
-              <Database className="w-6 h-6 lg:w-8 lg:h-8 text-white hidden drop-shadow-sm" />
+              <Database className="w-8 h-8 lg:w-10 lg:h-10 text-white hidden drop-shadow-sm" />
             </div>
             
             {/* Enhanced Title */}
-            <div className="flex flex-col">
+            <div className="flex flex-col ml-2">
               <h1 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent drop-shadow-sm">
                 Database Karyawan
               </h1>
