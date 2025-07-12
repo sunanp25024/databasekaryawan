@@ -47,9 +47,9 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-screen overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[95vh] lg:max-h-screen overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white z-10">
-          <h2 className="text-xl font-semibold text-gray-900">Detail Karyawan</h2>
+          <h2 className="text-lg lg:text-xl font-semibold text-gray-900">Detail Karyawan</h2>
           <button
             onClick={onClose}
             className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors duration-200"
@@ -58,15 +58,15 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
           </button>
         </div>
 
-        <div className="p-6 space-y-8">
+        <div className="p-4 lg:p-6 space-y-6 lg:space-y-8">
           {/* Header */}
           <div className="flex items-center space-x-4">
-            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
+            <div className="w-12 h-12 lg:w-16 lg:h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-lg lg:text-xl font-bold">
               {employee.namaKaryawan.split(' ').map(n => n[0]).join('').toUpperCase()}
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">{employee.namaKaryawan}</h3>
-              <p className="text-lg text-gray-600">{employee.posisi}</p>
+              <h3 className="text-xl lg:text-2xl font-bold text-gray-900">{employee.namaKaryawan}</h3>
+              <p className="text-base lg:text-lg text-gray-600">{employee.posisi}</p>
               <div className="flex items-center space-x-3 mt-2">
                 <span className={getStatusBadge(employee.statusI, 'primary')}>{employee.statusI}</span>
                 <span className={getStatusBadge(employee.statusII, 'secondary')}>{employee.statusII}</span>
@@ -76,18 +76,18 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
 
           {/* Basic Information */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <h4 className="text-base lg:text-lg font-semibold text-gray-900 mb-3 lg:mb-4 flex items-center">
               <User className="w-5 h-5 mr-2" />
               Informasi Dasar
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-500">No</label>
-                <p className="text-gray-900">{employee.no}</p>
+                <label className="block text-xs lg:text-sm font-medium text-gray-500">No</label>
+                <p className="text-sm lg:text-base text-gray-900">{employee.no}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500">NIK</label>
-                <p className="text-gray-900 font-mono">{employee.nik}</p>
+                <label className="block text-xs lg:text-sm font-medium text-gray-500">NIK</label>
+                <p className="text-sm lg:text-base text-gray-900 font-mono">{employee.nik}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-500">Klien</label>
@@ -118,11 +118,11 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
 
           {/* Employment Dates */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <h4 className="text-base lg:text-lg font-semibold text-gray-900 mb-3 lg:mb-4 flex items-center">
               <Calendar className="w-5 h-5 mr-2" />
               Tanggal Penting
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-500">Tanggal Joint</label>
                 <p className="text-gray-900">{formatDate(employee.tglJoint)}</p>
@@ -148,11 +148,11 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
 
           {/* Contract & BPJS */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <h4 className="text-base lg:text-lg font-semibold text-gray-900 mb-3 lg:mb-4 flex items-center">
               <Building className="w-5 h-5 mr-2" />
               Kontrak & BPJS
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-500">PKWT</label>
                 <p className="text-gray-900">{employee.pkwt}</p>
@@ -174,11 +174,11 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
 
           {/* Banking Information */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <h4 className="text-base lg:text-lg font-semibold text-gray-900 mb-3 lg:mb-4 flex items-center">
               <CreditCard className="w-5 h-5 mr-2" />
               Informasi Bank
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-500">Bank</label>
                 <p className="text-gray-900">{employee.bank}</p>
@@ -200,11 +200,11 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
 
           {/* Contact Information */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <h4 className="text-base lg:text-lg font-semibold text-gray-900 mb-3 lg:mb-4 flex items-center">
               <Phone className="w-5 h-5 mr-2" />
               Informasi Kontak
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-500">Email</label>
                 <p className="text-gray-900">{employee.alamatEmail}</p>

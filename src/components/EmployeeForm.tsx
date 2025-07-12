@@ -99,9 +99,9 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl shadow-xl max-w-6xl w-full max-h-screen overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-xl max-w-6xl w-full max-h-[95vh] lg:max-h-screen overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white z-10">
-          <h2 className="text-xl font-semibold text-gray-900">
+          <h2 className="text-lg lg:text-xl font-semibold text-gray-900">
             {employee ? 'Edit Data Karyawan' : 'Tambah Karyawan Baru'}
           </h2>
           <button
@@ -112,34 +112,34 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <form onSubmit={handleSubmit} className="p-4 lg:p-6 space-y-4 lg:space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
             {/* Basic Information */}
             <div className="lg:col-span-3">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Informasi Dasar</h3>
+              <h3 className="text-base lg:text-lg font-medium text-gray-900 mb-3 lg:mb-4">Informasi Dasar</h3>
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">No</label>
+              <label className="block text-xs lg:text-sm font-medium text-gray-700 mb-1 lg:mb-2">No</label>
               <input
                 type="number"
                 name="no"
                 value={formData.no}
                 readOnly
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed"
+                className="w-full px-2 lg:px-3 py-1.5 lg:py-2 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed"
                 title="Nomor otomatis terisi"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Klien</label>
+              <label className="block text-xs lg:text-sm font-medium text-gray-700 mb-1 lg:mb-2">Klien</label>
               <select
                 name="klien"
                 value={formData.klien}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-2 lg:px-3 py-1.5 lg:py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Pilih Klien</option>
                 {klienOptions.map((klien) => (
@@ -149,14 +149,14 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Nama PIC</label>
+              <label className="block text-xs lg:text-sm font-medium text-gray-700 mb-1 lg:mb-2">Nama PIC</label>
               <input
                 type="text"
                 name="namaPic"
                 value={formData.namaPic}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-2 lg:px-3 py-1.5 lg:py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Nama Person In Charge"
               />
             </div>
@@ -208,7 +208,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
 
             {/* Employee Details */}
             <div className="lg:col-span-3">
-              <h3 className="text-lg font-medium text-gray-900 mb-4 mt-6">Detail Karyawan</h3>
+              <h3 className="text-base lg:text-lg font-medium text-gray-900 mb-3 lg:mb-4 mt-4 lg:mt-6">Detail Karyawan</h3>
             </div>
 
             <div>
@@ -330,7 +330,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
 
             {/* Contract Information */}
             <div className="lg:col-span-3">
-              <h3 className="text-lg font-medium text-gray-900 mb-4 mt-6">Informasi Kontrak & BPJS</h3>
+              <h3 className="text-base lg:text-lg font-medium text-gray-900 mb-3 lg:mb-4 mt-4 lg:mt-6">Informasi Kontrak & BPJS</h3>
             </div>
 
             <div>
@@ -383,7 +383,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
 
             {/* Banking Information */}
             <div className="lg:col-span-3">
-              <h3 className="text-lg font-medium text-gray-900 mb-4 mt-6">Informasi Bank & Kontak</h3>
+              <h3 className="text-base lg:text-lg font-medium text-gray-900 mb-3 lg:mb-4 mt-4 lg:mt-6">Informasi Bank & Kontak</h3>
             </div>
 
             <div>
@@ -474,19 +474,19 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
             </div>
           </div>
 
-          <div className="flex items-center justify-end space-x-3 pt-6 border-t border-gray-200 sticky bottom-0 bg-white">
+          <div className="flex flex-col sm:flex-row items-center justify-end space-y-2 sm:space-y-0 sm:space-x-3 pt-4 lg:pt-6 border-t border-gray-200 sticky bottom-0 bg-white">
             <button
               type="button"
               onClick={onCancel}
-              className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200"
+              className="w-full sm:w-auto px-3 lg:px-4 py-2 text-sm lg:text-base text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200"
             >
               Batal
             </button>
             <button
               type="submit"
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-3 lg:px-4 py-2 text-sm lg:text-base bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
             >
-              <Save className="w-4 h-4 mr-2" />
+              <Save className="w-3 h-3 lg:w-4 lg:h-4 mr-2" />
               {employee ? 'Update' : 'Simpan'} Data
             </button>
           </div>

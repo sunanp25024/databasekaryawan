@@ -60,16 +60,16 @@ export function Dashboard({ employees }: DashboardProps) {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4 mb-4 lg:mb-6">
       {stats.map((stat) => (
-        <div key={stat.name} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200">
+        <div key={stat.name} className="bg-white rounded-lg shadow-sm border border-gray-200 p-3 lg:p-4 hover:shadow-md transition-all duration-200 hover:scale-105">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs font-medium text-gray-600 mb-1">{stat.name}</p>
-              <p className={`text-2xl font-bold ${stat.textColor}`}>{stat.value}</p>
+              <p className="text-xs font-medium text-gray-600 mb-1 leading-tight">{stat.name}</p>
+              <p className={`text-xl lg:text-2xl font-bold ${stat.textColor}`}>{stat.value}</p>
             </div>
-            <div className={`${stat.color} rounded-lg p-2`}>
-              <stat.icon className="w-4 h-4 text-white" />
+            <div className={`${stat.color} rounded-lg p-1.5 lg:p-2 flex-shrink-0`}>
+              <stat.icon className="w-3 h-3 lg:w-4 lg:h-4 text-white" />
             </div>
           </div>
         </div>

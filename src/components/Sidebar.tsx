@@ -1,14 +1,15 @@
 import React from 'react';
-import { Database, Building2, Users } from 'lucide-react';
+import { Database, Building2, Users, X } from 'lucide-react';
 
 interface SidebarProps {
   selectedKlien: string;
   onKlienChange: (klien: string) => void;
   employeeCounts: { [key: string]: number };
   totalEmployees: number;
+  onClose: () => void;
 }
 
-export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmployees }: SidebarProps) {
+export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmployees, onClose }: SidebarProps) {
   const klienList = ['ADIRA', 'MACF', 'SMSF'];
 
   const getKlienColor = (klien: string) => {
@@ -25,13 +26,27 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
   };
 
   return (
-    <div className="w-64 bg-white shadow-sm border-r border-gray-200 h-screen sticky top-16 overflow-y-auto">
-      <div className="p-4">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Database Klien</h2>
+    <div className="w-64 lg:w-72 bg-white shadow-lg lg:shadow-sm border-r border-gray-200 h-screen flex flex-col">
+      {/* Mobile close button */}
+      <div className="lg:hidden flex items-center justify-between p-4 border-b border-gray-200">
+        <h2 className="text-lg font-semibold text-gray-900">Menu</h2>
+        <button
+          onClick={onClose}
+          className="p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+      
+      <div className="flex-1 overflow-y-auto p-4">
+        <h2 className="hidden lg:block text-lg font-semibold text-gray-900 mb-4">Database Klien</h2>
         
         {/* All Database */}
         <button
-          onClick={() => onKlienChange('')}
+          onClick={() => {
+            onKlienChange('');
+            onClose();
+          }}
           className={`w-full flex items-center justify-between p-3 rounded-lg mb-2 transition-colors duration-200 ${
             selectedKlien === '' 
               ? 'bg-blue-50 text-blue-700 border border-blue-200' 
@@ -44,7 +59,7 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
             </div>
             <span className="font-medium">All Database</span>
           </div>
-          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+          <span className={`px-2 py-1 rounded-full text-xs font-medium min-w-[24px] text-center ${
             selectedKlien === '' 
               ? 'bg-blue-100 text-blue-700' 
               : 'bg-gray-100 text-gray-600'
@@ -58,7 +73,10 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
           {klienList.map((klien) => (
             <button
               key={klien}
-              onClick={() => onKlienChange(klien)}
+              onClick={() => {
+                onKlienChange(klien);
+                onClose();
+              }}
               className={`w-full flex items-center justify-between p-3 rounded-lg transition-colors duration-200 ${
                 selectedKlien === klien 
                   ? 'bg-blue-50 text-blue-700 border border-blue-200' 
@@ -71,7 +89,7 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
                 </div>
                 <span className="font-medium">{klien}</span>
               </div>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+              <span className={`px-2 py-1 rounded-full text-xs font-medium min-w-[24px] text-center ${
                 selectedKlien === klien 
                   ? 'bg-blue-100 text-blue-700' 
                   : 'bg-gray-100 text-gray-600'
@@ -83,7 +101,7 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
         </div>
 
         {/* Quick Stats */}
-        <div className="mt-6 p-3 bg-gray-50 rounded-lg">
+        <div className="mt-6 p-3 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg">
           <h3 className="text-sm font-medium text-gray-700 mb-2 flex items-center">
             <Users className="w-4 h-4 mr-2" />
             Quick Stats
