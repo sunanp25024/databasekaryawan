@@ -1,184 +1,11 @@
 import { Employee } from '../types/Employee';
 
-export const mockEmployees: Employee[] = [
-  {
-    id: '1',
-    no: 1,
-    klien: 'ADIRA',
-    namaPic: 'John Doe',
-    area: 'Jakarta Pusat',
-    cabang: 'Head Office',
-    nik: '3171234567890001',
-    namaKaryawan: 'Ahmad Pratama',
-    posisi: 'Software Developer',
-    source: 'Internal Recruitment',
-    tglJoint: '2023-01-15',
-    tglEoc: '2023-12-31',
-    statusI: 'Active',
-    statusII: 'Permanent',
-    tglResign: '',
-    reasonResign: '',
-    pkwt: 'PKWT-001',
-    noPkwt: 'PKW/2023/001',
-    bpjsKetenagakerjaan: '12345678901',
-    bpjsKesehatan: '0001234567890',
-    bank: 'BCA',
-    noRekening: '1234567890',
-    updateBank: '2023-01-20',
-    updateNoRekening: '2023-01-20',
-    alamatEmail: 'ahmad.pratama@company.com',
-    noTelp: '+62 812-3456-7890',
-    kontrakKe: 1,
-    suratPeringatan: []
-  },
-  {
-    id: '2',
-    no: 2,
-    klien: 'MACF',
-    namaPic: 'Jane Smith',
-    area: 'Jakarta Selatan',
-    cabang: 'Branch A',
-    nik: '3171234567890002',
-    namaKaryawan: 'Sari Dewi',
-    posisi: 'Marketing Specialist',
-    source: 'External Recruitment',
-    tglJoint: '2023-02-10',
-    tglEoc: '2024-02-09',
-    statusI: 'Active',
-    statusII: 'Contract',
-    tglResign: '',
-    reasonResign: '',
-    pkwt: 'PKWT-002',
-    noPkwt: 'PKW/2023/002',
-    bpjsKetenagakerjaan: '12345678902',
-    bpjsKesehatan: '0001234567891',
-    bank: 'Mandiri',
-    noRekening: '2345678901',
-    updateBank: '2023-02-15',
-    updateNoRekening: '2023-02-15',
-    alamatEmail: 'sari.dewi@company.com',
-    noTelp: '+62 821-9876-5432',
-    kontrakKe: 1,
-    suratPeringatan: [
-      {
-        id: '1',
-        type: 'SP1',
-        date: '2023-06-15',
-        reason: 'Terlambat berulang kali',
-        photoUrl: ''
-      }
-    ]
-  },
-  {
-    id: '3',
-    no: 3,
-    klien: 'SMSF',
-    namaPic: 'Robert Johnson',
-    area: 'Bandung',
-    cabang: 'Branch B',
-    nik: '3271234567890003',
-    namaKaryawan: 'Budi Santoso',
-    posisi: 'Financial Analyst',
-    source: 'Referral',
-    tglJoint: '2022-11-20',
-    tglEoc: '2023-11-19',
-    statusI: 'Resigned',
-    statusII: 'Contract',
-    tglResign: '2023-10-15',
-    reasonResign: 'Personal Reason',
-    pkwt: 'PKWT-003',
-    noPkwt: 'PKW/2022/003',
-    bpjsKetenagakerjaan: '12345678903',
-    bpjsKesehatan: '0001234567892',
-    bank: 'BRI',
-    noRekening: '3456789012',
-    updateBank: '2022-11-25',
-    updateNoRekening: '2022-11-25',
-    alamatEmail: 'budi.santoso@company.com',
-    noTelp: '+62 813-2468-1357',
-    kontrakKe: 1,
-    suratPeringatan: [
-      {
-        id: '1',
-        type: 'SP1',
-        date: '2023-03-10',
-        reason: 'Tidak mengikuti prosedur',
-        photoUrl: ''
-      },
-      {
-        id: '2',
-        type: 'SP2',
-        date: '2023-07-20',
-        reason: 'Kinerja menurun',
-        photoUrl: ''
-      }
-    ]
-  },
-  {
-    id: '4',
-    no: 4,
-    klien: 'ADIRA',
-    namaPic: 'Lisa Anderson',
-    area: 'Surabaya',
-    cabang: 'Branch C',
-    nik: '3571234567890004',
-    namaKaryawan: 'Lisa Rahman',
-    posisi: 'HR Specialist',
-    source: 'Job Portal',
-    tglJoint: '2023-03-05',
-    tglEoc: '2024-03-04',
-    statusI: 'Active',
-    statusII: 'Contract',
-    tglResign: '',
-    reasonResign: '',
-    pkwt: 'PKWT-004',
-    noPkwt: 'PKW/2023/004',
-    bpjsKetenagakerjaan: '12345678904',
-    bpjsKesehatan: '0001234567893',
-    bank: 'BNI',
-    noRekening: '4567890123',
-    updateBank: '2023-03-10',
-    updateNoRekening: '2023-03-10',
-    alamatEmail: 'lisa.rahman@company.com',
-    noTelp: '+62 856-7890-1234',
-    kontrakKe: 2,
-    suratPeringatan: []
-  },
-  {
-    id: '5',
-    no: 5,
-    klien: 'MACF',
-    namaPic: 'Michael Brown',
-    area: 'Medan',
-    cabang: 'Branch D',
-    nik: '1271234567890005',
-    namaKaryawan: 'Deni Kurniawan',
-    posisi: 'Operations Manager',
-    source: 'Headhunter',
-    tglJoint: '2022-08-12',
-    tglEoc: '2024-08-11',
-    statusI: 'Active',
-    statusII: 'Permanent',
-    tglResign: '',
-    reasonResign: '',
-    pkwt: 'PKWT-005',
-    noPkwt: 'PKW/2022/005',
-    bpjsKetenagakerjaan: '12345678905',
-    bpjsKesehatan: '0001234567894',
-    bank: 'CIMB Niaga',
-    noRekening: '5678901234',
-    updateBank: '2022-08-17',
-    updateNoRekening: '2022-08-17',
-    alamatEmail: 'deni.kurniawan@company.com',
-    noTelp: '+62 878-5432-9876',
-    kontrakKe: 1,
-    suratPeringatan: []
-  }
-];
+// Empty initial data for production
+export const mockEmployees: Employee[] = [];
 
 export const klienOptions = [
   'ADIRA',
-  'MACF',
+  'MACF', 
   'SMSF'
 ];
 
@@ -199,7 +26,9 @@ export const sourceOptions = [
   'External Recruitment',
   'Referral',
   'Job Portal',
-  'Headhunter'
+  'Headhunter',
+  'Campus Recruitment',
+  'Walk-in'
 ];
 
 export const bankOptions = [
@@ -209,5 +38,32 @@ export const bankOptions = [
   'BNI',
   'CIMB Niaga',
   'Danamon',
-  'Permata'
+  'Permata',
+  'BTN',
+  'Maybank',
+  'OCBC NISP'
+];
+
+export const areaOptions = [
+  'Jakarta Pusat',
+  'Jakarta Selatan', 
+  'Jakarta Utara',
+  'Jakarta Barat',
+  'Jakarta Timur',
+  'Bandung',
+  'Surabaya',
+  'Medan',
+  'Semarang',
+  'Yogyakarta',
+  'Makassar',
+  'Palembang'
+];
+
+export const cabangOptions = [
+  'Head Office',
+  'Branch A',
+  'Branch B', 
+  'Branch C',
+  'Branch D',
+  'Regional Office'
 ];

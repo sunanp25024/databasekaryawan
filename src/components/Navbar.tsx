@@ -11,59 +11,60 @@ interface NavbarProps {
 
 export function Navbar({ onAddEmployee, onExport, onImport, onToggleSidebar, sidebarOpen }: NavbarProps) {
   return (
-    <nav className="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 shadow-xl border-b border-blue-800/30 sticky top-0 z-30 backdrop-blur-sm">
+    <nav className="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 shadow-2xl border-b border-blue-700/30 sticky top-0 z-30 backdrop-blur-lg">
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 lg:h-18">
+        <div className="flex justify-between items-center h-18 lg:h-20">
           {/* Mobile menu button */}
           <button
             onClick={onToggleSidebar}
-            className="p-2.5 rounded-xl text-blue-200 hover:text-white hover:bg-blue-800/50 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 backdrop-blur-sm"
+            className="p-3 rounded-xl text-blue-200 hover:text-white hover:bg-blue-800/50 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 backdrop-blur-sm lg:hidden"
           >
-            {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
           
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 lg:space-x-6">
             {/* Enhanced Logo */}
-            <div className="flex items-center justify-center w-14 h-14 lg:w-16 lg:h-16 bg-transparent rounded-2xl">
+            <div className="flex items-center justify-center w-16 h-16 lg:w-20 lg:h-20 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20 shadow-xl">
               <img 
                 src="/swapro.png" 
                 alt="Swapro Logo" 
-                className="w-10 h-10 lg:w-12 lg:h-12 object-contain"
+                className="w-12 h-12 lg:w-16 lg:h-16 object-contain filter brightness-110 contrast-110"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
-                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                  const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+                  if (fallback) fallback.classList.remove('hidden');
                 }}
               />
-              <Database className="w-10 h-10 lg:w-12 lg:h-12 text-blue-400 hidden drop-shadow-sm" />
+              <Database className="w-12 h-12 lg:w-16 lg:h-16 text-blue-300 hidden drop-shadow-lg" />
             </div>
             
             {/* Enhanced Title */}
-            <div className="flex flex-col ml-2">
-              <h1 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent drop-shadow-sm">
+            <div className="flex flex-col">
+              <h1 className="text-xl lg:text-3xl font-black bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent drop-shadow-lg tracking-tight">
                 Database Karyawan
               </h1>
-              <p className="hidden sm:block text-sm lg:text-base text-blue-200/90 font-medium tracking-wide">
-                Manajemen Data Karyawan Multi-Divisi
+              <p className="hidden sm:block text-sm lg:text-base text-blue-200/90 font-semibold tracking-wide">
+                Sistem Manajemen Data Karyawan Terpadu
               </p>
             </div>
           </div>
           
-          <div className="flex items-center space-x-2 lg:space-x-3">
+          <div className="flex items-center space-x-2 lg:space-x-4">
             {/* Desktop buttons with enhanced styling */}
-            <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
+            <div className="hidden md:flex items-center space-x-3">
               <button
                 onClick={onImport}
-                className="inline-flex items-center px-4 lg:px-5 py-2.5 lg:py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-sm lg:text-base font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 ring-1 ring-emerald-500/20"
+                className="inline-flex items-center px-5 lg:px-6 py-3 lg:py-3.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-sm lg:text-base font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 ring-1 ring-emerald-500/30 border border-emerald-500/20"
               >
                 <Upload className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
-                Import
+                Import Data
               </button>
               <button
                 onClick={onExport}
-                className="inline-flex items-center px-4 lg:px-5 py-2.5 lg:py-3 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-sm lg:text-base font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 ring-1 ring-amber-500/20"
+                className="inline-flex items-center px-5 lg:px-6 py-3 lg:py-3.5 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-sm lg:text-base font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 ring-1 ring-amber-500/30 border border-amber-500/20"
               >
                 <Download className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
-                Export
+                Export Data
               </button>
             </div>
             
@@ -75,9 +76,9 @@ export function Navbar({ onAddEmployee, onExport, onImport, onToggleSidebar, sid
                   if (e.target.value === 'export') onExport();
                   e.target.value = '';
                 }}
-                className="text-sm px-3 py-2 bg-slate-800/50 border border-blue-600/30 text-blue-100 rounded-lg focus:ring-2 focus:ring-blue-400 backdrop-blur-sm"
+                className="text-sm px-3 py-2.5 bg-slate-800/60 border border-blue-600/40 text-blue-100 rounded-xl focus:ring-2 focus:ring-blue-400 backdrop-blur-sm font-medium"
               >
-                <option value="">Actions</option>
+                <option value="">Menu</option>
                 <option value="import">Import</option>
                 <option value="export">Export</option>
               </select>
@@ -85,11 +86,11 @@ export function Navbar({ onAddEmployee, onExport, onImport, onToggleSidebar, sid
             
             <button
               onClick={onAddEmployee}
-              className="inline-flex items-center px-4 lg:px-6 py-2.5 lg:py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 text-white text-sm lg:text-base font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 ring-1 ring-blue-500/30"
+              className="inline-flex items-center px-5 lg:px-8 py-3 lg:py-3.5 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 text-white text-sm lg:text-base font-black rounded-xl transition-all duration-200 shadow-xl hover:shadow-2xl hover:scale-105 ring-1 ring-blue-500/30 border border-blue-500/20"
             >
               <Plus className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
               <span className="hidden sm:inline">Tambah Karyawan</span>
-              <span className="sm:hidden">Add</span>
+              <span className="sm:hidden">Tambah</span>
             </button>
           </div>
         </div>

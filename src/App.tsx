@@ -100,6 +100,11 @@ function App() {
   };
 
   const handleExport = () => {
+    if (employees.length === 0) {
+      alert('Tidak ada data untuk diekspor. Silakan tambah data karyawan terlebih dahulu.');
+      return;
+    }
+
     const csvContent = [
       // Header
       [
@@ -138,44 +143,48 @@ function App() {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          const csv = e.target?.result as string;
-          // Basic CSV parsing - in production, use a proper CSV parser
-          const lines = csv.split('\n');
-          const headers = lines[0].split(',');
-          const data = lines.slice(1).filter(line => line.trim()).map(line => {
-            const values = line.split(',');
-            return {
-              id: Date.now().toString() + Math.random(),
-              no: parseInt(values[0]) || 0,
-              klien: values[1] || '',
-              namaPic: values[2] || '',
-              area: values[3] || '',
-              cabang: values[4] || '',
-              nik: values[5] || '',
-              namaKaryawan: values[6] || '',
-              posisi: values[7] || '',
-              source: values[8] || '',
-              tglJoint: values[9] || '',
-              tglEoc: values[10] || '',
-              statusI: values[11] || 'Active',
-              statusII: values[12] || 'Contract',
-              tglResign: values[13] || '',
-              reasonResign: values[14] || '',
-              pkwt: values[15] || '',
-              noPkwt: values[16] || '',
-              bpjsKetenagakerjaan: values[17] || '',
-              bpjsKesehatan: values[18] || '',
-              bank: values[19] || '',
-              noRekening: values[20] || '',
-              updateBank: values[21] || '',
-              updateNoRekening: values[22] || '',
-              alamatEmail: values[23] || '',
-              noTelp: values[24] || '',
-              kontrakKe: parseInt(values[25]) || 1,
-              suratPeringatan: values[26] ? JSON.parse(values[26]) : []
-            } as Employee;
-          });
-          setEmployees(prev => [...prev, ...data]);
+          try {
+            const csv = e.target?.result as string;
+            const lines = csv.split('\n');
+            const headers = lines[0].split(',');
+            const data = lines.slice(1).filter(line => line.trim()).map((line, index) => {
+              const values = line.split(',');
+              return {
+                id: Date.now().toString() + Math.random(),
+                no: parseInt(values[0]) || (employees.length + index + 1),
+                klien: values[1] || '',
+                namaPic: values[2] || '',
+                area: values[3] || '',
+                cabang: values[4] || '',
+                nik: values[5] || '',
+                namaKaryawan: values[6] || '',
+                posisi: values[7] || '',
+                source: values[8] || '',
+                tglJoint: values[9] || '',
+                tglEoc: values[10] || '',
+                statusI: values[11] || 'Active',
+                statusII: values[12] || 'Contract',
+                tglResign: values[13] || '',
+                reasonResign: values[14] || '',
+                pkwt: values[15] || '',
+                noPkwt: values[16] || '',
+                bpjsKetenagakerjaan: values[17] || '',
+                bpjsKesehatan: values[18] || '',
+                bank: values[19] || '',
+                noRekening: values[20] || '',
+                updateBank: values[21] || '',
+                updateNoRekening: values[22] || '',
+                alamatEmail: values[23] || '',
+                noTelp: values[24] || '',
+                kontrakKe: parseInt(values[25]) || 1,
+                suratPeringatan: values[26] ? JSON.parse(values[26]) : []
+              } as Employee;
+            });
+            setEmployees(prev => [...prev, ...data]);
+            alert(`Berhasil mengimpor ${data.length} data karyawan.`);
+          } catch (error) {
+            alert('Gagal mengimpor file. Pastikan format CSV sesuai dengan template.');
+          }
         };
         reader.readAsText(file);
       }
@@ -241,9 +250,9 @@ function App() {
         
         {/* Main Content */}
         <div className={`flex-1 flex flex-col min-w-0 overflow-hidden transition-all duration-300 ease-in-out ${
-          sidebarOpen ? 'lg:ml-72 xl:ml-80' : 'ml-0'
+          sidebarOpen ? 'lg:ml-80 xl:ml-84' : 'ml-0'
         }`}>
-          <div className="flex-1 px-4 sm:px-6 lg:px-8 py-6 lg:py-8 overflow-auto">
+          <div className="flex-1 px-6 lg:px-8 py-8 overflow-auto">
             <Dashboard employees={selectedKlien ? employees.filter(emp => emp.klien === selectedKlien) : employees} />
           
             <FilterBar
