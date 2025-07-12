@@ -112,7 +112,6 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
               </h4>
               <div className="space-y-4">
                 {[
-                  { label: 'No', value: employee.no, icon: '🔢' },
                   { label: 'NIK', value: employee.nik, icon: '🆔' },
                   { label: 'Nama PIC', value: employee.namaPic, icon: '👤' },
                   { label: 'Source', value: employee.source, icon: '📍' },

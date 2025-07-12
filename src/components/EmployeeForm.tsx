@@ -130,7 +130,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
               </h3>
             </div>
             
-            <div>
+            <div className="hidden">
               <label className="block text-sm font-semibold text-gray-700 mb-2">No</label>
               <input
                 type="number"
@@ -246,18 +246,15 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Source</label>
-              <select
+              <input
+                type="text"
                 name="source"
                 value={formData.source}
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-300 transition-all duration-200 bg-gray-50 focus:bg-white hover:border-gray-300"
-              >
-                <option value="">Pilih Source</option>
-                {sourceOptions.map((source) => (
-                  <option key={source} value={source}>{source}</option>
-                ))}
-              </select>
+                placeholder="Masukkan sumber rekrutmen"
+              />
             </div>
 
             <div>
