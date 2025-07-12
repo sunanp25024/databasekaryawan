@@ -84,40 +84,40 @@ export function Dashboard({ employees }: DashboardProps) {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
       {stats.map((stat, index) => (
         <div 
           key={stat.name} 
-          className={`relative overflow-hidden bg-gradient-to-br ${stat.bgGradient} rounded-3xl shadow-xl border border-white/60 p-6 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 group`}
+          className={`relative overflow-hidden bg-gradient-to-br ${stat.bgGradient} rounded-2xl lg:rounded-3xl shadow-lg lg:shadow-xl border border-white/60 p-4 lg:p-6 hover:shadow-xl lg:hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 group`}
           style={{ animationDelay: `${index * 100}ms` }}
         >
           {/* Background Pattern */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-60"></div>
-          <div className="absolute -top-6 -right-6 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+          <div className="absolute -top-4 -right-4 lg:-top-6 lg:-right-6 w-20 h-20 lg:w-32 lg:h-32 bg-white/10 rounded-full blur-2xl"></div>
           
           <div className="relative z-10">
-            <div className="flex items-start justify-between mb-5">
-              <div className="flex-1">
-                <p className="text-xs font-black text-gray-600 mb-3 uppercase tracking-wider">
+            <div className="flex items-start justify-between mb-3 lg:mb-5">
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-black text-gray-600 mb-2 lg:mb-3 uppercase tracking-wider truncate">
                   {stat.name}
                 </p>
-                <p className={`text-4xl font-black ${stat.textColor} mb-2 group-hover:scale-110 transition-transform duration-300`}>
+                <p className={`text-2xl lg:text-4xl font-black ${stat.textColor} mb-1 lg:mb-2 group-hover:scale-110 transition-transform duration-300`}>
                   {stat.value}
                 </p>
-                <p className="text-xs text-gray-600 font-bold">
+                <p className="text-xs text-gray-600 font-bold truncate">
                   {stat.description}
                 </p>
               </div>
               
-              <div className={`${stat.iconBg} rounded-2xl p-4 shadow-xl group-hover:shadow-2xl group-hover:scale-110 transition-all duration-300 ring-4 ring-white/40`}>
-                <stat.icon className="w-6 h-6 text-white" />
+              <div className={`${stat.iconBg} rounded-xl lg:rounded-2xl p-2 lg:p-4 shadow-lg lg:shadow-xl group-hover:shadow-2xl group-hover:scale-110 transition-all duration-300 ring-2 lg:ring-4 ring-white/40 flex-shrink-0`}>
+                <stat.icon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
               </div>
             </div>
             
             {/* Progress indicator */}
-            <div className="w-full bg-white/40 rounded-full h-2 mb-3">
+            <div className="w-full bg-white/40 rounded-full h-1.5 lg:h-2 mb-2 lg:mb-3">
               <div 
-                className={`bg-gradient-to-r ${stat.gradient} h-2 rounded-full transition-all duration-1000 ease-out`}
+                className={`bg-gradient-to-r ${stat.gradient} h-1.5 lg:h-2 rounded-full transition-all duration-1000 ease-out`}
                 style={{ width: `${employees.length > 0 ? Math.min((stat.value / employees.length) * 100, 100) : 0}%` }}
               ></div>
             </div>
@@ -128,7 +128,7 @@ export function Dashboard({ employees }: DashboardProps) {
                 {employees.length > 0 ? ((stat.value / employees.length) * 100).toFixed(1) : '0.0'}%
               </span>
               <div className="flex items-center text-green-700">
-                <TrendingUp className="w-3 h-3 mr-1" />
+                <TrendingUp className="w-2 h-2 lg:w-3 lg:h-3 mr-1" />
                 <span className="font-bold">{stat.change}</span>
               </div>
             </div>
