@@ -111,7 +111,8 @@ function App() {
         'NO', 'KLIEN', 'NAMA PIC', 'AREA', 'CABANG', 'NIK', 'NAMA KARYAWAN', 'POSISI', 'SOURCE',
         'TGL JOINT', 'TGL EOC', 'STATUS I', 'STATUS II', 'TGL RESIGN', 'REASON RESIGN', 'PKWT',
         'NO PKWT', 'BPJS KETENAGAKERJAAN', 'BPJS KESEHATAN', 'BANK', 'NO REKENING', 'UPDATE BANK',
-        'UPDATE NO REKENING', 'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE', 'SURAT_PERINGATAN'
+        'UPDATE NO REKENING', 'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE', 'JENIS KELAMIN', 
+        'PENDIDIKAN TERAKHIR', 'AGAMA', 'SURAT_PERINGATAN'
       ].join(','),
       // Data
       ...employees.map(emp => [
@@ -119,7 +120,8 @@ function App() {
         emp.posisi, emp.source, emp.tglJoint, emp.tglEoc, emp.statusI, emp.statusII,
         emp.tglResign, emp.reasonResign, emp.pkwt, emp.noPkwt, emp.bpjsKetenagakerjaan,
         emp.bpjsKesehatan, emp.bank, emp.noRekening, emp.updateBank, emp.updateNoRekening,
-        emp.alamatEmail, emp.noTelp, emp.kontrakKe, JSON.stringify(emp.suratPeringatan || [])
+        emp.alamatEmail, emp.noTelp, emp.kontrakKe, emp.jenisKelamin, emp.pendidikanTerakhir,
+        emp.agama, JSON.stringify(emp.suratPeringatan || [])
       ].join(','))
     ].join('\n');
 
@@ -147,9 +149,13 @@ function App() {
             const csv = e.target?.result as string;
             const lines = csv.split('\n');
             const headers = lines[0].split(',');
-            const data = lines.slice(1).filter(line => line.trim()).map((line, index) => {
+            
+            let addedCount = 0;
+            let updatedCount = 0;
+            
+            const processedData = lines.slice(1).filter(line => line.trim()).map((line, index) => {
               const values = line.split(',');
-              return {
+              const employeeData = {
                 id: Date.now().toString() + Math.random(),
                 no: parseInt(values[0]) || (employees.length + index + 1),
                 klien: values[1] || '',
@@ -177,11 +183,109 @@ function App() {
                 alamatEmail: values[23] || '',
                 noTelp: values[24] || '',
                 kontrakKe: parseInt(values[25]) || 1,
-                suratPeringatan: values[26] ? JSON.parse(values[26]) : []
-              } as Employee;
+                jenisKelamin: values[26] || '',
+                pendidikanTerakhir: values[27] || '',
+                agama: values[28] || '',
+                suratPeringatan: values[29] ? JSON.parse(values[29]) : []
+              };
+              
+              // Check if employee with same NIK already exists
+              const existingEmployeeIndex = employees.findIndex(emp => emp.nik === employeeData.nik);
+              
+              if (existingEmployeeIndex !== -1) {
+                // Update existing employee
+                employeeData.id = employees[existingEmployeeIndex].id; // Keep existing ID
+                updatedCount++;
+                return { ...employeeData, isUpdate: true, existingIndex: existingEmployeeIndex };
+              } else {
+                // New employee
+                addedCount++;
+                return { ...employeeData, isUpdate: false };
+              }
             });
-            setEmployees(prev => [...prev, ...data]);
-            alert(`Berhasil mengimpor ${data.length} data karyawan.`);
+            
+            // Process the data: update existing and add new
+            setEmployees(prev => {
+              let updatedEmployees = [...prev];
+              
+              processedData.forEach((empData: any) => {
+                if (empData.isUpdate) {
+                  // Update existing employee
+                  updatedEmployees[empData.existingIndex] = {
+                    id: empData.id,
+                    no: empData.no,
+                    klien: empData.klien,
+                    namaPic: empData.namaPic,
+                    area: empData.area,
+                    cabang: empData.cabang,
+                    nik: empData.nik,
+                    namaKaryawan: empData.namaKaryawan,
+                    posisi: empData.posisi,
+                    source: empData.source,
+                    tglJoint: empData.tglJoint,
+                    tglEoc: empData.tglEoc,
+                    statusI: empData.statusI,
+                    statusII: empData.statusII,
+                    tglResign: empData.tglResign,
+                    reasonResign: empData.reasonResign,
+                    pkwt: empData.pkwt,
+                    noPkwt: empData.noPkwt,
+                    bpjsKetenagakerjaan: empData.bpjsKetenagakerjaan,
+                    bpjsKesehatan: empData.bpjsKesehatan,
+                    bank: empData.bank,
+                    noRekening: empData.noRekening,
+                    updateBank: empData.updateBank,
+                    updateNoRekening: empData.updateNoRekening,
+                    alamatEmail: empData.alamatEmail,
+                    noTelp: empData.noTelp,
+                    kontrakKe: empData.kontrakKe,
+                    jenisKelamin: empData.jenisKelamin,
+                    pendidikanTerakhir: empData.pendidikanTerakhir,
+                    agama: empData.agama,
+                    suratPeringatan: empData.suratPeringatan
+                  };
+                } else {
+                  // Add new employee
+                  updatedEmployees.push({
+                    id: empData.id,
+                    no: empData.no,
+                    klien: empData.klien,
+                    namaPic: empData.namaPic,
+                    area: empData.area,
+                    cabang: empData.cabang,
+                    nik: empData.nik,
+                    namaKaryawan: empData.namaKaryawan,
+                    posisi: empData.posisi,
+                    source: empData.source,
+                    tglJoint: empData.tglJoint,
+                    tglEoc: empData.tglEoc,
+                    statusI: empData.statusI,
+                    statusII: empData.statusII,
+                    tglResign: empData.tglResign,
+                    reasonResign: empData.reasonResign,
+                    pkwt: empData.pkwt,
+                    noPkwt: empData.noPkwt,
+                    bpjsKetenagakerjaan: empData.bpjsKetenagakerjaan,
+                    bpjsKesehatan: empData.bpjsKesehatan,
+                    bank: empData.bank,
+                    noRekening: empData.noRekening,
+                    updateBank: empData.updateBank,
+                    updateNoRekening: empData.updateNoRekening,
+                    alamatEmail: empData.alamatEmail,
+                    noTelp: empData.noTelp,
+                    kontrakKe: empData.kontrakKe,
+                    jenisKelamin: empData.jenisKelamin,
+                    pendidikanTerakhir: empData.pendidikanTerakhir,
+                    agama: empData.agama,
+                    suratPeringatan: empData.suratPeringatan
+                  });
+                }
+              });
+              
+              return updatedEmployees;
+            });
+            
+            alert(`Berhasil mengimpor data:\n- ${addedCount} karyawan baru ditambahkan\n- ${updatedCount} karyawan diperbarui\n\nTotal: ${addedCount + updatedCount} data diproses.`);
           } catch (error) {
             alert('Gagal mengimpor file. Pastikan format CSV sesuai dengan template.');
           }
@@ -197,7 +301,8 @@ function App() {
       'NO', 'KLIEN', 'NAMA PIC', 'AREA', 'CABANG', 'NIK', 'NAMA KARYAWAN', 'POSISI', 'SOURCE',
       'TGL JOINT', 'TGL EOC', 'STATUS I', 'STATUS II', 'TGL RESIGN', 'REASON RESIGN', 'PKWT',
       'NO PKWT', 'BPJS KETENAGAKERJAAN', 'BPJS KESEHATAN', 'BANK', 'NO REKENING', 'UPDATE BANK',
-      'UPDATE NO REKENING', 'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE', 'SURAT_PERINGATAN'
+      'UPDATE NO REKENING', 'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE', 'JENIS KELAMIN', 
+      'PENDIDIKAN TERAKHIR', 'AGAMA', 'SURAT_PERINGATAN'
     ];
 
     // Create sample data rows to show format
@@ -207,14 +312,14 @@ function App() {
         'Jane Smith', 'Manager', 'Internal Recruitment', '2024-01-15', '2024-01-20', 
         'Active', 'Permanent', '', '', 'PKWT-001', 'PKW-2024-001', '1234567890', 
         '0987654321', 'BCA', '1234567890', '2024-01-15', '2024-01-15', 
-        'jane.smith@email.com', '+62812345678', '1', '[]'
+        'jane.smith@email.com', '+62812345678', '1', 'Perempuan', 'S1', 'Islam', '[]'
       ],
       [
         '2', 'MACF', 'Alice Johnson', 'Jakarta Selatan', 'Branch A', '9876543210987654', 
         'Bob Wilson', 'Staff', 'External Recruitment', '2024-02-01', '2024-02-05', 
         'Active', 'Contract', '', '', 'PKWT-002', 'PKW-2024-002', '2345678901', 
         '1098765432', 'Mandiri', '2345678901', '2024-02-01', '2024-02-01', 
-        'bob.wilson@email.com', '+62823456789', '1', '[]'
+        'bob.wilson@email.com', '+62823456789', '1', 'Laki-laki', 'SMA/SMK', 'Kristen Protestan', '[]'
       ]
     ];
 
