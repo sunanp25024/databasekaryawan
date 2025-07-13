@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Navbar } from './components/Navbar';
 import { Dashboard } from './components/Dashboard';
@@ -9,10 +9,12 @@ import { EmployeeDetail } from './components/EmployeeDetail';
 import { Employee, FilterOptions } from './types/Employee';
 import { mockEmployees } from './data/mockData';
 import { useLocalStorage } from './hooks/useLocalStorage';
-import { Menu, X } from 'lucide-react';
+import { useSupabase } from './hooks/useSupabase';
+import { Menu, X, Database, HardDrive } from 'lucide-react';
 
 function App() {
-  const [employees, setEmployees] = useLocalStorage<Employee[]>('employees', mockEmployees);
+  const [localEmployees, setLocalEmployees] = useLocalStorage<Employee[]>('employees', mockEmployees);
+  const [useDatabase, setUseDatabase] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedKlien, setSelectedKlien] = useState('');
   const [filters, setFilters] = useState<FilterOptions>({
@@ -26,6 +28,58 @@ function App() {
   const [editingEmployee, setEditingEmployee] = useState<Employee | undefined>();
   const [viewingEmployee, setViewingEmployee] = useState<Employee | undefined>();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const {
+    employees: dbEmployees,
+    loading: dbLoading,
+    error: dbError,
+    fetchEmployees,
+    createEmployee: createDbEmployee,
+    updateEmployee: updateDbEmployee,
+    deleteEmployee: deleteDbEmployee,
+    bulkCreateEmployees: bulkCreateDbEmployees,
+    migrateFromLocalStorage
+  } = useSupabase();
+
+  // Choose data source based on mode
+  const employees = useDatabase ? dbEmployees : localEmployees;
+  const isLoading = useDatabase ? dbLoading : false;
+
+  // Initialize database when switching to database mode
+  useEffect(() => {
+    if (useDatabase) {
+      fetchEmployees();
+    }
+  }, [useDatabase]);
+
+  // Migration handler
+  const handleMigrateToDatabase = async () => {
+    if (localEmployees.length === 0) {
+      alert('Tidak ada data localStorage untuk dimigrate. Silakan tambah data terlebih dahulu.');
+      return;
+    }
+
+    if (window.confirm(`Migrate ${localEmployees.length} data karyawan dari localStorage ke Supabase database?\n\nData akan tersimpan permanen di cloud dan bisa diakses dari mana saja.`)) {
+      try {
+        await migrateFromLocalStorage(localEmployees);
+        setUseDatabase(true);
+        alert(`Berhasil migrate ${localEmployees.length} data karyawan ke database!`);
+      } catch (error) {
+        alert(`Gagal migrate data: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
+    }
+  };
+
+  const toggleDataSource = () => {
+    if (!useDatabase && dbEmployees.length === 0 && localEmployees.length > 0) {
+      // Suggest migration
+      if (window.confirm('Anda memiliki data di localStorage. Ingin migrate ke database sekarang?')) {
+        handleMigrateToDatabase();
+        return;
+      }
+    }
+    setUseDatabase(!useDatabase);
+  };
 
   const filteredEmployees = useMemo(() => {
     let filtered = employees;
@@ -75,27 +129,49 @@ function App() {
     setViewingEmployee(employee);
   };
 
-  const handleSaveEmployee = (employeeData: Omit<Employee, 'id'>) => {
-    if (editingEmployee) {
-      setEmployees(prev => prev.map(emp => 
-        emp.id === editingEmployee.id 
-          ? { ...employeeData, id: editingEmployee.id }
-          : emp
-      ));
-    } else {
-      const newEmployee: Employee = {
-        ...employeeData,
-        id: Date.now().toString()
-      };
-      setEmployees(prev => [...prev, newEmployee]);
+  const handleSaveEmployee = async (employeeData: Omit<Employee, 'id'>) => {
+    try {
+      if (useDatabase) {
+        // Use database
+        if (editingEmployee) {
+          await updateDbEmployee(editingEmployee.id, employeeData);
+        } else {
+          await createDbEmployee(employeeData);
+        }
+      } else {
+        // Use localStorage
+        if (editingEmployee) {
+          setLocalEmployees(prev => prev.map(emp => 
+            emp.id === editingEmployee.id 
+              ? { ...employeeData, id: editingEmployee.id }
+              : emp
+          ));
+        } else {
+          const newEmployee: Employee = {
+            ...employeeData,
+            id: Date.now().toString()
+          };
+          setLocalEmployees(prev => [...prev, newEmployee]);
+        }
+      }
+      setShowForm(false);
+      setEditingEmployee(undefined);
+    } catch (error) {
+      alert(`Gagal menyimpan data: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
-    setShowForm(false);
-    setEditingEmployee(undefined);
   };
 
-  const handleDeleteEmployee = (id: string) => {
+  const handleDeleteEmployee = async (id: string) => {
     if (window.confirm('Apakah Anda yakin ingin menghapus data karyawan ini?')) {
-      setEmployees(prev => prev.filter(emp => emp.id !== id));
+      try {
+        if (useDatabase) {
+          await deleteDbEmployee(id);
+        } else {
+          setLocalEmployees(prev => prev.filter(emp => emp.id !== id));
+        }
+      } catch (error) {
+        alert(`Gagal menghapus data: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
     }
   };
 
@@ -176,7 +252,7 @@ function App() {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
           try {
             const csv = e.target?.result as string;
             const lines = csv.split('\n').filter(line => line.trim());
@@ -264,14 +340,42 @@ function App() {
               return;
             }
             
-            // Process the data: update existing and add new
-            setEmployees(prev => {
-              let updatedEmployees = [...prev];
-              
-              processedData.forEach((empData: any) => {
-                if (empData.isUpdate) {
-                  // Update existing employee
-                  updatedEmployees[empData.existingIndex] = {
+            // Process the data based on storage mode
+            if (useDatabase) {
+              // Use database bulk import
+              try {
+                const newEmployees = processedData.filter((emp: any) => !emp.isUpdate).map((emp: any) => {
+                  const { isUpdate, existingIndex, ...employeeData } = emp;
+                  return employeeData;
+                });
+                
+                if (newEmployees.length > 0) {
+                  await bulkCreateDbEmployees(newEmployees);
+                }
+                
+                // Handle updates one by one (Supabase doesn't support bulk updates easily)
+                const updatePromises = processedData
+                  .filter((emp: any) => emp.isUpdate)
+                  .map((emp: any) => {
+                    const { isUpdate, existingIndex, ...employeeData } = emp;
+                    return updateDbEmployee(employeeData.id, employeeData);
+                  });
+                
+                if (updatePromises.length > 0) {
+                  await Promise.all(updatePromises);
+                }
+              } catch (error) {
+                throw new Error(`Database import failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+              }
+            } else {
+              // Use localStorage
+              setLocalEmployees(prev => {
+                let updatedEmployees = [...prev];
+                
+                processedData.forEach((empData: any) => {
+                  if (empData.isUpdate) {
+                    // Update existing employee
+                    updatedEmployees[empData.existingIndex] = {
                     id: empData.id,
                     no: empData.no,
                     klien: empData.klien,
@@ -338,12 +442,13 @@ function App() {
                     pendidikanTerakhir: empData.pendidikanTerakhir,
                     agama: empData.agama,
                     suratPeringatan: empData.suratPeringatan
-                  });
-                }
+                    });
+                  }
+                });
+                
+                return updatedEmployees;
               });
-              
-              return updatedEmployees;
-            });
+            }
             
             let message = `Berhasil mengimpor data:\n- ${addedCount} karyawan baru ditambahkan\n- ${updatedCount} karyawan diperbarui\n\nTotal: ${addedCount + updatedCount} data diproses.`;
             
@@ -441,6 +546,51 @@ function App() {
         onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         sidebarOpen={sidebarOpen}
       />
+      
+      {/* Data Source Toggle */}
+      <div className="bg-white border-b border-gray-200 px-4 py-2">
+        <div className="flex items-center justify-between max-w-7xl mx-auto">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              {useDatabase ? (
+                <Database className="h-4 w-4 text-green-600" />
+              ) : (
+                <HardDrive className="h-4 w-4 text-blue-600" />
+              )}
+              <span className="text-sm font-medium text-gray-700">
+                Storage: {useDatabase ? 'Supabase Database' : 'localStorage'}
+              </span>
+              {isLoading && (
+                <div className="h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+              )}
+            </div>
+            
+            <button
+              onClick={toggleDataSource}
+              className="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors"
+              disabled={isLoading}
+            >
+              Switch to {useDatabase ? 'localStorage' : 'Database'}
+            </button>
+            
+            {!useDatabase && localEmployees.length > 0 && (
+              <button
+                onClick={handleMigrateToDatabase}
+                className="px-3 py-1 text-xs bg-green-100 hover:bg-green-200 text-green-700 rounded-md transition-colors"
+              >
+                Migrate to Database
+              </button>
+            )}
+          </div>
+          
+          <div className="text-xs text-gray-500">
+            {employees.length} employees loaded
+            {dbError && (
+              <span className="text-red-500 ml-2">• Database Error</span>
+            )}
+          </div>
+        </div>
+      </div>
       
       <div className="flex flex-1 relative min-h-0">
         {/* Mobile Sidebar Overlay */}
