@@ -26,18 +26,12 @@ export function Navbar({ onAddEmployee, onExport, onImport, onToggleSidebar, sid
             
             {/* Logo Section */}
             <div className="flex items-center space-x-2 sm:space-x-3 min-w-0">
-              <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-white/15 rounded-xl backdrop-blur-sm border border-white/20 shadow-lg flex-shrink-0">
+              <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-white rounded-xl border border-blue-200/50 shadow-xl flex-shrink-0">
                 <img 
                   src="/swapro.png" 
                   alt="Swapro Logo" 
-                  className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 object-contain filter brightness-110 contrast-110"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    const fallback = e.currentTarget.nextElementSibling as HTMLElement;
-                    if (fallback) fallback.classList.remove('hidden');
-                  }}
+                  className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 object-contain"
                 />
-                <Database className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-blue-300 hidden drop-shadow-lg" />
               </div>
               
               {/* Title */}

@@ -43,18 +43,12 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
       {/* Mobile Header */}
       <div className="lg:hidden flex items-center justify-between p-4 border-b border-slate-200/50 bg-white/90 backdrop-blur-sm">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-md border border-slate-200/50">
+          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg border border-blue-200/50">
             <img 
               src="/swapro.png" 
               alt="Swapro Logo" 
               className="w-8 h-8 object-contain"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                const fallback = e.currentTarget.nextElementSibling as HTMLElement;
-                if (fallback) fallback.classList.remove('hidden');
-              }}
             />
-            <Database className="w-8 h-8 text-blue-600 hidden" />
           </div>
           <h2 className="text-lg font-bold text-slate-800">Filter Klien</h2>
         </div>
@@ -70,18 +64,12 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
         {/* Desktop Header */}
         <div className="hidden lg:block mb-6">
           <div className="flex items-center space-x-4 mb-4">
-            <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-lg border border-slate-200/50">
+            <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-xl border border-blue-200/50">
               <img 
                 src="/swapro.png" 
                 alt="Swapro Logo" 
                 className="w-10 h-10 object-contain"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  const fallback = e.currentTarget.nextElementSibling as HTMLElement;
-                  if (fallback) fallback.classList.remove('hidden');
-                }}
               />
-              <Database className="w-10 h-10 text-blue-600 hidden" />
             </div>
             <div>
               <h2 className="text-xl font-black bg-gradient-to-r from-slate-800 to-blue-800 bg-clip-text text-transparent">
