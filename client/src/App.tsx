@@ -136,6 +136,38 @@ function App() {
     document.body.removeChild(link);
   };
 
+  // Helper function to parse CSV properly
+  const parseCSVLine = (line: string): string[] => {
+    const values: string[] = [];
+    let current = '';
+    let inQuotes = false;
+    let i = 0;
+    
+    while (i < line.length) {
+      const char = line[i];
+      
+      if (char === '"' && !inQuotes) {
+        inQuotes = true;
+      } else if (char === '"' && inQuotes) {
+        if (line[i + 1] === '"') {
+          current += '"';
+          i++; // Skip next quote
+        } else {
+          inQuotes = false;
+        }
+      } else if (char === ',' && !inQuotes) {
+        values.push(current.trim());
+        current = '';
+      } else {
+        current += char;
+      }
+      i++;
+    }
+    
+    values.push(current.trim());
+    return values;
+  };
+
   const handleImport = () => {
     const input = document.createElement('input');
     input.type = 'file';
@@ -147,62 +179,90 @@ function App() {
         reader.onload = (e) => {
           try {
             const csv = e.target?.result as string;
-            const lines = csv.split('\n');
-            const headers = lines[0].split(',');
+            const lines = csv.split('\n').filter(line => line.trim());
+            
+            if (lines.length < 2) {
+              alert('File CSV harus memiliki header dan minimal 1 baris data.');
+              return;
+            }
+            
+            const headers = parseCSVLine(lines[0]);
+            console.log('Headers found:', headers.length, headers);
             
             let addedCount = 0;
             let updatedCount = 0;
+            let errorCount = 0;
+            const errors: string[] = [];
             
-            const processedData = lines.slice(1).filter(line => line.trim()).map((line, index) => {
-              const values = line.split(',');
-              const employeeData = {
-                id: Date.now().toString() + Math.random(),
-                no: parseInt(values[0]) || (employees.length + index + 1),
-                klien: values[1] || '',
-                namaPic: values[2] || '',
-                area: values[3] || '',
-                cabang: values[4] || '',
-                nik: values[5] || '',
-                namaKaryawan: values[6] || '',
-                posisi: values[7] || '',
-                source: values[8] || '',
-                tglJoint: values[9] || '',
-                tglEoc: values[10] || '',
-                statusI: values[11] || 'Active',
-                statusII: values[12] || 'Contract',
-                tglResign: values[13] || '',
-                reasonResign: values[14] || '',
-                pkwt: values[15] || '',
-                noPkwt: values[16] || '',
-                bpjsKetenagakerjaan: values[17] || '',
-                bpjsKesehatan: values[18] || '',
-                bank: values[19] || '',
-                noRekening: values[20] || '',
-                updateBank: values[21] || '',
-                updateNoRekening: values[22] || '',
-                alamatEmail: values[23] || '',
-                noTelp: values[24] || '',
-                kontrakKe: parseInt(values[25]) || 1,
-                jenisKelamin: values[26] || '',
-                pendidikanTerakhir: values[27] || '',
-                agama: values[28] || '',
-                suratPeringatan: values[29] ? JSON.parse(values[29]) : []
-              };
-              
-              // Check if employee with same NIK already exists
-              const existingEmployeeIndex = employees.findIndex(emp => emp.nik === employeeData.nik);
-              
-              if (existingEmployeeIndex !== -1) {
-                // Update existing employee
-                employeeData.id = employees[existingEmployeeIndex].id; // Keep existing ID
-                updatedCount++;
-                return { ...employeeData, isUpdate: true, existingIndex: existingEmployeeIndex };
-              } else {
-                // New employee
-                addedCount++;
-                return { ...employeeData, isUpdate: false };
+            const processedData = lines.slice(1).map((line, index) => {
+              try {
+                const values = parseCSVLine(line);
+                
+                if (values.length < 29) {
+                  errors.push(`Baris ${index + 2}: Jumlah kolom tidak lengkap (${values.length}/30)`);
+                  errorCount++;
+                  return null;
+                }
+                
+                const employeeData = {
+                  id: Date.now().toString() + Math.random(),
+                  no: parseInt(values[0]) || (employees.length + index + 1),
+                  klien: values[1] || '',
+                  namaPic: values[2] || '',
+                  area: values[3] || '',
+                  cabang: values[4] || '',
+                  nik: values[5] || '',
+                  namaKaryawan: values[6] || '',
+                  posisi: values[7] || '',
+                  source: values[8] || '',
+                  tglJoint: values[9] || '',
+                  tglEoc: values[10] || '',
+                  statusI: values[11] || 'Active',
+                  statusII: values[12] || 'Contract',
+                  tglResign: values[13] || '',
+                  reasonResign: values[14] || '',
+                  pkwt: values[15] || '',
+                  noPkwt: values[16] || '',
+                  bpjsKetenagakerjaan: values[17] || '',
+                  bpjsKesehatan: values[18] || '',
+                  bank: values[19] || '',
+                  noRekening: values[20] || '',
+                  updateBank: values[21] || '',
+                  updateNoRekening: values[22] || '',
+                  alamatEmail: values[23] || '',
+                  noTelp: values[24] || '',
+                  kontrakKe: parseInt(values[25]) || 1,
+                  jenisKelamin: values[26] || '',
+                  pendidikanTerakhir: values[27] || '',
+                  agama: values[28] || '',
+                  suratPeringatan: values[29] && values[29].trim() !== '' ? 
+                    (values[29].startsWith('[') ? JSON.parse(values[29]) : []) : []
+                };
+                
+                // Check if employee with same NIK already exists
+                const existingEmployeeIndex = employees.findIndex(emp => emp.nik === employeeData.nik);
+                
+                if (existingEmployeeIndex !== -1) {
+                  // Update existing employee
+                  employeeData.id = employees[existingEmployeeIndex].id; // Keep existing ID
+                  updatedCount++;
+                  return { ...employeeData, isUpdate: true, existingIndex: existingEmployeeIndex };
+                } else {
+                  // New employee
+                  addedCount++;
+                  return { ...employeeData, isUpdate: false };
+                }
+              } catch (error) {
+                errors.push(`Baris ${index + 2}: ${error instanceof Error ? error.message : 'Error parsing data'}`);
+                errorCount++;
+                return null;
               }
-            });
+            }).filter(item => item !== null);
+            
+            if (processedData.length === 0) {
+              alert('Tidak ada data yang berhasil diproses.\n\nError:\n' + errors.join('\n'));
+              return;
+            }
             
             // Process the data: update existing and add new
             setEmployees(prev => {
@@ -285,12 +345,22 @@ function App() {
               return updatedEmployees;
             });
             
-            alert(`Berhasil mengimpor data:\n- ${addedCount} karyawan baru ditambahkan\n- ${updatedCount} karyawan diperbarui\n\nTotal: ${addedCount + updatedCount} data diproses.`);
+            let message = `Berhasil mengimpor data:\n- ${addedCount} karyawan baru ditambahkan\n- ${updatedCount} karyawan diperbarui\n\nTotal: ${addedCount + updatedCount} data diproses.`;
+            
+            if (errorCount > 0) {
+              message += `\n\n⚠️ ${errorCount} baris gagal diproses:\n${errors.slice(0, 5).join('\n')}`;
+              if (errors.length > 5) {
+                message += `\n... dan ${errors.length - 5} error lainnya`;
+              }
+            }
+            
+            alert(message);
           } catch (error) {
-            alert('Gagal mengimpor file. Pastikan format CSV sesuai dengan template.');
+            console.error('Import error:', error);
+            alert(`Gagal mengimpor file: ${error instanceof Error ? error.message : 'Unknown error'}\n\nPastikan file CSV sesuai dengan template dan encoding UTF-8.`);
           }
         };
-        reader.readAsText(file);
+        reader.readAsText(file, 'UTF-8');
       }
     };
     input.click();
