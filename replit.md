@@ -127,4 +127,24 @@ Preferred communication style: Simple, everyday language.
 - **Neon Database**: Serverless PostgreSQL for easy deployment
 - **Schema-first approach**: Drizzle schema defines both database and TypeScript types
 
-The current implementation uses memory storage for development but is configured for PostgreSQL production use. The application is designed to be easily deployed on Replit with minimal configuration.
+The current implementation supports both localStorage and Supabase database storage:
+
+### Storage Modes
+- **localStorage Mode (Default)**: Data stored in browser, good for demo and development
+- **Supabase Database Mode**: Data stored in cloud PostgreSQL, persistent and multi-device
+
+### Recent Updates (July 13, 2025)
+- ✅ **Supabase Integration**: Complete database integration with real-time PostgreSQL
+- ✅ **Dual Storage Support**: Toggle between localStorage and database modes
+- ✅ **Migration System**: One-click migration from localStorage to database
+- ✅ **Improved CSV Import**: Better parsing for complex data with quotes and commas
+- ✅ **Vercel Deployment**: Fixed deployment configuration for proper static hosting
+- ✅ **Database Schema**: Full employee management schema with JSONB support
+
+### Database Configuration
+- **Supabase URL**: https://smrcndetprrmonmzaogj.supabase.co
+- **Table**: employees with 30+ fields including JSONB for surat peringatan
+- **Security**: Row Level Security enabled with public access policy
+- **Features**: Auto-timestamps, indexed searches, real-time sync
+
+The application is designed to be easily deployed on Replit and Vercel with minimal configuration.
