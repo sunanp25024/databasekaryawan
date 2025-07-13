@@ -227,11 +227,14 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
             {/* Contact Information */}
             <div className="bg-gradient-to-br from-white to-indigo-50/50 rounded-2xl p-6 shadow-lg border border-indigo-100/50">
               <h4 className="text-xl font-bold text-gray-900 mb-5 flex items-center pb-3 border-b border-indigo-200">
-                <Phone className="w-6 h-6 mr-3 text-indigo-600" />
-                Informasi Kontak
+                <User className="w-6 h-6 mr-3 text-indigo-600" />
+                Informasi Personal
               </h4>
               <div className="space-y-4">
                 {[
+                  { label: 'Jenis Kelamin', value: employee.jenisKelamin, icon: '👤' },
+                  { label: 'Pendidikan Terakhir', value: employee.pendidikanTerakhir, icon: '🎓' },
+                  { label: 'Agama', value: employee.agama, icon: '🕌' },
                   { label: 'Email', value: employee.alamatEmail, icon: '📧' },
                   { label: 'No Telp', value: employee.noTelp, icon: '📱' }
                 ].map((item, index) => (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Save, User } from 'lucide-react';
 import { Employee } from '../types/Employee';
 import { SPManager } from './SPManager';
-import { klienOptions, statusIOptions, statusIIOptions, sourceOptions, bankOptions, areaOptions, cabangOptions } from '../data/mockData';
+import { klienOptions, statusIOptions, statusIIOptions, sourceOptions, bankOptions, areaOptions, cabangOptions, jenisKelaminOptions, pendidikanTerakhirOptions, agamaOptions } from '../data/mockData';
 
 interface EmployeeFormProps {
   employee?: Employee;
@@ -50,6 +50,9 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     alamatEmail: '',
     noTelp: '',
     kontrakKe: 1,
+    jenisKelamin: '',
+    pendidikanTerakhir: '',
+    agama: '',
     suratPeringatan: []
   });
 
@@ -82,6 +85,9 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
         alamatEmail: employee.alamatEmail,
         noTelp: employee.noTelp,
         kontrakKe: employee.kontrakKe,
+        jenisKelamin: employee.jenisKelamin,
+        pendidikanTerakhir: employee.pendidikanTerakhir,
+        agama: employee.agama,
         suratPeringatan: employee.suratPeringatan || []
       });
     }
@@ -408,6 +414,62 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-mono font-semibold shadow-sm hover:shadow-md"
                 placeholder="Nomor BPJS Kesehatan"
               />
+            </div>
+
+            {/* Personal Information */}
+            <div className="lg:col-span-3">
+              <h3 className="text-xl font-black text-gray-900 mb-6 mt-8 pb-3 border-b-2 border-green-200 flex items-center">
+                <div className="w-2 h-2 bg-green-600 rounded-full mr-3"></div>
+                Informasi Personal
+              </h3>
+            </div>
+
+            <div>
+              <label className="block text-sm font-black text-gray-700 mb-3">Jenis Kelamin *</label>
+              <select
+                name="jenisKelamin"
+                value={formData.jenisKelamin}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
+              >
+                <option value="">Pilih Jenis Kelamin</option>
+                {jenisKelaminOptions.map((jk) => (
+                  <option key={jk} value={jk}>{jk}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-black text-gray-700 mb-3">Pendidikan Terakhir *</label>
+              <select
+                name="pendidikanTerakhir"
+                value={formData.pendidikanTerakhir}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
+              >
+                <option value="">Pilih Pendidikan Terakhir</option>
+                {pendidikanTerakhirOptions.map((pendidikan) => (
+                  <option key={pendidikan} value={pendidikan}>{pendidikan}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-black text-gray-700 mb-3">Agama *</label>
+              <select
+                name="agama"
+                value={formData.agama}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
+              >
+                <option value="">Pilih Agama</option>
+                {agamaOptions.map((agama) => (
+                  <option key={agama} value={agama}>{agama}</option>
+                ))}
+              </select>
             </div>
 
             {/* Banking Information */}

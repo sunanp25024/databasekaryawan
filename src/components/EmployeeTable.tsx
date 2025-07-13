@@ -126,6 +126,9 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
               <th className="px-4 py-6 text-left text-sm font-black text-gray-700 uppercase tracking-wider min-w-[180px]">Email</th>
               <th className="px-4 py-6 text-left text-sm font-black text-gray-700 uppercase tracking-wider min-w-[130px]">No Telp</th>
               <th className="px-4 py-6 text-left text-sm font-black text-gray-700 uppercase tracking-wider min-w-[100px]">Kontrak Ke</th>
+              <th className="px-4 py-6 text-left text-sm font-black text-gray-700 uppercase tracking-wider min-w-[120px]">Jenis Kelamin</th>
+              <th className="px-4 py-6 text-left text-sm font-black text-gray-700 uppercase tracking-wider min-w-[150px]">Pendidikan Terakhir</th>
+              <th className="px-4 py-6 text-left text-sm font-black text-gray-700 uppercase tracking-wider min-w-[100px]">Agama</th>
               <th className="px-4 py-6 text-left text-sm font-black text-gray-700 uppercase tracking-wider min-w-[140px]">Surat Peringatan</th>
               <th className="px-4 py-6 text-left text-sm font-black text-gray-700 uppercase tracking-wider sticky right-0 bg-gradient-to-r from-slate-50 to-blue-50 z-20 border-l border-gray-200">Actions</th>
             </tr>
@@ -163,6 +166,9 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                 <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.alamatEmail}</td>
                 <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.noTelp}</td>
                 <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-bold">{employee.kontrakKe}</td>
+                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.jenisKelamin}</td>
+                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.pendidikanTerakhir}</td>
+                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.agama}</td>
                 <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900">
                   {employee.suratPeringatan && employee.suratPeringatan.length > 0 ? (
                     <div className="flex flex-wrap gap-1">
