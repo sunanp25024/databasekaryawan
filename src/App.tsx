@@ -192,6 +192,48 @@ function App() {
     input.click();
   };
 
+  const handleDownloadTemplate = () => {
+    const headers = [
+      'NO', 'KLIEN', 'NAMA PIC', 'AREA', 'CABANG', 'NIK', 'NAMA KARYAWAN', 'POSISI', 'SOURCE',
+      'TGL JOINT', 'TGL EOC', 'STATUS I', 'STATUS II', 'TGL RESIGN', 'REASON RESIGN', 'PKWT',
+      'NO PKWT', 'BPJS KETENAGAKERJAAN', 'BPJS KESEHATAN', 'BANK', 'NO REKENING', 'UPDATE BANK',
+      'UPDATE NO REKENING', 'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE', 'SURAT_PERINGATAN'
+    ];
+
+    // Create sample data rows to show format
+    const sampleRows = [
+      [
+        '1', 'ADIRA', 'John Doe', 'Jakarta Pusat', 'Head Office', '1234567890123456', 
+        'Jane Smith', 'Manager', 'Internal Recruitment', '2024-01-15', '2024-01-20', 
+        'Active', 'Permanent', '', '', 'PKWT-001', 'PKW-2024-001', '1234567890', 
+        '0987654321', 'BCA', '1234567890', '2024-01-15', '2024-01-15', 
+        'jane.smith@email.com', '+62812345678', '1', '[]'
+      ],
+      [
+        '2', 'MACF', 'Alice Johnson', 'Jakarta Selatan', 'Branch A', '9876543210987654', 
+        'Bob Wilson', 'Staff', 'External Recruitment', '2024-02-01', '2024-02-05', 
+        'Active', 'Contract', '', '', 'PKWT-002', 'PKW-2024-002', '2345678901', 
+        '1098765432', 'Mandiri', '2345678901', '2024-02-01', '2024-02-01', 
+        'bob.wilson@email.com', '+62823456789', '1', '[]'
+      ]
+    ];
+
+    const csvContent = [
+      headers.join(','),
+      ...sampleRows.map(row => row.join(','))
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `template-data-karyawan-${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handleClearFilters = () => {
     setFilters({
       klien: '',
@@ -220,6 +262,7 @@ function App() {
         onAddEmployee={handleAddEmployee}
         onExport={handleExport}
         onImport={handleImport}
+        onDownloadTemplate={handleDownloadTemplate}
         onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         sidebarOpen={sidebarOpen}
       />
