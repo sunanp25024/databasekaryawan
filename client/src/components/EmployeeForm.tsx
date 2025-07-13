@@ -56,6 +56,44 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     suratPeringatan: employee?.suratPeringatan || []
   });
 
+  // Helper function to convert date formats
+  const convertDateToISO = (dateStr: string): string => {
+    if (!dateStr) return '';
+    
+    // If already in ISO format (YYYY-MM-DD), return as is
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+      return dateStr;
+    }
+    
+    // If in format like "Saturday, January 11, 2025", parse it
+    try {
+      const date = new Date(dateStr);
+      if (!isNaN(date.getTime())) {
+        return date.toISOString().split('T')[0];
+      }
+    } catch (e) {
+      console.error('Date conversion error:', e);
+    }
+    
+    return '';
+  };
+
+  // Helper function to normalize status values
+  const normalizeStatus = (status: string): string => {
+    if (!status) return '';
+    
+    // Map common variations to standard values
+    const statusMap: { [key: string]: string } = {
+      'AKTIF': 'Active',
+      'AKTIVE': 'Active', 
+      'ACTIVE': 'Active',
+      'RESIGN': 'Resigned',
+      'RESIGNED': 'Resigned'
+    };
+    
+    return statusMap[status.toUpperCase()] || status;
+  };
+
   useEffect(() => {
     console.log('EmployeeForm useEffect triggered, employee:', employee);
     if (employee) {
@@ -69,11 +107,11 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
         namaKaryawan: employee.namaKaryawan || '',
         posisi: employee.posisi || '',
         source: employee.source || '',
-        tglJoint: employee.tglJoint || '',
-        tglEoc: employee.tglEoc || '',
-        statusI: employee.statusI || 'Active',
+        tglJoint: convertDateToISO(employee.tglJoint) || '',
+        tglEoc: convertDateToISO(employee.tglEoc) || '',
+        statusI: normalizeStatus(employee.statusI) || 'Active',
         statusII: employee.statusII || 'Contract',
-        tglResign: employee.tglResign || '',
+        tglResign: convertDateToISO(employee.tglResign) || '',
         reasonResign: employee.reasonResign || '',
         pkwt: employee.pkwt || '',
         noPkwt: employee.noPkwt || '',
@@ -81,8 +119,8 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
         bpjsKesehatan: employee.bpjsKesehatan || '',
         bank: employee.bank || '',
         noRekening: employee.noRekening || '',
-        updateBank: employee.updateBank || '',
-        updateNoRekening: employee.updateNoRekening || '',
+        updateBank: convertDateToISO(employee.updateBank) || '',
+        updateNoRekening: convertDateToISO(employee.updateNoRekening) || '',
         alamatEmail: employee.alamatEmail || '',
         noTelp: employee.noTelp || '',
         kontrakKe: employee.kontrakKe || 1,
@@ -187,7 +225,6 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                 name="namaPic"
                 value={formData.namaPic}
                 onChange={handleChange}
-                required
                 className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
                 placeholder="Nama Person In Charge"
               />
@@ -280,18 +317,20 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
 
             <div>
               <label className="block text-sm font-black text-gray-700 mb-3">Source *</label>
-              <select
+              <input
+                type="text"
                 name="source"
                 value={formData.source}
                 onChange={handleChange}
-                required
                 className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              >
-                <option value="">Pilih Source</option>
+                placeholder="Masukkan Source Recruitment"
+                list="source-options"
+              />
+              <datalist id="source-options">
                 {sourceOptions.map((source) => (
-                  <option key={source} value={source}>{source}</option>
+                  <option key={source} value={source} />
                 ))}
-              </select>
+              </datalist>
             </div>
 
             <div>
