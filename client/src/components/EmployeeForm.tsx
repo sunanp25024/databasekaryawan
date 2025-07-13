@@ -45,8 +45,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     bpjsKesehatan: employee?.bpjsKesehatan || '',
     bank: employee?.bank || '',
     noRekening: employee?.noRekening || '',
-    updateBank: employee?.updateBank || '',
-    updateNoRekening: employee?.updateNoRekening || '',
+    namaPenerima: employee?.namaPenerima || '',
     alamatEmail: employee?.alamatEmail || '',
     noTelp: employee?.noTelp || '',
     kontrakKe: employee?.kontrakKe || 1,
@@ -157,8 +156,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
         bpjsKesehatan: employee.bpjsKesehatan || '',
         bank: employee.bank || '',
         noRekening: employee.noRekening || '',
-        updateBank: convertDateToISO(employee.updateBank) || '',
-        updateNoRekening: convertDateToISO(employee.updateNoRekening) || '',
+        namaPenerima: employee.namaPenerima || '',
         alamatEmail: employee.alamatEmail || '',
         noTelp: employee.noTelp || '',
         kontrakKe: employee.kontrakKe || 1,
@@ -593,24 +591,14 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
             </div>
 
             <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Update Bank</label>
+              <label className="block text-sm font-black text-gray-700 mb-3">Nama Penerima</label>
               <input
-                type="date"
-                name="updateBank"
-                value={formData.updateBank}
+                type="text"
+                name="namaPenerima"
+                value={formData.namaPenerima}
                 onChange={handleChange}
                 className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Update No Rekening</label>
-              <input
-                type="date"
-                name="updateNoRekening"
-                value={formData.updateNoRekening}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
+                placeholder="Nama penerima rekening"
               />
             </div>
 

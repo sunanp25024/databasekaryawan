@@ -24,8 +24,7 @@ export interface Employee {
   bpjs_kesehatan: string;
   bank: string;
   no_rekening: string;
-  update_bank: string;
-  update_no_rekening: string;
+  nama_penerima: string;
   alamat_email: string;
   no_telp: string;
   kontrak_ke: number;

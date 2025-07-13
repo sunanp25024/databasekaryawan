@@ -210,8 +210,7 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
                 {[
                   { label: 'Bank', value: employee.bank, icon: '🏦' },
                   { label: 'No Rekening', value: employee.noRekening, icon: '💳' },
-                  { label: 'Update Bank', value: formatDate(employee.updateBank), icon: '📅' },
-                  { label: 'Update No Rekening', value: formatDate(employee.updateNoRekening), icon: '🔄' }
+                  { label: 'Nama Penerima', value: employee.namaPenerima, icon: '👤' }
                 ].map((item, index) => (
                   <div key={index} className="flex items-center justify-between p-3 bg-white/80 rounded-xl border border-green-100">
                     <div className="flex items-center space-x-3">

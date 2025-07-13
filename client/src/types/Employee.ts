@@ -30,8 +30,7 @@ export interface Employee {
   bpjsKesehatan: string;
   bank: string;
   noRekening: string;
-  updateBank: string;
-  updateNoRekening: string;
+  namaPenerima: string;
   alamatEmail: string;
   noTelp: string;
   kontrakKe: number;

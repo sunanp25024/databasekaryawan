@@ -121,8 +121,7 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
               <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[140px]">BPJS Kesehatan</th>
               <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Bank</th>
               <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">No Rekening</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[120px]">Update Bank</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[150px]">Update No Rekening</th>
+              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">Nama Penerima</th>
               <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[180px]">Email</th>
               <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">No Telp</th>
               <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[100px]">Kontrak Ke</th>
@@ -161,8 +160,7 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                 <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">{employee.bpjsKesehatan}</td>
                 <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.bank}</td>
                 <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">{employee.noRekening}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{formatDate(employee.updateBank)}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{formatDate(employee.updateNoRekening)}</td>
+                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.namaPenerima}</td>
                 <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.alamatEmail}</td>
                 <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.noTelp}</td>
                 <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-bold">{employee.kontrakKe}</td>
