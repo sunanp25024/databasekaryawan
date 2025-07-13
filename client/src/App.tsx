@@ -121,7 +121,6 @@ function App() {
   };
 
   const handleEditEmployee = (employee: Employee) => {
-    console.log('Edit employee clicked:', employee);
     setEditingEmployee(employee);
     setShowForm(true);
   };

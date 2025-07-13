@@ -94,8 +94,46 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     return statusMap[status.toUpperCase()] || status;
   };
 
+  // Helper function to normalize gender values
+  const normalizeGender = (gender: string): string => {
+    if (!gender) return '';
+    
+    const genderMap: { [key: string]: string } = {
+      'L': 'Laki-laki',
+      'P': 'Perempuan', 
+      'M': 'Laki-laki',
+      'F': 'Perempuan',
+      'MALE': 'Laki-laki',
+      'FEMALE': 'Perempuan'
+    };
+    
+    return genderMap[gender.toUpperCase()] || gender;
+  };
+
+  // Helper function to normalize education values  
+  const normalizeEducation = (education: string): string => {
+    if (!education) return '';
+    
+    const educationMap: { [key: string]: string } = {
+      'SMK': 'SMA/SMK',
+      'SMA': 'SMA/SMK',
+      'SMU': 'SMA/SMK',
+      'D1': 'D1',
+      'D2': 'D2', 
+      'D3': 'D3',
+      'DIPLOMA': 'D3',
+      'S1': 'S1',
+      'SARJANA': 'S1',
+      'S2': 'S2',
+      'MAGISTER': 'S2',
+      'S3': 'S3',
+      'DOKTOR': 'S3'
+    };
+    
+    return educationMap[education.toUpperCase()] || education;
+  };
+
   useEffect(() => {
-    console.log('EmployeeForm useEffect triggered, employee:', employee);
     if (employee) {
       const newFormData = {
         no: employee.no,
@@ -124,12 +162,11 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
         alamatEmail: employee.alamatEmail || '',
         noTelp: employee.noTelp || '',
         kontrakKe: employee.kontrakKe || 1,
-        jenisKelamin: employee.jenisKelamin || '',
-        pendidikanTerakhir: employee.pendidikanTerakhir || '',
+        jenisKelamin: normalizeGender(employee.jenisKelamin) || '',
+        pendidikanTerakhir: normalizeEducation(employee.pendidikanTerakhir) || '',
         agama: employee.agama || '',
         suratPeringatan: employee.suratPeringatan || []
       };
-      console.log('Setting form data:', newFormData);
       setFormData(newFormData);
     }
   }, [employee]);
