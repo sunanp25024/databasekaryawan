@@ -57,39 +57,42 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
   });
 
   useEffect(() => {
+    console.log('EmployeeForm useEffect triggered, employee:', employee);
     if (employee) {
-      setFormData({
+      const newFormData = {
         no: employee.no,
         klien: employee.klien,
-        namaPic: employee.namaPic,
-        area: employee.area,
-        cabang: employee.cabang,
-        nik: employee.nik,
-        namaKaryawan: employee.namaKaryawan,
-        posisi: employee.posisi,
-        source: employee.source,
-        tglJoint: employee.tglJoint,
-        tglEoc: employee.tglEoc,
-        statusI: employee.statusI,
-        statusII: employee.statusII,
-        tglResign: employee.tglResign,
-        reasonResign: employee.reasonResign,
-        pkwt: employee.pkwt,
-        noPkwt: employee.noPkwt,
-        bpjsKetenagakerjaan: employee.bpjsKetenagakerjaan,
-        bpjsKesehatan: employee.bpjsKesehatan,
-        bank: employee.bank,
-        noRekening: employee.noRekening,
-        updateBank: employee.updateBank,
-        updateNoRekening: employee.updateNoRekening,
-        alamatEmail: employee.alamatEmail,
-        noTelp: employee.noTelp,
-        kontrakKe: employee.kontrakKe,
-        jenisKelamin: employee.jenisKelamin,
-        pendidikanTerakhir: employee.pendidikanTerakhir,
-        agama: employee.agama,
+        namaPic: employee.namaPic || '',
+        area: employee.area || '',
+        cabang: employee.cabang || '',
+        nik: employee.nik || '',
+        namaKaryawan: employee.namaKaryawan || '',
+        posisi: employee.posisi || '',
+        source: employee.source || '',
+        tglJoint: employee.tglJoint || '',
+        tglEoc: employee.tglEoc || '',
+        statusI: employee.statusI || 'Active',
+        statusII: employee.statusII || 'Contract',
+        tglResign: employee.tglResign || '',
+        reasonResign: employee.reasonResign || '',
+        pkwt: employee.pkwt || '',
+        noPkwt: employee.noPkwt || '',
+        bpjsKetenagakerjaan: employee.bpjsKetenagakerjaan || '',
+        bpjsKesehatan: employee.bpjsKesehatan || '',
+        bank: employee.bank || '',
+        noRekening: employee.noRekening || '',
+        updateBank: employee.updateBank || '',
+        updateNoRekening: employee.updateNoRekening || '',
+        alamatEmail: employee.alamatEmail || '',
+        noTelp: employee.noTelp || '',
+        kontrakKe: employee.kontrakKe || 1,
+        jenisKelamin: employee.jenisKelamin || '',
+        pendidikanTerakhir: employee.pendidikanTerakhir || '',
+        agama: employee.agama || '',
         suratPeringatan: employee.suratPeringatan || []
-      });
+      };
+      console.log('Setting form data:', newFormData);
+      setFormData(newFormData);
     }
   }, [employee]);
 
@@ -192,34 +195,40 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
 
             <div>
               <label className="block text-sm font-black text-gray-700 mb-3">Area *</label>
-              <select
+              <input
+                type="text"
                 name="area"
                 value={formData.area}
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              >
-                <option value="">Pilih Area</option>
+                placeholder="Masukkan Area"
+                list="area-options"
+              />
+              <datalist id="area-options">
                 {areaOptions.map((area) => (
-                  <option key={area} value={area}>{area}</option>
+                  <option key={area} value={area} />
                 ))}
-              </select>
+              </datalist>
             </div>
 
             <div>
               <label className="block text-sm font-black text-gray-700 mb-3">Cabang *</label>
-              <select
+              <input
+                type="text"
                 name="cabang"
                 value={formData.cabang}
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              >
-                <option value="">Pilih Cabang</option>
+                placeholder="Masukkan Cabang"
+                list="cabang-options"
+              />
+              <datalist id="cabang-options">
                 {cabangOptions.map((cabang) => (
-                  <option key={cabang} value={cabang}>{cabang}</option>
+                  <option key={cabang} value={cabang} />
                 ))}
-              </select>
+              </datalist>
             </div>
 
             <div>
