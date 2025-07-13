@@ -143,6 +143,9 @@ The current implementation supports both localStorage and Supabase database stor
 - ✅ **Fixed Edit Form Bug**: Form fields now populate correctly with existing employee data
 - ✅ **Input Type Optimization**: Changed Area, Cabang, Source to text inputs with auto-suggestions
 - ✅ **Data Mapping**: Smart conversion for dates, status, gender, and education values
+- ✅ **Schema Restructuring**: Removed "updateBank" and "updateNoRekening" fields, added "namaPenerima"
+- ✅ **Form Layout Optimization**: Reorganized form into 6 color-coded sections with better spacing
+- ✅ **Template Updates**: All CSV templates and import/export functions updated to new schema
 
 ### Database Configuration
 - **Supabase URL**: https://smrcndetprrmonmzaogj.supabase.co

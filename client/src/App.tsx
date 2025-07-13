@@ -186,8 +186,8 @@ function App() {
       [
         'NO', 'KLIEN', 'NAMA PIC', 'AREA', 'CABANG', 'NIK', 'NAMA KARYAWAN', 'POSISI', 'SOURCE',
         'TGL JOINT', 'TGL EOC', 'STATUS I', 'STATUS II', 'TGL RESIGN', 'REASON RESIGN', 'PKWT',
-        'NO PKWT', 'BPJS KETENAGAKERJAAN', 'BPJS KESEHATAN', 'BANK', 'NO REKENING', 'UPDATE BANK',
-        'UPDATE NO REKENING', 'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE', 'JENIS KELAMIN', 
+        'NO PKWT', 'BPJS KETENAGAKERJAAN', 'BPJS KESEHATAN', 'BANK', 'NO REKENING', 'NAMA PENERIMA',
+        'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE', 'JENIS KELAMIN', 
         'PENDIDIKAN TERAKHIR', 'AGAMA', 'SURAT_PERINGATAN'
       ].join(','),
       // Data
@@ -195,7 +195,7 @@ function App() {
         emp.no, emp.klien, emp.namaPic, emp.area, emp.cabang, emp.nik, emp.namaKaryawan,
         emp.posisi, emp.source, emp.tglJoint, emp.tglEoc, emp.statusI, emp.statusII,
         emp.tglResign, emp.reasonResign, emp.pkwt, emp.noPkwt, emp.bpjsKetenagakerjaan,
-        emp.bpjsKesehatan, emp.bank, emp.noRekening, emp.updateBank, emp.updateNoRekening,
+        emp.bpjsKesehatan, emp.bank, emp.noRekening, emp.namaPenerima,
         emp.alamatEmail, emp.noTelp, emp.kontrakKe, emp.jenisKelamin, emp.pendidikanTerakhir,
         emp.agama, JSON.stringify(emp.suratPeringatan || [])
       ].join(','))
@@ -274,8 +274,8 @@ function App() {
               try {
                 const values = parseCSVLine(line);
                 
-                if (values.length < 29) {
-                  errors.push(`Baris ${index + 2}: Jumlah kolom tidak lengkap (${values.length}/30)`);
+                if (values.length < 28) {
+                  errors.push(`Baris ${index + 2}: Jumlah kolom tidak lengkap (${values.length}/29)`);
                   errorCount++;
                   return null;
                 }
@@ -303,16 +303,15 @@ function App() {
                   bpjsKesehatan: values[18] || '',
                   bank: values[19] || '',
                   noRekening: values[20] || '',
-                  updateBank: values[21] || '',
-                  updateNoRekening: values[22] || '',
-                  alamatEmail: values[23] || '',
-                  noTelp: values[24] || '',
-                  kontrakKe: parseInt(values[25]) || 1,
-                  jenisKelamin: values[26] || '',
-                  pendidikanTerakhir: values[27] || '',
-                  agama: values[28] || '',
-                  suratPeringatan: values[29] && values[29].trim() !== '' ? 
-                    (values[29].startsWith('[') ? JSON.parse(values[29]) : []) : []
+                  namaPenerima: values[21] || '',
+                  alamatEmail: values[22] || '',
+                  noTelp: values[23] || '',
+                  kontrakKe: parseInt(values[24]) || 1,
+                  jenisKelamin: values[25] || '',
+                  pendidikanTerakhir: values[26] || '',
+                  agama: values[27] || '',
+                  suratPeringatan: values[28] && values[28].trim() !== '' ? 
+                    (values[28].startsWith('[') ? JSON.parse(values[28]) : []) : []
                 };
                 
                 // Check if employee with same NIK already exists
@@ -398,8 +397,7 @@ function App() {
                     bpjsKesehatan: empData.bpjsKesehatan,
                     bank: empData.bank,
                     noRekening: empData.noRekening,
-                    updateBank: empData.updateBank,
-                    updateNoRekening: empData.updateNoRekening,
+                    namaPenerima: empData.namaPenerima,
                     alamatEmail: empData.alamatEmail,
                     noTelp: empData.noTelp,
                     kontrakKe: empData.kontrakKe,
@@ -433,8 +431,7 @@ function App() {
                     bpjsKesehatan: empData.bpjsKesehatan,
                     bank: empData.bank,
                     noRekening: empData.noRekening,
-                    updateBank: empData.updateBank,
-                    updateNoRekening: empData.updateNoRekening,
+                    namaPenerima: empData.namaPenerima,
                     alamatEmail: empData.alamatEmail,
                     noTelp: empData.noTelp,
                     kontrakKe: empData.kontrakKe,
@@ -475,8 +472,8 @@ function App() {
     const headers = [
       'NO', 'KLIEN', 'NAMA PIC', 'AREA', 'CABANG', 'NIK', 'NAMA KARYAWAN', 'POSISI', 'SOURCE',
       'TGL JOINT', 'TGL EOC', 'STATUS I', 'STATUS II', 'TGL RESIGN', 'REASON RESIGN', 'PKWT',
-      'NO PKWT', 'BPJS KETENAGAKERJAAN', 'BPJS KESEHATAN', 'BANK', 'NO REKENING', 'UPDATE BANK',
-      'UPDATE NO REKENING', 'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE', 'JENIS KELAMIN', 
+      'NO PKWT', 'BPJS KETENAGAKERJAAN', 'BPJS KESEHATAN', 'BANK', 'NO REKENING', 'NAMA PENERIMA',
+      'ALAMAT EMAIL', 'NO TELP', 'KONTRAK KE', 'JENIS KELAMIN', 
       'PENDIDIKAN TERAKHIR', 'AGAMA', 'SURAT_PERINGATAN'
     ];
 
@@ -486,14 +483,14 @@ function App() {
         '1', 'ADIRA', 'John Doe', 'Jakarta Pusat', 'Head Office', '1234567890123456', 
         'Jane Smith', 'Manager', 'Internal Recruitment', '2024-01-15', '2024-01-20', 
         'Active', 'Permanent', '', '', 'PKWT-001', 'PKW-2024-001', '1234567890', 
-        '0987654321', 'BCA', '1234567890', '2024-01-15', '2024-01-15', 
+        '0987654321', 'BCA', '1234567890', 'Jane Smith', 
         'jane.smith@email.com', '+62812345678', '1', 'Perempuan', 'S1', 'Islam', '[]'
       ],
       [
         '2', 'MACF', 'Alice Johnson', 'Jakarta Selatan', 'Branch A', '9876543210987654', 
         'Bob Wilson', 'Staff', 'External Recruitment', '2024-02-01', '2024-02-05', 
         'Active', 'Contract', '', '', 'PKWT-002', 'PKW-2024-002', '2345678901', 
-        '1098765432', 'Mandiri', '2345678901', '2024-02-01', '2024-02-01', 
+        '1098765432', 'Mandiri', '2345678901', 'Bob Wilson', 
         'bob.wilson@email.com', '+62823456789', '1', 'Laki-laki', 'SMA/SMK', 'Kristen Protestan', '[]'
       ]
     ];
