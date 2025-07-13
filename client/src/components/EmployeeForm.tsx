@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Save, User } from 'lucide-react';
+import { X, User, Plus, Trash2 } from 'lucide-react';
 import { Employee } from '../types/Employee';
 import { SPManager } from './SPManager';
 import { klienOptions, statusIOptions, statusIIOptions, sourceOptions, bankOptions, areaOptions, cabangOptions, jenisKelaminOptions, pendidikanTerakhirOptions, agamaOptions } from '../data/mockData';
@@ -191,480 +191,485 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-3xl shadow-2xl max-w-6xl w-full max-h-[95vh] overflow-y-auto border border-gray-200">
-        <div className="flex items-center justify-between p-8 border-b border-gray-200 sticky top-0 bg-white z-10 rounded-t-3xl">
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-xl">
-              <User className="w-6 h-6 text-white" />
+      <div className="bg-white rounded-3xl shadow-2xl max-w-7xl w-full max-h-[95vh] overflow-y-auto border border-gray-200">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white z-10 rounded-t-3xl">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg">
+              <User className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-black bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              <h2 className="text-xl font-bold text-gray-900">
                 {employee ? 'Edit Data Karyawan' : 'Tambah Karyawan Baru'}
               </h2>
-              <p className="text-sm text-gray-600 font-semibold">
+              <p className="text-sm text-gray-600">
                 {employee ? 'Perbarui informasi karyawan' : 'Lengkapi form untuk menambah karyawan baru'}
               </p>
             </div>
           </div>
           <button
             onClick={onCancel}
-            className="p-3 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-2xl transition-all duration-200 hover:scale-110"
+            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all duration-200"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Basic Information */}
-            <div className="lg:col-span-3">
-              <h3 className="text-xl font-black text-gray-900 mb-6 pb-3 border-b-2 border-blue-200 flex items-center">
+        <form onSubmit={handleSubmit} className="p-6">
+          <div className="space-y-8">
+            {/* Section 1: Informasi Dasar */}
+            <div className="bg-gradient-to-br from-blue-50/50 to-white p-6 rounded-xl border border-blue-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-5 pb-2 border-b border-blue-200 flex items-center">
                 <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
                 Informasi Dasar
               </h3>
-            </div>
-            
-            <div className="hidden">
-              <label className="block text-sm font-black text-gray-700 mb-2">No</label>
-              <input
-                type="number"
-                name="no"
-                value={formData.no}
-                readOnly
-                required
-                className="w-full px-4 py-3 text-sm border border-gray-200 rounded-xl bg-gray-50 text-gray-500 cursor-not-allowed font-semibold"
-                title="Nomor otomatis terisi"
-              />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="hidden">
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">No</label>
+                  <input
+                    type="number"
+                    name="no"
+                    value={formData.no}
+                    readOnly
+                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Klien *</label>
+                  <select
+                    name="klien"
+                    value={formData.klien}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  >
+                    <option value="">Pilih Klien</option>
+                    {klienOptions.map((klien) => (
+                      <option key={klien} value={klien}>{klien}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Nama PIC</label>
+                  <input
+                    type="text"
+                    name="namaPic"
+                    value={formData.namaPic}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    placeholder="Nama Person In Charge"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Area *</label>
+                  <input
+                    type="text"
+                    name="area"
+                    value={formData.area}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    placeholder="Masukkan Area"
+                    list="area-options"
+                  />
+                  <datalist id="area-options">
+                    {areaOptions.map((area) => (
+                      <option key={area} value={area} />
+                    ))}
+                  </datalist>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Cabang *</label>
+                  <input
+                    type="text"
+                    name="cabang"
+                    value={formData.cabang}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    placeholder="Masukkan Cabang"
+                    list="cabang-options"
+                  />
+                  <datalist id="cabang-options">
+                    {cabangOptions.map((cabang) => (
+                      <option key={cabang} value={cabang} />
+                    ))}
+                  </datalist>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">NIK *</label>
+                  <input
+                    type="text"
+                    name="nik"
+                    value={formData.nik}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 font-mono"
+                    placeholder="Nomor Induk Kependudukan"
+                  />
+                </div>
+              </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Klien *</label>
-              <select
-                name="klien"
-                value={formData.klien}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              >
-                <option value="">Pilih Klien</option>
-                {klienOptions.map((klien) => (
-                  <option key={klien} value={klien}>{klien}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Nama PIC *</label>
-              <input
-                type="text"
-                name="namaPic"
-                value={formData.namaPic}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-                placeholder="Nama Person In Charge"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Area *</label>
-              <input
-                type="text"
-                name="area"
-                value={formData.area}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-                placeholder="Masukkan Area"
-                list="area-options"
-              />
-              <datalist id="area-options">
-                {areaOptions.map((area) => (
-                  <option key={area} value={area} />
-                ))}
-              </datalist>
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Cabang *</label>
-              <input
-                type="text"
-                name="cabang"
-                value={formData.cabang}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-                placeholder="Masukkan Cabang"
-                list="cabang-options"
-              />
-              <datalist id="cabang-options">
-                {cabangOptions.map((cabang) => (
-                  <option key={cabang} value={cabang} />
-                ))}
-              </datalist>
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">NIK *</label>
-              <input
-                type="text"
-                name="nik"
-                value={formData.nik}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-mono font-semibold shadow-sm hover:shadow-md"
-                placeholder="Nomor Induk Kependudukan"
-              />
-            </div>
-
-            {/* Employee Details */}
-            <div className="lg:col-span-3">
-              <h3 className="text-xl font-black text-gray-900 mb-6 mt-8 pb-3 border-b-2 border-emerald-200 flex items-center">
+            {/* Section 2: Detail Karyawan */}
+            <div className="bg-gradient-to-br from-emerald-50/50 to-white p-6 rounded-xl border border-emerald-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-5 pb-2 border-b border-emerald-200 flex items-center">
                 <div className="w-2 h-2 bg-emerald-600 rounded-full mr-3"></div>
                 Detail Karyawan
               </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Nama Karyawan *</label>
+                  <input
+                    type="text"
+                    name="namaKaryawan"
+                    value={formData.namaKaryawan}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                    placeholder="Nama lengkap karyawan"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Posisi *</label>
+                  <input
+                    type="text"
+                    name="posisi"
+                    value={formData.posisi}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                    placeholder="Jabatan/Posisi"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Source</label>
+                  <input
+                    type="text"
+                    name="source"
+                    value={formData.source}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                    placeholder="Masukkan Source"
+                    list="source-options"
+                  />
+                  <datalist id="source-options">
+                    {sourceOptions.map((source) => (
+                      <option key={source} value={source} />
+                    ))}
+                  </datalist>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Tanggal Joint *</label>
+                  <input
+                    type="date"
+                    name="tglJoint"
+                    value={formData.tglJoint}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Tanggal EOC *</label>
+                  <input
+                    type="date"
+                    name="tglEoc"
+                    value={formData.tglEoc}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Status I *</label>
+                  <select
+                    name="statusI"
+                    value={formData.statusI}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                  >
+                    {statusIOptions.map((status) => (
+                      <option key={status} value={status}>{status}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Status II *</label>
+                  <select
+                    name="statusII"
+                    value={formData.statusII}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                  >
+                    {statusIIOptions.map((status) => (
+                      <option key={status} value={status}>{status}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Tanggal Resign</label>
+                  <input
+                    type="date"
+                    name="tglResign"
+                    value={formData.tglResign}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Reason Resign</label>
+                  <input
+                    type="text"
+                    name="reasonResign"
+                    value={formData.reasonResign}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200"
+                    placeholder="Alasan resign"
+                  />
+                </div>
+              </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Nama Karyawan *</label>
-              <input
-                type="text"
-                name="namaKaryawan"
-                value={formData.namaKaryawan}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-                placeholder="Nama lengkap karyawan"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Posisi *</label>
-              <input
-                type="text"
-                name="posisi"
-                value={formData.posisi}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-                placeholder="Jabatan/posisi"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Source *</label>
-              <input
-                type="text"
-                name="source"
-                value={formData.source}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-                placeholder="Masukkan Source Recruitment"
-                list="source-options"
-              />
-              <datalist id="source-options">
-                {sourceOptions.map((source) => (
-                  <option key={source} value={source} />
-                ))}
-              </datalist>
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Tanggal Joint *</label>
-              <input
-                type="date"
-                name="tglJoint"
-                value={formData.tglJoint}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Tanggal EOC *</label>
-              <input
-                type="date"
-                name="tglEoc"
-                value={formData.tglEoc}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Status I *</label>
-              <select
-                name="statusI"
-                value={formData.statusI}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              >
-                {statusIOptions.map((status) => (
-                  <option key={status} value={status}>{status}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Status II *</label>
-              <select
-                name="statusII"
-                value={formData.statusII}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              >
-                {statusIIOptions.map((status) => (
-                  <option key={status} value={status}>{status}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Tanggal Resign</label>
-              <input
-                type="date"
-                name="tglResign"
-                value={formData.tglResign}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Reason Resign</label>
-              <input
-                type="text"
-                name="reasonResign"
-                value={formData.reasonResign}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-                placeholder="Alasan resign"
-              />
-            </div>
-
-            {/* Contract Information */}
-            <div className="lg:col-span-3">
-              <h3 className="text-xl font-black text-gray-900 mb-6 mt-8 pb-3 border-b-2 border-purple-200 flex items-center">
-                <div className="w-2 h-2 bg-purple-600 rounded-full mr-3"></div>
+            {/* Section 3: Kontrak & BPJS */}
+            <div className="bg-gradient-to-br from-amber-50/50 to-white p-6 rounded-xl border border-amber-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-5 pb-2 border-b border-amber-200 flex items-center">
+                <div className="w-2 h-2 bg-amber-600 rounded-full mr-3"></div>
                 Informasi Kontrak & BPJS
               </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">PKWT</label>
+                  <input
+                    type="text"
+                    name="pkwt"
+                    value={formData.pkwt}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200"
+                    placeholder="Jenis PKWT"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">No PKWT</label>
+                  <input
+                    type="text"
+                    name="noPkwt"
+                    value={formData.noPkwt}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 font-mono"
+                    placeholder="Nomor PKWT"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">BPJS Ketenagakerjaan</label>
+                  <input
+                    type="text"
+                    name="bpjsKetenagakerjaan"
+                    value={formData.bpjsKetenagakerjaan}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 font-mono"
+                    placeholder="Nomor BPJS Ketenagakerjaan"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">BPJS Kesehatan</label>
+                  <input
+                    type="text"
+                    name="bpjsKesehatan"
+                    value={formData.bpjsKesehatan}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 font-mono"
+                    placeholder="Nomor BPJS Kesehatan"
+                  />
+                </div>
+              </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">PKWT</label>
-              <input
-                type="text"
-                name="pkwt"
-                value={formData.pkwt}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-                placeholder="Jenis PKWT"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">No PKWT</label>
-              <input
-                type="text"
-                name="noPkwt"
-                value={formData.noPkwt}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-mono font-semibold shadow-sm hover:shadow-md"
-                placeholder="Nomor PKWT"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">BPJS Ketenagakerjaan</label>
-              <input
-                type="text"
-                name="bpjsKetenagakerjaan"
-                value={formData.bpjsKetenagakerjaan}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-mono font-semibold shadow-sm hover:shadow-md"
-                placeholder="Nomor BPJS Ketenagakerjaan"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">BPJS Kesehatan</label>
-              <input
-                type="text"
-                name="bpjsKesehatan"
-                value={formData.bpjsKesehatan}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-mono font-semibold shadow-sm hover:shadow-md"
-                placeholder="Nomor BPJS Kesehatan"
-              />
-            </div>
-
-            {/* Personal Information */}
-            <div className="lg:col-span-3">
-              <h3 className="text-xl font-black text-gray-900 mb-6 mt-8 pb-3 border-b-2 border-green-200 flex items-center">
+            {/* Section 4: Informasi Bank & Kontak */}
+            <div className="bg-gradient-to-br from-green-50/50 to-white p-6 rounded-xl border border-green-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-5 pb-2 border-b border-green-200 flex items-center">
                 <div className="w-2 h-2 bg-green-600 rounded-full mr-3"></div>
-                Informasi Personal
-              </h3>
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Jenis Kelamin *</label>
-              <select
-                name="jenisKelamin"
-                value={formData.jenisKelamin}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              >
-                <option value="">Pilih Jenis Kelamin</option>
-                {jenisKelaminOptions.map((jk) => (
-                  <option key={jk} value={jk}>{jk}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Pendidikan Terakhir *</label>
-              <select
-                name="pendidikanTerakhir"
-                value={formData.pendidikanTerakhir}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              >
-                <option value="">Pilih Pendidikan Terakhir</option>
-                {pendidikanTerakhirOptions.map((pendidikan) => (
-                  <option key={pendidikan} value={pendidikan}>{pendidikan}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Agama *</label>
-              <select
-                name="agama"
-                value={formData.agama}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              >
-                <option value="">Pilih Agama</option>
-                {agamaOptions.map((agama) => (
-                  <option key={agama} value={agama}>{agama}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Banking Information */}
-            <div className="lg:col-span-3">
-              <h3 className="text-xl font-black text-gray-900 mb-6 mt-8 pb-3 border-b-2 border-amber-200 flex items-center">
-                <div className="w-2 h-2 bg-amber-600 rounded-full mr-3"></div>
                 Informasi Bank & Kontak
               </h3>
-            </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Bank</label>
+                  <select
+                    name="bank"
+                    value={formData.bank}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                  >
+                    <option value="">Pilih Bank</option>
+                    {bankOptions.map((bank) => (
+                      <option key={bank} value={bank}>{bank}</option>
+                    ))}
+                  </select>
+                </div>
 
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Bank</label>
-              <select
-                name="bank"
-                value={formData.bank}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              >
-                <option value="">Pilih Bank</option>
-                {bankOptions.map((bank) => (
-                  <option key={bank} value={bank}>{bank}</option>
-                ))}
-              </select>
-            </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">No Rekening</label>
+                  <input
+                    type="text"
+                    name="noRekening"
+                    value={formData.noRekening}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 font-mono"
+                    placeholder="Nomor rekening"
+                  />
+                </div>
 
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">No Rekening</label>
-              <input
-                type="text"
-                name="noRekening"
-                value={formData.noRekening}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-mono font-semibold shadow-sm hover:shadow-md"
-                placeholder="Nomor rekening"
-              />
-            </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Nama Penerima</label>
+                  <input
+                    type="text"
+                    name="namaPenerima"
+                    value={formData.namaPenerima}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                    placeholder="Nama penerima rekening"
+                  />
+                </div>
 
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Nama Penerima</label>
-              <input
-                type="text"
-                name="namaPenerima"
-                value={formData.namaPenerima}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-                placeholder="Nama penerima rekening"
-              />
-            </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Email *</label>
+                  <input
+                    type="email"
+                    name="alamatEmail"
+                    value={formData.alamatEmail}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                    placeholder="alamat@email.com"
+                  />
+                </div>
 
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Email *</label>
-              <input
-                type="email"
-                name="alamatEmail"
-                value={formData.alamatEmail}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-                placeholder="alamat@email.com"
-              />
-            </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">No Telp *</label>
+                  <input
+                    type="tel"
+                    name="noTelp"
+                    value={formData.noTelp}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 font-mono"
+                    placeholder="+62 812-3456-7890"
+                  />
+                </div>
 
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">No Telp *</label>
-              <input
-                type="tel"
-                name="noTelp"
-                value={formData.noTelp}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-mono font-semibold shadow-sm hover:shadow-md"
-                placeholder="+62 812-3456-7890"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-black text-gray-700 mb-3">Kontrak Ke</label>
-              <input
-                type="number"
-                name="kontrakKe"
-                value={formData.kontrakKe}
-                onChange={handleChange}
-                min="1"
-                className="w-full px-4 py-3.5 text-sm border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white font-semibold shadow-sm hover:shadow-md"
-              />
-            </div>
-
-            {/* Surat Peringatan Information */}
-            <div className="lg:col-span-3">
-              <div className="mt-6">
-                <SPManager
-                  suratPeringatan={formData.suratPeringatan}
-                  onChange={handleSPChange}
-                />
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Kontrak Ke</label>
+                  <input
+                    type="number"
+                    name="kontrakKe"
+                    value={formData.kontrakKe}
+                    onChange={handleChange}
+                    min="1"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                  />
+                </div>
               </div>
+            </div>
+
+            {/* Section 5: Informasi Personal */}
+            <div className="bg-gradient-to-br from-purple-50/50 to-white p-6 rounded-xl border border-purple-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-5 pb-2 border-b border-purple-200 flex items-center">
+                <div className="w-2 h-2 bg-purple-600 rounded-full mr-3"></div>
+                Informasi Personal
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Jenis Kelamin *</label>
+                  <select
+                    name="jenisKelamin"
+                    value={formData.jenisKelamin}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
+                  >
+                    <option value="">Pilih Jenis Kelamin</option>
+                    {jenisKelaminOptions.map((gender) => (
+                      <option key={gender} value={gender}>{gender}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Pendidikan Terakhir *</label>
+                  <select
+                    name="pendidikanTerakhir"
+                    value={formData.pendidikanTerakhir}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
+                  >
+                    <option value="">Pilih Pendidikan</option>
+                    {pendidikanTerakhirOptions.map((education) => (
+                      <option key={education} value={education}>{education}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">Agama</label>
+                  <select
+                    name="agama"
+                    value={formData.agama}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
+                  >
+                    <option value="">Pilih Agama</option>
+                    {agamaOptions.map((religion) => (
+                      <option key={religion} value={religion}>{religion}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 6: Surat Peringatan */}
+            <div className="bg-gradient-to-br from-red-50/50 to-white p-6 rounded-xl border border-red-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-5 pb-2 border-b border-red-200 flex items-center">
+                <div className="w-2 h-2 bg-red-600 rounded-full mr-3"></div>
+                Surat Peringatan
+              </h3>
+              <SPManager
+                suratPeringatan={formData.suratPeringatan}
+                onChange={handleSPChange}
+              />
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-end space-y-4 sm:space-y-0 sm:space-x-4 pt-8 border-t-2 border-gray-200 sticky bottom-0 bg-white rounded-b-3xl">
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-end space-y-3 sm:space-y-0 sm:space-x-3 pt-6 border-t border-gray-200 mt-8">
             <button
               type="button"
               onClick={onCancel}
-              className="w-full sm:w-auto px-8 py-3.5 text-base text-gray-700 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 rounded-xl transition-all duration-200 font-black shadow-lg hover:shadow-xl"
+              className="w-full sm:w-auto px-6 py-2.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200 font-medium"
             >
               Batal
             </button>
             <button
               type="submit"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-base bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-black shadow-xl hover:shadow-2xl"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-2.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
             >
-              <Save className="w-5 h-5 mr-2" />
-              {employee ? 'Update' : 'Simpan'} Data
+              {employee ? 'Update Karyawan' : 'Simpan Karyawan'}
             </button>
           </div>
         </form>
