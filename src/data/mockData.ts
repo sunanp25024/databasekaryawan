@@ -67,3 +67,30 @@ export const cabangOptions = [
   'Branch D',
   'Regional Office'
 ];
+
+export const jenisKelaminOptions = [
+  'Laki-laki',
+  'Perempuan'
+];
+
+export const pendidikanTerakhirOptions = [
+  'SD',
+  'SMP', 
+  'SMA/SMK',
+  'D1',
+  'D2',
+  'D3',
+  'S1',
+  'S2',
+  'S3'
+];
+
+export const agamaOptions = [
+  'Islam',
+  'Kristen Protestan',
+  'Kristen Katolik',
+  'Hindu',
+  'Buddha',
+  'Konghucu',
+  'Lainnya'
+];

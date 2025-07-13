@@ -35,6 +35,9 @@ export interface Employee {
   alamatEmail: string;
   noTelp: string;
   kontrakKe: number;
+  jenisKelamin: string;
+  pendidikanTerakhir: string;
+  agama: string;
   suratPeringatan: SuratPeringatan[];
 }
 
