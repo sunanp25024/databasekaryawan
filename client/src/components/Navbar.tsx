@@ -1,5 +1,6 @@
 import React from 'react';
 import { Users, Database, Plus, Download, Upload, Menu, X, Trash2 } from 'lucide-react';
+import { ThemeSwitcher, Theme } from './ThemeSwitcher';
 
 interface NavbarProps {
   onAddEmployee: () => void;
@@ -9,9 +10,11 @@ interface NavbarProps {
   onClearAllData: () => void;
   onToggleSidebar: () => void;
   sidebarOpen: boolean;
+  currentTheme?: Theme;
+  onThemeChange?: (theme: Theme) => void;
 }
 
-export function Navbar({ onAddEmployee, onExport, onImport, onDownloadTemplate, onClearAllData, onToggleSidebar, sidebarOpen }: NavbarProps) {
+export function Navbar({ onAddEmployee, onExport, onImport, onDownloadTemplate, onClearAllData, onToggleSidebar, sidebarOpen, currentTheme = 'default', onThemeChange }: NavbarProps) {
   return (
     <nav className="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 shadow-2xl border-b border-blue-700/30 sticky top-0 z-40 backdrop-blur-lg">
       <div className="w-full px-3 sm:px-4 lg:px-6">
@@ -107,6 +110,14 @@ export function Navbar({ onAddEmployee, onExport, onImport, onDownloadTemplate, 
             </div>
             
             {/* Add Employee Button */}
+            {/* Theme Switcher */}
+            {onThemeChange && (
+              <ThemeSwitcher 
+                currentTheme={currentTheme} 
+                onThemeChange={onThemeChange} 
+              />
+            )}
+            
             <button
               onClick={onAddEmployee}
               className="inline-flex items-center px-2 sm:px-3 lg:px-4 py-2 lg:py-2.5 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 text-white text-xs lg:text-sm font-black rounded-lg transition-all duration-200 shadow-xl hover:shadow-2xl hover:scale-105"

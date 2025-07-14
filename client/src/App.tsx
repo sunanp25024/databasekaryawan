@@ -10,6 +10,7 @@ import { Employee, FilterOptions } from './types/Employee';
 import { mockEmployees } from './data/mockData';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useSupabase } from './hooks/useSupabase';
+import { useTheme } from './hooks/useTheme';
 import { Menu, X, Database, HardDrive } from 'lucide-react';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
   const [editingEmployee, setEditingEmployee] = useState<Employee | undefined>();
   const [viewingEmployee, setViewingEmployee] = useState<Employee | undefined>();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [currentTheme, setCurrentTheme] = useTheme();
 
   const {
     employees: dbEmployees,
@@ -603,6 +605,8 @@ function App() {
         onClearAllData={handleClearAllData}
         onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         sidebarOpen={sidebarOpen}
+        currentTheme={currentTheme}
+        onThemeChange={setCurrentTheme}
       />
       
       {/* Data Source Toggle */}
