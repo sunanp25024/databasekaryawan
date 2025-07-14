@@ -7,12 +7,52 @@ interface DashboardProps {
 }
 
 export function Dashboard({ employees }: DashboardProps) {
-  const activeEmployees = employees.filter(emp => emp.statusI === 'Active').length;
-  const resignedEmployees = employees.filter(emp => emp.statusI === 'Resigned').length;
-  const contractEmployees = employees.filter(emp => emp.statusII === 'Contract').length;
-  const permanentEmployees = employees.filter(emp => emp.statusII === 'Permanent').length;
+  // Debug: Log current employee statuses
+  console.log('Employee statuses:', employees.map(emp => ({
+    name: emp.namaKaryawan,
+    statusI: emp.statusI,
+    statusII: emp.statusII
+  })));
+  
+  // Handle different status formats (Active/AKTIF, Resigned/RESIGN, etc)
+  const activeEmployees = employees.filter(emp => 
+    emp.statusI === 'Active' || emp.statusI === 'AKTIF' || emp.statusI === 'AKTIVE'
+  ).length;
+  
+  const resignedEmployees = employees.filter(emp => 
+    emp.statusI === 'Resigned' || emp.statusI === 'RESIGN' || emp.statusI === 'RESIGNED'
+  ).length;
+  
+  const contractEmployees = employees.filter(emp => 
+    emp.statusII === 'Contract' || emp.statusII === 'CONTRACT'
+  ).length;
+  
+  const permanentEmployees = employees.filter(emp => 
+    emp.statusII === 'Permanent' || emp.statusII === 'PERMANENT'
+  ).length;
+  
+  const probationEmployees = employees.filter(emp => 
+    emp.statusII === 'Probation' || emp.statusII === 'PROBATION'
+  ).length;
+  
   const uniqueClients = new Set(employees.map(emp => emp.klien)).size;
   const uniqueArea = new Set(employees.map(emp => emp.area)).size;
+  
+  // More detailed breakdown
+  const activeContract = employees.filter(emp => 
+    (emp.statusI === 'Active' || emp.statusI === 'AKTIF' || emp.statusI === 'AKTIVE') && 
+    (emp.statusII === 'Contract' || emp.statusII === 'CONTRACT')
+  ).length;
+  
+  const activePermanent = employees.filter(emp => 
+    (emp.statusI === 'Active' || emp.statusI === 'AKTIF' || emp.statusI === 'AKTIVE') && 
+    (emp.statusII === 'Permanent' || emp.statusII === 'PERMANENT')
+  ).length;
+  
+  const activeProbation = employees.filter(emp => 
+    (emp.statusI === 'Active' || emp.statusI === 'AKTIF' || emp.statusI === 'AKTIVE') && 
+    (emp.statusII === 'Probation' || emp.statusII === 'PROBATION')
+  ).length;
 
   const stats = [
     {
@@ -56,7 +96,7 @@ export function Dashboard({ employees }: DashboardProps) {
       bgGradient: 'from-amber-50 to-orange-100',
       textColor: 'text-amber-800',
       iconBg: 'bg-amber-600',
-      description: 'Status kontrak',
+      description: `${activeContract} aktif`,
       change: '+0%'
     },
     {
@@ -67,7 +107,18 @@ export function Dashboard({ employees }: DashboardProps) {
       bgGradient: 'from-purple-50 to-purple-100',
       textColor: 'text-purple-800',
       iconBg: 'bg-purple-600',
-      description: 'Status tetap',
+      description: `${activePermanent} aktif`,
+      change: '+0%'
+    },
+    {
+      name: 'Probation',
+      value: probationEmployees,
+      icon: Calendar,
+      gradient: 'from-indigo-600 to-indigo-700',
+      bgGradient: 'from-indigo-50 to-indigo-100',
+      textColor: 'text-indigo-800',
+      iconBg: 'bg-indigo-600',
+      description: `${activeProbation} aktif`,
       change: '+0%'
     },
     {

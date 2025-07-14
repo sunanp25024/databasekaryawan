@@ -86,11 +86,11 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     
     // Map common variations to standard values
     const statusMap: { [key: string]: string } = {
-      'AKTIF': 'Active',
-      'AKTIVE': 'Active', 
-      'ACTIVE': 'Active',
-      'RESIGN': 'Resigned',
-      'RESIGNED': 'Resigned'
+      'AKTIF': 'AKTIF',
+      'AKTIVE': 'AKTIF', 
+      'ACTIVE': 'AKTIF',
+      'RESIGN': 'RESIGN',
+      'RESIGNED': 'RESIGN'
     };
     
     return statusMap[status.toUpperCase()] || status;
@@ -149,7 +149,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
         source: employee.source || '',
         tglJoint: convertDateToISO(employee.tglJoint) || '',
         tglEoc: convertDateToISO(employee.tglEoc) || '',
-        statusI: normalizeStatus(employee.statusI) || 'Active',
+        statusI: normalizeStatus(employee.statusI) || 'AKTIF',
         statusII: employee.statusII || 'Contract',
         tglResign: convertDateToISO(employee.tglResign) || '',
         reasonResign: employee.reasonResign || '',

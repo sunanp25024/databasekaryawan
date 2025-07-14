@@ -313,7 +313,7 @@ function App() {
                   source: values[8] || '',
                   tglJoint: values[9] || '',
                   tglEoc: values[10] || '',
-                  statusI: values[11] || 'Active',
+                  statusI: values[11] || 'AKTIF',
                   statusII: values[12] || 'Contract',
                   tglResign: values[13] || '',
                   reasonResign: values[14] || '',

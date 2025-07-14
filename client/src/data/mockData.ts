@@ -10,9 +10,9 @@ export const klienOptions = [
 ];
 
 export const statusIOptions = [
-  'Active',
-  'Resigned',
-  'Terminated'
+  'AKTIF',
+  'RESIGN',
+  'TERMINATED'
 ];
 
 export const statusIIOptions = [
