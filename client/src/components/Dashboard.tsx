@@ -7,13 +7,6 @@ interface DashboardProps {
 }
 
 export function Dashboard({ employees }: DashboardProps) {
-  // Debug: Log current employee statuses
-  console.log('Employee statuses:', employees.map(emp => ({
-    name: emp.namaKaryawan,
-    statusI: emp.statusI,
-    statusII: emp.statusII
-  })));
-  
   // Handle different status formats (Active/AKTIF, Resigned/RESIGN, etc)
   const activeEmployees = employees.filter(emp => 
     emp.statusI === 'Active' || emp.statusI === 'AKTIF' || emp.statusI === 'AKTIVE'
@@ -36,7 +29,7 @@ export function Dashboard({ employees }: DashboardProps) {
   ).length;
   
   const uniqueClients = new Set(employees.map(emp => emp.klien)).size;
-  const uniqueArea = new Set(employees.map(emp => emp.area)).size;
+  const uniqueArea = new Set(employees.map(emp => emp.area).filter(area => area && area.trim() !== '')).size;
   
   // More detailed breakdown
   const activeContract = employees.filter(emp => 
@@ -53,7 +46,7 @@ export function Dashboard({ employees }: DashboardProps) {
     (emp.statusI === 'Active' || emp.statusI === 'AKTIF' || emp.statusI === 'AKTIVE') && 
     (emp.statusII === 'Probation' || emp.statusII === 'PROBATION')
   ).length;
-
+  
   const stats = [
     {
       name: 'Total Karyawan',
@@ -125,10 +118,10 @@ export function Dashboard({ employees }: DashboardProps) {
       name: 'Total Area',
       value: uniqueArea,
       icon: Building2,
-      gradient: 'from-indigo-600 to-indigo-700',
-      bgGradient: 'from-indigo-50 to-indigo-100',
-      textColor: 'text-indigo-800',
-      iconBg: 'bg-indigo-600',
+      gradient: 'from-teal-600 to-teal-700',
+      bgGradient: 'from-teal-50 to-teal-100',
+      textColor: 'text-teal-800',
+      iconBg: 'bg-teal-600',
       description: 'Wilayah kerja',
       change: '+0%'
     }

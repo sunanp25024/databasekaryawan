@@ -147,6 +147,14 @@ The current implementation supports both localStorage and Supabase database stor
 - ✅ **Form Layout Optimization**: Reorganized form into 6 color-coded sections with better spacing
 - ✅ **Template Updates**: All CSV templates and import/export functions updated to new schema
 
+### Recent Updates (July 14, 2025)
+- ✅ **Status Calculation Fix**: Fixed dashboard calculations for Indonesian status terms
+- ✅ **Status Normalization**: System now properly recognizes AKTIF/RESIGN/TERMINATED
+- ✅ **Dashboard Enhancement**: Added breakdown showing active employees by contract type
+- ✅ **Total Area Counter**: Added unique area counter in dashboard statistics
+- ✅ **Consistent Status Format**: All forms and calculations use Indonesian status terms
+- ✅ **Debug Enhancement**: Added comprehensive status debugging for troubleshooting
+
 ### Database Configuration
 - **Supabase URL**: https://smrcndetprrmonmzaogj.supabase.co
 - **Table**: employees with 30+ fields including JSONB for surat peringatan
