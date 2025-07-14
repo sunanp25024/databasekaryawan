@@ -55,6 +55,9 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     suratPeringatan: employee?.suratPeringatan || []
   });
 
+  const [nikError, setNikError] = useState('');
+  const [emailError, setEmailError] = useState('');
+
   // Helper function to convert date formats
   const convertDateToISO = (dateStr: string): string => {
     if (!dateStr) return '';
@@ -171,11 +174,57 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prevent submission if there's NIK error
+    if (nikError) {
+      alert('Tidak dapat menyimpan: ' + nikError);
+      return;
+    }
+    
+    // Prevent submission if there's Email error
+    if (emailError) {
+      alert('Tidak dapat menyimpan: ' + emailError);
+      return;
+    }
+    
+    // Check for empty NIK
+    if (!formData.nik.trim()) {
+      alert('NIK tidak boleh kosong');
+      return;
+    }
+    
     onSave(formData);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    
+    // Check for duplicate NIK
+    if (name === 'nik' && value.trim()) {
+      const existingEmployee = employees.find(emp => 
+        emp.nik === value.trim() && emp.id !== employee?.id
+      );
+      
+      if (existingEmployee) {
+        setNikError(`⚠️ NIK ${value} sudah digunakan oleh ${existingEmployee.namaKaryawan}`);
+      } else {
+        setNikError('');
+      }
+    }
+    
+    // Check for duplicate Email
+    if (name === 'alamatEmail' && value.trim()) {
+      const existingEmployee = employees.find(emp => 
+        emp.alamatEmail.toLowerCase() === value.trim().toLowerCase() && emp.id !== employee?.id
+      );
+      
+      if (existingEmployee) {
+        setEmailError(`⚠️ Email ${value} sudah digunakan oleh ${existingEmployee.namaKaryawan}`);
+      } else {
+        setEmailError('');
+      }
+    }
+    
     setFormData(prev => ({
       ...prev,
       [name]: name === 'no' || name === 'kontrakKe' ? parseInt(value) || 0 : value
@@ -309,9 +358,19 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                     value={formData.nik}
                     onChange={handleChange}
                     required
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 font-mono"
+                    className={`w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 transition-all duration-200 font-mono ${
+                      nikError 
+                        ? 'border-red-300 focus:ring-red-500 focus:border-red-500 bg-red-50' 
+                        : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                    }`}
                     placeholder="Nomor Induk Kependudukan"
                   />
+                  {nikError && (
+                    <p className="mt-1 text-xs text-red-600 flex items-center">
+                      <span className="mr-1">⚠️</span>
+                      {nikError}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -564,9 +623,19 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                     value={formData.alamatEmail}
                     onChange={handleChange}
                     required
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                    className={`w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 transition-all duration-200 ${
+                      emailError 
+                        ? 'border-red-300 focus:ring-red-500 focus:border-red-500 bg-red-50' 
+                        : 'border-gray-300 focus:ring-green-500 focus:border-green-500'
+                    }`}
                     placeholder="alamat@email.com"
                   />
+                  {emailError && (
+                    <p className="mt-1 text-xs text-red-600 flex items-center">
+                      <span className="mr-1">⚠️</span>
+                      {emailError}
+                    </p>
+                  )}
                 </div>
 
                 <div>
