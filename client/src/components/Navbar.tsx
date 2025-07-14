@@ -1,16 +1,17 @@
 import React from 'react';
-import { Users, Database, Plus, Download, Upload, Menu, X } from 'lucide-react';
+import { Users, Database, Plus, Download, Upload, Menu, X, Trash2 } from 'lucide-react';
 
 interface NavbarProps {
   onAddEmployee: () => void;
   onExport: () => void;
   onImport: () => void;
   onDownloadTemplate: () => void;
+  onClearAllData: () => void;
   onToggleSidebar: () => void;
   sidebarOpen: boolean;
 }
 
-export function Navbar({ onAddEmployee, onExport, onImport, onDownloadTemplate, onToggleSidebar, sidebarOpen }: NavbarProps) {
+export function Navbar({ onAddEmployee, onExport, onImport, onDownloadTemplate, onClearAllData, onToggleSidebar, sidebarOpen }: NavbarProps) {
   return (
     <nav className="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 shadow-2xl border-b border-blue-700/30 sticky top-0 z-40 backdrop-blur-lg">
       <div className="w-full px-3 sm:px-4 lg:px-6">
@@ -75,6 +76,14 @@ export function Navbar({ onAddEmployee, onExport, onImport, onDownloadTemplate, 
                 <span className="hidden lg:inline">Export</span>
                 <span className="lg:hidden">Export</span>
               </button>
+              <button
+                onClick={onClearAllData}
+                className="inline-flex items-center px-3 lg:px-4 py-2 lg:py-2.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-xs lg:text-sm font-bold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
+              >
+                <Trash2 className="w-3 h-3 lg:w-4 lg:h-4 mr-1 lg:mr-2" />
+                <span className="hidden lg:inline">Clear All</span>
+                <span className="lg:hidden">Clear</span>
+              </button>
             </div>
             
             {/* Mobile dropdown */}
@@ -84,6 +93,7 @@ export function Navbar({ onAddEmployee, onExport, onImport, onDownloadTemplate, 
                   if (e.target.value === 'template') onDownloadTemplate();
                   if (e.target.value === 'import') onImport();
                   if (e.target.value === 'export') onExport();
+                  if (e.target.value === 'clear') onClearAllData();
                   e.target.value = '';
                 }}
                 className="text-xs px-2 py-2 bg-slate-800/60 border border-blue-600/40 text-blue-100 rounded-lg focus:ring-2 focus:ring-blue-400 backdrop-blur-sm font-medium"
@@ -92,6 +102,7 @@ export function Navbar({ onAddEmployee, onExport, onImport, onDownloadTemplate, 
                 <option value="template">Download Template</option>
                 <option value="import">Import</option>
                 <option value="export">Export</option>
+                <option value="clear">Clear All Data</option>
               </select>
             </div>
             

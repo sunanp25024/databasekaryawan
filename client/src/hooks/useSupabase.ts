@@ -183,6 +183,26 @@ export function useSupabase() {
     }
   };
 
+  const clearAllData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Delete all employees one by one
+      const currentEmployees = [...employees];
+      for (const emp of currentEmployees) {
+        await supabase.deleteEmployee(emp.id);
+      }
+      
+      setEmployees([]);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to clear all data');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     employees,
     loading,
@@ -192,6 +212,7 @@ export function useSupabase() {
     updateEmployee,
     deleteEmployee,
     bulkCreateEmployees,
-    migrateFromLocalStorage
+    migrateFromLocalStorage,
+    clearAllData
   };
 }

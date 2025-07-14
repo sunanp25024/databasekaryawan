@@ -38,7 +38,8 @@ function App() {
     updateEmployee: updateDbEmployee,
     deleteEmployee: deleteDbEmployee,
     bulkCreateEmployees: bulkCreateDbEmployees,
-    migrateFromLocalStorage
+    migrateFromLocalStorage,
+    clearAllData: clearDbData
   } = useSupabase();
 
   // Choose data source based on mode
@@ -542,6 +543,45 @@ function App() {
     setSearchTerm('');
   };
 
+  // Clear all data handler
+  const handleClearAllData = async () => {
+    const totalEmployees = employees.length;
+    
+    if (totalEmployees === 0) {
+      alert('Tidak ada data untuk dihapus.');
+      return;
+    }
+
+    const confirmMessage = `⚠️ PERINGATAN: Menghapus semua data!\n\nAnda akan menghapus ${totalEmployees} data karyawan dari ${useDatabase ? 'database' : 'localStorage'}.\n\nTindakan ini TIDAK DAPAT DIBATALKAN!\n\nApakah Anda yakin ingin melanjutkan?`;
+    
+    if (window.confirm(confirmMessage)) {
+      try {
+        if (useDatabase) {
+          await clearDbData();
+        } else {
+          setLocalEmployees([]);
+        }
+        
+        // Reset all UI state
+        setShowForm(false);
+        setEditingEmployee(undefined);
+        setViewingEmployee(undefined);
+        setSearchTerm('');
+        setFilters({
+          klien: '',
+          area: '',
+          cabang: '',
+          statusI: '',
+          statusII: ''
+        });
+        
+        alert(`✅ Berhasil menghapus ${totalEmployees} data karyawan!`);
+      } catch (error) {
+        alert(`❌ Gagal menghapus data: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
+    }
+  };
+
   // Listen for custom event from empty state button
   React.useEffect(() => {
     const handleAddEmployee = () => {
@@ -560,6 +600,7 @@ function App() {
         onExport={handleExport}
         onImport={handleImport}
         onDownloadTemplate={handleDownloadTemplate}
+        onClearAllData={handleClearAllData}
         onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         sidebarOpen={sidebarOpen}
       />
