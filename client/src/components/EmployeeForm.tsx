@@ -501,20 +501,20 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
               </div>
             </div>
 
-            {/* Section 4: Informasi Bank & Kontak */}
-            <div className="bg-gradient-to-br from-green-50/50 to-white p-6 rounded-xl border border-green-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-5 pb-2 border-b border-green-200 flex items-center">
-                <div className="w-2 h-2 bg-green-600 rounded-full mr-3"></div>
-                Informasi Bank & Kontak
+            {/* Section 4A: Informasi Bank */}
+            <div className="bg-gradient-to-br from-blue-50/50 to-white p-6 rounded-xl border border-blue-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-5 pb-2 border-b border-blue-200 flex items-center">
+                <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+                Informasi Bank
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Bank</label>
                   <select
                     name="bank"
                     value={formData.bank}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                   >
                     <option value="">Pilih Bank</option>
                     {bankOptions.map((bank) => (
@@ -530,7 +530,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                     name="noRekening"
                     value={formData.noRekening}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 font-mono"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 font-mono"
                     placeholder="Nomor rekening"
                   />
                 </div>
@@ -542,11 +542,20 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
                     name="namaPenerima"
                     value={formData.namaPenerima}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                     placeholder="Nama penerima rekening"
                   />
                 </div>
+              </div>
+            </div>
 
+            {/* Section 4B: Informasi Kontak */}
+            <div className="bg-gradient-to-br from-green-50/50 to-white p-6 rounded-xl border border-green-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-5 pb-2 border-b border-green-200 flex items-center">
+                <div className="w-2 h-2 bg-green-600 rounded-full mr-3"></div>
+                Informasi Kontak
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Email *</label>
                   <input
