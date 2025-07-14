@@ -162,15 +162,35 @@ function App() {
   };
 
   const handleDeleteEmployee = async (id: string) => {
-    if (window.confirm('Apakah Anda yakin ingin menghapus data karyawan ini?')) {
+    // Find employee details for confirmation
+    const employeeToDelete = employees.find(emp => emp.id === id);
+    if (!employeeToDelete) {
+      alert('Data karyawan tidak ditemukan!');
+      return;
+    }
+
+    // Enhanced confirmation dialog
+    const confirmed = window.confirm(
+      `⚠️ HAPUS DATA KARYAWAN ⚠️\n\n` +
+      `Nama: ${employeeToDelete.namaKaryawan}\n` +
+      `NIK: ${employeeToDelete.nik}\n` +
+      `Klien: ${employeeToDelete.klien}\n` +
+      `Posisi: ${employeeToDelete.posisi}\n\n` +
+      `❌ DATA AKAN DIHAPUS PERMANEN!\n` +
+      `Apakah Anda yakin ingin menghapus data ini?`
+    );
+
+    if (confirmed) {
       try {
         if (useDatabase) {
           await deleteDbEmployee(id);
+          alert(`✅ Data karyawan "${employeeToDelete.namaKaryawan}" berhasil dihapus dari database!`);
         } else {
           setLocalEmployees(prev => prev.filter(emp => emp.id !== id));
+          alert(`✅ Data karyawan "${employeeToDelete.namaKaryawan}" berhasil dihapus dari penyimpanan lokal!`);
         }
       } catch (error) {
-        alert(`Gagal menghapus data: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        alert(`❌ Gagal menghapus data: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
     }
   };

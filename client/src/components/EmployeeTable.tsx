@@ -73,10 +73,10 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                   </button>
                   <button
                     onClick={() => onDelete(employee.id)}
-                    className="p-2.5 text-gray-400 hover:text-red-600 hover:bg-red-100 rounded-xl transition-all duration-200 hover:scale-110"
-                    title="Delete"
+                    className="p-2.5 text-gray-400 hover:text-red-600 hover:bg-red-100 rounded-xl transition-all duration-200 hover:scale-110 group"
+                    title="Hapus Karyawan"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-4 h-4 group-hover:animate-pulse" />
                   </button>
                 </div>
               </div>
@@ -207,10 +207,10 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                     </button>
                     <button
                       onClick={() => onDelete(employee.id)}
-                      className="p-2.5 text-gray-400 hover:text-red-600 hover:bg-red-100 rounded-xl transition-all duration-200 hover:scale-110 hover:shadow-md"
-                      title="Delete"
+                      className="p-2.5 text-gray-400 hover:text-red-600 hover:bg-red-100 rounded-xl transition-all duration-200 hover:scale-110 hover:shadow-md group"
+                      title="Hapus Karyawan"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="w-4 h-4 group-hover:animate-pulse" />
                     </button>
                   </div>
                 </td>
