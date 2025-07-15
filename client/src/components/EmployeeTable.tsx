@@ -1,5 +1,5 @@
-import React from 'react';
-import { Edit, Trash2, Eye, Users, Plus, UserPlus } from 'lucide-react';
+import React, { useState } from 'react';
+import { Edit, Trash2, Eye, Users, Plus, UserPlus, Grid3X3, List } from 'lucide-react';
 import { Employee } from '../types/Employee';
 
 interface EmployeeTableProps {
@@ -10,6 +10,8 @@ interface EmployeeTableProps {
 }
 
 export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeTableProps) {
+  const [viewMode, setViewMode] = useState<'card' | 'table'>('table');
+  
   const formatDate = (dateString: string) => {
     if (!dateString) return '-';
     return new Date(dateString).toLocaleDateString('id-ID');
@@ -45,8 +47,47 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
 
   return (
     <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-      {/* Mobile Card View */}
-      <div className="block lg:hidden">
+      {/* Header dengan Toggle View Mode */}
+      <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gradient-to-r from-slate-50 to-blue-50">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+            <Users className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h2 className="text-lg font-black text-gray-900">Data Karyawan</h2>
+            <p className="text-sm text-gray-600 font-semibold">{employees.length} karyawan</p>
+          </div>
+        </div>
+        
+        {/* Toggle View Mode */}
+        <div className="flex items-center space-x-2 bg-white rounded-lg p-1 shadow-sm border border-gray-200">
+          <button
+            onClick={() => setViewMode('card')}
+            className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+              viewMode === 'card'
+                ? 'bg-blue-500 text-white shadow-sm'
+                : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+            }`}
+          >
+            <Grid3X3 className="w-4 h-4 mr-2" />
+            Card
+          </button>
+          <button
+            onClick={() => setViewMode('table')}
+            className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+              viewMode === 'table'
+                ? 'bg-blue-500 text-white shadow-sm'
+                : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+            }`}
+          >
+            <List className="w-4 h-4 mr-2" />
+            Table
+          </button>
+        </div>
+      </div>
+
+      {/* Card View */}
+      <div className={viewMode === 'card' ? 'block' : 'hidden'}>
         <div className="divide-y divide-gray-100">
           {employees.map((employee) => (
             <div key={employee.id} className="p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200 border-l-4 border-transparent hover:border-blue-500">
@@ -95,8 +136,8 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
         </div>
       </div>
       
-      {/* Desktop Table View */}
-      <div className="hidden lg:block overflow-x-auto">
+      {/* Table View */}
+      <div className={`${viewMode === 'table' ? 'block' : 'hidden'} overflow-x-auto`}>
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gradient-to-r from-slate-50 to-blue-50">
             <tr>
