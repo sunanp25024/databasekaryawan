@@ -7,44 +7,71 @@ interface DashboardProps {
 }
 
 export function Dashboard({ employees }: DashboardProps) {
-  // Handle different status formats (Active/AKTIF, Resigned/RESIGN, etc)
+  // Debug: Log all unique status values
+  const uniqueStatusI = [...new Set(employees.map(emp => emp.statusI))];
+  const uniqueStatusII = [...new Set(employees.map(emp => emp.statusII))];
+  console.log('Unique Status I values:', uniqueStatusI);
+  console.log('Unique Status II values:', uniqueStatusII);
+  
+  // Normalize status function
+  const normalizeStatus = (status: string): string => {
+    if (!status) return '';
+    const normalized = status.toString().toUpperCase().trim();
+    
+    // Active variations
+    if (normalized.includes('AKTIF') || normalized.includes('ACTIVE')) return 'AKTIF';
+    
+    // Resign variations
+    if (normalized.includes('RESIGN') || normalized.includes('KELUAR') || normalized.includes('BERHENTI')) return 'RESIGN';
+    
+    // Terminated variations
+    if (normalized.includes('TERMINATED') || normalized.includes('TERMINATE') || normalized.includes('DIBERHENTIKAN')) return 'TERMINATED';
+    
+    return normalized;
+  };
+
+  // Handle different status formats with normalization
   const activeEmployees = employees.filter(emp => 
-    emp.statusI === 'Active' || emp.statusI === 'AKTIF' || emp.statusI === 'AKTIVE'
+    normalizeStatus(emp.statusI) === 'AKTIF'
   ).length;
   
   const resignedEmployees = employees.filter(emp => 
-    emp.statusI === 'Resigned' || emp.statusI === 'RESIGN' || emp.statusI === 'RESIGNED'
+    normalizeStatus(emp.statusI) === 'RESIGN'
+  ).length;
+  
+  const terminatedEmployees = employees.filter(emp => 
+    normalizeStatus(emp.statusI) === 'TERMINATED'
   ).length;
   
   const contractEmployees = employees.filter(emp => 
-    emp.statusII === 'Contract' || emp.statusII === 'CONTRACT'
+    normalizeStatus(emp.statusII).includes('CONTRACT') || normalizeStatus(emp.statusII).includes('KONTRAK')
   ).length;
   
   const permanentEmployees = employees.filter(emp => 
-    emp.statusII === 'Permanent' || emp.statusII === 'PERMANENT'
+    normalizeStatus(emp.statusII).includes('PERMANENT') || normalizeStatus(emp.statusII).includes('TETAP')
   ).length;
   
   const probationEmployees = employees.filter(emp => 
-    emp.statusII === 'Probation' || emp.statusII === 'PROBATION'
+    normalizeStatus(emp.statusII).includes('PROBATION') || normalizeStatus(emp.statusII).includes('PERCOBAAN')
   ).length;
   
   const uniqueClients = new Set(employees.map(emp => emp.klien)).size;
   const uniqueArea = new Set(employees.map(emp => emp.area).filter(area => area && area.trim() !== '')).size;
   
-  // More detailed breakdown
+  // More detailed breakdown - Only count active employees
   const activeContract = employees.filter(emp => 
-    (emp.statusI === 'Active' || emp.statusI === 'AKTIF' || emp.statusI === 'AKTIVE') && 
-    (emp.statusII === 'Contract' || emp.statusII === 'CONTRACT')
+    normalizeStatus(emp.statusI) === 'AKTIF' && 
+    (normalizeStatus(emp.statusII).includes('CONTRACT') || normalizeStatus(emp.statusII).includes('KONTRAK'))
   ).length;
   
   const activePermanent = employees.filter(emp => 
-    (emp.statusI === 'Active' || emp.statusI === 'AKTIF' || emp.statusI === 'AKTIVE') && 
-    (emp.statusII === 'Permanent' || emp.statusII === 'PERMANENT')
+    normalizeStatus(emp.statusI) === 'AKTIF' && 
+    (normalizeStatus(emp.statusII).includes('PERMANENT') || normalizeStatus(emp.statusII).includes('TETAP'))
   ).length;
   
   const activeProbation = employees.filter(emp => 
-    (emp.statusI === 'Active' || emp.statusI === 'AKTIF' || emp.statusI === 'AKTIVE') && 
-    (emp.statusII === 'Probation' || emp.statusII === 'PROBATION')
+    normalizeStatus(emp.statusI) === 'AKTIF' && 
+    (normalizeStatus(emp.statusII).includes('PROBATION') || normalizeStatus(emp.statusII).includes('PERCOBAAN'))
   ).length;
   
   const stats = [
@@ -79,6 +106,17 @@ export function Dashboard({ employees }: DashboardProps) {
       textColor: 'text-red-800',
       iconBg: 'bg-red-600',
       description: 'Sudah resign',
+      change: '+0%'
+    },
+    {
+      name: 'Terminated',
+      value: terminatedEmployees,
+      icon: UserX,
+      gradient: 'from-gray-600 to-gray-700',
+      bgGradient: 'from-gray-50 to-gray-100',
+      textColor: 'text-gray-800',
+      iconBg: 'bg-gray-600',
+      description: 'Diberhentikan',
       change: '+0%'
     },
     {
