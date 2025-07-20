@@ -1,4 +1,6 @@
 import { users, employees, type User, type InsertUser, type Employee, type InsertEmployee } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -64,8 +66,27 @@ export class MemStorage implements IStorage {
     const employee: Employee = { 
       ...employeeData, 
       id,
+      namaPic: employeeData.namaPic ?? null,
+      source: employeeData.source ?? null,
+      tglJoint: employeeData.tglJoint ?? null,
+      tglEoc: employeeData.tglEoc ?? null,
       statusI: employeeData.statusI ?? null,
       statusII: employeeData.statusII ?? null,
+      tglResign: employeeData.tglResign ?? null,
+      reasonResign: employeeData.reasonResign ?? null,
+      pkwt: employeeData.pkwt ?? null,
+      noPkwt: employeeData.noPkwt ?? null,
+      bpjsKetenagakerjaan: employeeData.bpjsKetenagakerjaan ?? null,
+      bpjsKesehatan: employeeData.bpjsKesehatan ?? null,
+      bank: employeeData.bank ?? null,
+      noRekening: employeeData.noRekening ?? null,
+      namaPenerima: employeeData.namaPenerima ?? null,
+      alamatEmail: employeeData.alamatEmail ?? null,
+      noTelp: employeeData.noTelp ?? null,
+      jenisKelamin: employeeData.jenisKelamin ?? null,
+      pendidikanTerakhir: employeeData.pendidikanTerakhir ?? null,
+      agama: employeeData.agama ?? null,
+      kontrakKe: employeeData.kontrakKe ?? 1,
       suratPeringatan: employeeData.suratPeringatan || []
     };
     this.employees.set(id, employee);
@@ -97,4 +118,76 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  // Employee methods
+  async getAllEmployees(): Promise<Employee[]> {
+    return await db.select().from(employees);
+  }
+
+  async getEmployeeById(id: string): Promise<Employee | undefined> {
+    const [employee] = await db.select().from(employees).where(eq(employees.id, id));
+    return employee || undefined;
+  }
+
+  async getEmployeeByNik(nik: string): Promise<Employee | undefined> {
+    const [employee] = await db.select().from(employees).where(eq(employees.nik, nik));
+    return employee || undefined;
+  }
+
+  async createEmployee(employeeData: Omit<InsertEmployee, 'id'>): Promise<Employee> {
+    const id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+    const [employee] = await db
+      .insert(employees)
+      .values({ ...employeeData, id })
+      .returning();
+    return employee;
+  }
+
+  async updateEmployee(id: string, updates: Partial<InsertEmployee>): Promise<Employee | undefined> {
+    const [employee] = await db
+      .update(employees)
+      .set(updates)
+      .where(eq(employees.id, id))
+      .returning();
+    return employee || undefined;
+  }
+
+  async deleteEmployee(id: string): Promise<boolean> {
+    const result = await db.delete(employees).where(eq(employees.id, id));
+    return (result.rowCount ?? 0) > 0;
+  }
+
+  async bulkCreateEmployees(employeesData: Omit<InsertEmployee, 'id'>[]): Promise<Employee[]> {
+    const employeesWithIds = employeesData.map(empData => ({
+      ...empData,
+      id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
+    }));
+    
+    const createdEmployees = await db
+      .insert(employees)
+      .values(employeesWithIds)
+      .returning();
+    
+    return createdEmployees;
+  }
+}
+
+export const storage = new DatabaseStorage();
