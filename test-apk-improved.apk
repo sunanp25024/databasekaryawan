@@ -1,0 +1,12 @@
+{
+  "manifest": {
+    "package": "com.swadata.app",
+    "versionCode": 1,
+    "versionName": "1.0.0",
+    "applicationLabel": "SWA DATA"
+  },
+  "webview": {
+    "url": "http://localhost:5000",
+    "title": "SWA DATA"
+  }
+}

@@ -25,10 +25,18 @@ export function APKDownloadButton() {
       });
 
       if (!response.ok) {
-        throw new Error('Gagal membuat APK');
+        const errorText = await response.text();
+        console.error('APK generation failed:', errorText);
+        throw new Error(`Gagal membuat APK: ${response.status} - ${errorText}`);
       }
 
       const blob = await response.blob();
+      console.log('APK blob size:', blob.size, 'bytes');
+      
+      if (blob.size < 1000) {
+        throw new Error('APK file terlalu kecil, kemungkinan tidak valid');
+      }
+      
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.style.display = 'none';
