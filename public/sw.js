@@ -124,8 +124,8 @@ self.addEventListener('sync', event => {
 self.addEventListener('push', event => {
   const options = {
     body: event.data ? event.data.text() : 'Notifikasi baru dari SWA DATA',
-    icon: '/icons/logo-swapro.png',
-    badge: '/icons/logo-swapro.png',
+    icon: '/swapro.png',
+    badge: '/swapro.png',
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
@@ -135,12 +135,12 @@ self.addEventListener('push', event => {
       {
         action: 'explore',
         title: 'Buka SWA DATA',
-        icon: '/icons/logo-swapro.png'
+        icon: '/swapro.png'
       },
       {
         action: 'close',
         title: 'Tutup',
-        icon: '/icons/logo-swapro.png'
+        icon: '/swapro.png'
       }
     ]
   };

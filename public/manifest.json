@@ -12,49 +12,49 @@
   "categories": ["business", "productivity"],
   "icons": [
     {
-      "src": "/icons/logo-swapro.png",
+      "src": "/swapro.png",
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icons/logo-swapro.png",
+      "src": "/swapro.png",
       "sizes": "96x96",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icons/logo-swapro.png",
+      "src": "/swapro.png",
       "sizes": "128x128",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icons/logo-swapro.png",
+      "src": "/swapro.png",
       "sizes": "144x144",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icons/logo-swapro.png",
+      "src": "/swapro.png",
       "sizes": "152x152",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icons/logo-swapro.png",
+      "src": "/swapro.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icons/logo-swapro.png",
+      "src": "/swapro.png",
       "sizes": "384x384",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icons/logo-swapro.png",
+      "src": "/swapro.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
@@ -68,7 +68,7 @@
       "url": "/?action=add",
       "icons": [
         {
-          "src": "/icons/logo-swapro.png",
+          "src": "/swapro.png",
           "sizes": "96x96"
         }
       ]
@@ -80,7 +80,7 @@
       "url": "/?view=dashboard",
       "icons": [
         {
-          "src": "/icons/logo-swapro.png",
+          "src": "/swapro.png",
           "sizes": "96x96"
         }
       ]

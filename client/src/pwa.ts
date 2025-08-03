@@ -27,9 +27,9 @@ class PWAManager {
     // Register service worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.register('/sw.js', { scope: '/' })
           .then((registration) => {
-            console.log('SW registered: ', registration);
+            console.log('SW registered successfully: ', registration.scope);
             
             // Check for updates
             registration.addEventListener('updatefound', () => {
