@@ -9,7 +9,10 @@
   "background_color": "#ff6b6b",
   "scope": "/",
   "lang": "id",
-  "categories": ["business", "productivity"],
+  "categories": [
+    "business",
+    "productivity"
+  ],
   "icons": [
     {
       "src": "/swapro.png",

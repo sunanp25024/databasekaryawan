@@ -25,9 +25,12 @@ class PWAManager {
 
   private init() {
     // Register service worker
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+        navigator.serviceWorker.register('/sw.js', { 
+          scope: '/',
+          updateViaCache: 'none'
+        })
           .then((registration) => {
             console.log('SW registered successfully: ', registration.scope);
             

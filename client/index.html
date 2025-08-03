@@ -376,7 +376,10 @@
             backdrop-filter: blur(2px);
           `;
           
-          document.querySelector('#app-loading').appendChild(bubble);
+          const loadingElement = document.querySelector('#app-loading');
+          if (loadingElement) {
+            loadingElement.appendChild(bubble);
+          }
           
           // Remove bubble after animation
           setTimeout(() => {

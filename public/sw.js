@@ -1,9 +1,9 @@
-const CACHE_NAME = 'swa-data-v1.0.0';
+const CACHE_NAME = 'swa-data-v1.1.0';
 const urlsToCache = [
   '/',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
+  '/index.html',
   '/manifest.json',
+  '/swapro.png',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png'
 ];
