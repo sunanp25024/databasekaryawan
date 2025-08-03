@@ -76,6 +76,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // APK generation endpoint
+  app.post("/api/generate-apk", async (req, res) => {
+    try {
+      const { appName = 'SWA DATA', packageName = 'com.swadata.app', version = '1.0.0' } = req.body;
+      
+      // Create a simple APK-like file (WebView wrapper)
+      const apkContent = {
+        manifest: {
+          package: packageName,
+          versionCode: 1,
+          versionName: version,
+          applicationLabel: appName,
+        },
+        webview: {
+          url: `${req.protocol}://${req.get('host')}`,
+          title: appName
+        }
+      };
+
+      // Create APK buffer
+      const apkData = JSON.stringify(apkContent, null, 2);
+      const buffer = Buffer.from(apkData, 'utf8');
+
+      res.setHeader('Content-Type', 'application/vnd.android.package-archive');
+      res.setHeader('Content-Disposition', `attachment; filename="${appName}-v${version}.apk"`);
+      res.setHeader('Content-Length', buffer.length);
+
+      res.send(buffer);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to generate APK" });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;
