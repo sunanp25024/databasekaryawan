@@ -7,8 +7,8 @@
     <!-- PWA Meta Tags -->
     <title>SWA DATA</title>
     <meta name="description" content="SWA DATA - Sistem Manajemen Data Karyawan yang mudah dan efisien" />
-    <meta name="theme-color" content="#1e3c72" />
-    <meta name="msapplication-TileColor" content="#1e3c72" />
+    <meta name="theme-color" content="#ff6b6b" />
+    <meta name="msapplication-TileColor" content="#ff6b6b" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="SWA DATA" />
@@ -313,15 +313,28 @@
       </style>
       
       <script>
-        // Loading text animation
+        // Enhanced loading animations
         const loadingTexts = [
           'Memuat aplikasi...',
-          'Menyiapkan data...',
-          'Menginisialisasi...',
+          'Menyiapkan database...',
+          'Menginisialisasi komponen...',
+          'Mengoptimalkan performa...',
           'Hampir selesai...'
         ];
+        
+        const titleTexts = [
+          'SWA DATA',
+          'S W A   D A T A',
+          'SWA_DATA',
+          '{ SWA DATA }',
+          'SWA DATA'
+        ];
+        
         let textIndex = 0;
+        let titleIndex = 0;
+        
         const loadingTextElement = document.getElementById('loading-text');
+        const titleElement = document.getElementById('main-title');
         
         function updateLoadingText() {
           if (loadingTextElement) {
@@ -330,59 +343,81 @@
           }
         }
         
-        // Update text every 1.5 seconds
-        const textInterval = setInterval(updateLoadingText, 1500);
-        
-        // Add random particles
-        function createParticle() {
-          const particle = document.createElement('div');
-          particle.style.cssText = `
-            position: absolute;
-            width: ${Math.random() * 4 + 2}px;
-            height: ${Math.random() * 4 + 2}px;
-            background: rgba(255, 255, 255, ${Math.random() * 0.5 + 0.3});
-            border-radius: 50%;
-            left: ${Math.random() * 100}%;
-            animation: particleFloat ${Math.random() * 10 + 8}s linear infinite;
-            pointer-events: none;
-          `;
-          
-          document.querySelector('#app-loading > div').appendChild(particle);
-          
-          // Remove particle after animation
-          setTimeout(() => {
-            if (particle.parentNode) {
-              particle.parentNode.removeChild(particle);
-            }
-          }, 18000);
+        function updateTitle() {
+          if (titleElement) {
+            titleElement.textContent = titleTexts[titleIndex];
+            titleIndex = (titleIndex + 1) % titleTexts.length;
+          }
         }
         
-        // Create particles periodically
-        const particleInterval = setInterval(createParticle, 800);
+        // Update text every 1.8 seconds
+        const textInterval = setInterval(updateLoadingText, 1800);
         
-        // Add particle animation styles
-        const style = document.createElement('style');
-        style.textContent = `
-          @keyframes particleFloat {
-            0% { 
-              transform: translateY(100vh) translateX(0) rotate(0deg); 
-              opacity: 0; 
+        // Update title every 3 seconds
+        const titleInterval = setInterval(updateTitle, 3000);
+        
+        // Create floating bubbles
+        function createBubble() {
+          const bubble = document.createElement('div');
+          const size = Math.random() * 15 + 5;
+          const colors = ['rgba(255,107,107,0.3)', 'rgba(78,205,196,0.3)', 'rgba(69,183,209,0.3)', 'rgba(150,206,180,0.3)', 'rgba(254,202,87,0.3)'];
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          
+          bubble.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            background: ${color};
+            border-radius: 50%;
+            left: ${Math.random() * 100}%;
+            bottom: -20px;
+            animation: bubbleFloat ${Math.random() * 8 + 6}s ease-out infinite;
+            pointer-events: none;
+            backdrop-filter: blur(2px);
+          `;
+          
+          document.querySelector('#app-loading').appendChild(bubble);
+          
+          // Remove bubble after animation
+          setTimeout(() => {
+            if (bubble.parentNode) {
+              bubble.parentNode.removeChild(bubble);
             }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
+          }, 14000);
+        }
+        
+        // Create bubbles periodically
+        const bubbleInterval = setInterval(createBubble, 600);
+        
+        // Add dynamic bubble animation
+        const bubbleStyle = document.createElement('style');
+        bubbleStyle.textContent = `
+          @keyframes bubbleFloat {
+            0% { 
+              transform: translateY(0px) translateX(0px) scale(0);
+              opacity: 0;
+            }
+            10% {
+              opacity: 1;
+              transform: scale(1);
+            }
+            90% {
+              opacity: 1;
+            }
             100% { 
-              transform: translateY(-10vh) translateX(${Math.random() * 200 - 100}px) rotate(360deg); 
-              opacity: 0; 
+              transform: translateY(-100vh) translateX(${Math.random() * 100 - 50}px) scale(0);
+              opacity: 0;
             }
           }
         `;
-        document.head.appendChild(style);
+        document.head.appendChild(bubbleStyle);
         
         // Clean up when app loads
         window.addEventListener('load', () => {
           setTimeout(() => {
             clearInterval(textInterval);
-            clearInterval(particleInterval);
+            clearInterval(titleInterval);
+            clearInterval(bubbleInterval);
           }, 1000);
         });
       </script>
