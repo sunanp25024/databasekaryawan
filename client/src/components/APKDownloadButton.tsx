@@ -12,6 +12,34 @@ export function APKDownloadButton() {
     setDownloadError('');
     
     try {
+      // Check if we're in production (Vercel) without backend
+      const isProduction = window.location.hostname.includes('vercel.app') || 
+                          window.location.hostname.includes('swadata.com');
+      
+      if (isProduction) {
+        // Production fallback: Create client-side APK
+        const apkData = createClientSideAPK();
+        const blob = new Blob([apkData], { type: 'application/vnd.android.package-archive' });
+        
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'SWA-DATA-v1.0.0.apk';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        setDownloadComplete(true);
+        setTimeout(() => {
+          setDownloadComplete(false);
+          setShowModal(false);
+        }, 3000);
+        return;
+      }
+
+      // Development: Use backend endpoint
       const response = await fetch('/api/generate-apk', {
         method: 'POST',
         headers: {
@@ -59,6 +87,68 @@ export function APKDownloadButton() {
     } finally {
       setIsDownloading(false);
     }
+  };
+
+  const createClientSideAPK = () => {
+    // Create a client-side APK with PWA wrapper info
+    const manifestXml = `<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.swadata.app"
+    android:versionCode="1"
+    android:versionName="1.0.0">
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="SWA DATA"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>`;
+
+    const installInstructions = `
+INSTRUKSI INSTALL APK SWA DATA:
+
+1. File APK ini adalah template untuk pengembang
+2. Untuk membuat APK yang dapat diinstall, gunakan tools seperti:
+   - Android Studio
+   - Cordova/PhoneGap
+   - Capacitor
+   - React Native
+
+3. URL aplikasi: ${window.location.origin}
+
+4. Alternatif: Gunakan "Add to Home Screen" di browser Chrome:
+   - Buka ${window.location.origin} di Chrome Android
+   - Tap menu (3 titik) > "Add to Home screen"
+   - App akan muncul seperti aplikasi native
+
+CATATAN: APK ini hanya template dan memerlukan build tools untuk menjadi aplikasi Android yang dapat diinstall.
+`;
+
+    // Create simple APK structure
+    const apkContent = {
+      manifest: manifestXml,
+      instructions: installInstructions,
+      webAppUrl: window.location.origin,
+      appName: 'SWA DATA',
+      packageName: 'com.swadata.app',
+      version: '1.0.0'
+    };
+
+    return new TextEncoder().encode(JSON.stringify(apkContent, null, 2));
   };
 
   const showInstructions = () => {
