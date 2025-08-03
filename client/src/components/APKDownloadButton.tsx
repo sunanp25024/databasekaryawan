@@ -154,17 +154,20 @@ CATATAN: APK ini hanya template dan memerlukan build tools untuk menjadi aplikas
   const showInstructions = () => {
     alert(`Cara Install APK SWA DATA:
 
-1. File APK sudah didownload ke perangkat Anda
-2. Buka file manager di Android  
+1. File APK sudah didownload ke perangkat Android Anda
+2. Buka file manager/File Manager di Android  
 3. Cari file "SWA-DATA-v1.0.0.apk" di folder Download
 4. Tap file APK untuk mulai install
-5. Jika muncul peringatan "Unknown Sources":
-   - Buka Settings > Security
-   - Aktifkan "Install Unknown Apps" atau "Unknown Sources"
-   - Kembali dan install APK
-6. Setelah install selesai, buka app "SWA DATA" dari home screen
 
-APK ini adalah wrapper PWA yang akan membuka aplikasi dalam webview native Android.`);
+5. JIKA MUNCUL PERINGATAN "Unknown Sources" atau "Install blocked":
+   Android 8+: Settings > Apps > Special access > Install unknown apps > Chrome/File Manager > Allow
+   Android 7-: Settings > Security > Unknown sources > Enable
+
+6. Tap "Install" pada dialog konfirmasi
+7. Setelah install selesai, buka app "SWA DATA" dari home screen
+8. App akan membuka PWA dalam WebView native Android
+
+CATATAN: APK ini berfungsi sebagai wrapper untuk mengakses website sebagai aplikasi native Android.`);
   };
 
   return (

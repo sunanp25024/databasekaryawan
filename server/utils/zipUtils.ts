@@ -123,17 +123,29 @@ export function createZipBuffer(entries: ZipEntry[]): Buffer {
 }
 
 function calculateCRC32(data: Buffer): number {
-  // Simplified CRC32 calculation - in production, use a proper CRC32 library
-  let crc = 0xFFFFFFFF;
-  for (let i = 0; i < data.length; i++) {
-    crc = crc ^ data[i];
-    for (let j = 0; j < 8; j++) {
-      if (crc & 1) {
-        crc = (crc >>> 1) ^ 0xEDB88320;
-      } else {
-        crc = crc >>> 1;
+  // Proper CRC32 calculation using the standard polynomial
+  const crcTable: number[] = [];
+  
+  // Generate CRC table if not already done
+  if (crcTable.length === 0) {
+    for (let i = 0; i < 256; i++) {
+      let crc = i;
+      for (let j = 0; j < 8; j++) {
+        if (crc & 1) {
+          crc = (crc >>> 1) ^ 0xEDB88320;
+        } else {
+          crc = crc >>> 1;
+        }
       }
+      crcTable[i] = crc;
     }
   }
+
+  let crc = 0xFFFFFFFF;
+  for (let i = 0; i < data.length; i++) {
+    const byte = data[i];
+    crc = crcTable[(crc ^ byte) & 0xFF] ^ (crc >>> 8);
+  }
+  
   return (crc ^ 0xFFFFFFFF) >>> 0;
 }
