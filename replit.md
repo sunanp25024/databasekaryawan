@@ -155,14 +155,6 @@ The current implementation supports both localStorage and Supabase database stor
 - ✅ **Consistent Status Format**: All forms and calculations use Indonesian status terms
 - ✅ **Debug Enhancement**: Added comprehensive status debugging for troubleshooting
 
-### Database Configuration
-- **Supabase URL**: https://smrcndetprrmonmzaogj.supabase.co
-- **Table**: employees with 30+ fields including JSONB for surat peringatan
-- **Security**: Row Level Security enabled with public access policy
-- **Features**: Auto-timestamps, indexed searches, real-time sync
-
-The application is designed to be easily deployed on Replit and Vercel with minimal configuration.
-
 ### Recent Updates (July 14, 2025 - Evening)
 - ✅ **Deployment Ready**: Application prepared for Vercel deployment
 - ✅ **Production Build**: Optimized build configuration for static hosting
@@ -171,12 +163,79 @@ The application is designed to be easily deployed on Replit and Vercel with mini
 - ✅ **Vercel Configuration**: Complete deployment guide and configuration files
 - ✅ **Documentation**: Added comprehensive deployment instructions
 
-### Recent Updates (August 3, 2025)
-- ✅ **PWA Conversion**: Complete Progressive Web App implementation
-- ✅ **Custom Branding**: Rebranded to "SWA DATA" with SWAPRO logo integration
-- ✅ **PWA Assets**: Manifest.json, service worker, and app icons using user's logo
-- ✅ **Loading Screen**: Beautiful gradient loading screen with SWAPRO logo animation
-- ✅ **Splash Screen**: Native app experience with custom branding
-- ✅ **Install Functionality**: Cross-platform PWA install prompts for mobile and desktop
-- ✅ **Offline Support**: Service worker caching for offline functionality
-- ✅ **PWA Status**: Visual indicators for PWA mode and connection status
+# SWA DATA - Employee Management System
+
+A comprehensive employee management system built with React, TypeScript, and PostgreSQL. Features real-time data synchronization, advanced filtering, and modern UI/UX design.
+
+## Features
+
+### 🎯 Core Functionality
+- **Employee Management**: Complete CRUD operations for employee data
+- **Advanced Filtering**: Filter by client, status, area, and custom criteria
+- **Real-time Search**: Instant search across all employee fields
+- **Data Import/Export**: Excel/CSV import and export capabilities
+- **Responsive Design**: Mobile-first design that works on all devices
+
+### 📊 Dashboard & Analytics
+- **Interactive Dashboard**: Real-time statistics and data visualization
+- **Employee Status Tracking**: Active, resigned, terminated status management
+- **Client-based Organization**: Multi-client support (ADIRA, MACF, SMSF)
+- **Area Management**: Geographic area-based employee organization
+
+### 🔐 Data Management
+- **PostgreSQL Database**: Robust data storage with Drizzle ORM
+- **Type Safety**: Full TypeScript implementation
+- **Data Validation**: Comprehensive input validation and error handling
+- **Backup & Recovery**: Automated data backup capabilities
+
+### 📱 Modern UI/UX
+- **Tailwind CSS**: Modern, responsive design system
+- **Progressive Web App**: PWA support for mobile installation
+- **Dark/Light Theme**: User preference-based theming
+- **Accessibility**: WCAG compliant interface design
+
+## Technical Stack
+
+### Frontend
+- **React 18**: Modern React with hooks and functional components
+- **TypeScript**: Full type safety and developer experience
+- **Tailwind CSS**: Utility-first CSS framework
+- **Vite**: Fast development and build tooling
+- **Lucide React**: Modern icon system
+
+### Backend
+- **Node.js**: Server-side JavaScript runtime
+- **Express.js**: Web application framework
+- **PostgreSQL**: Relational database
+- **Drizzle ORM**: Type-safe database operations
+
+### Development Tools
+- **ESLint**: Code linting and formatting
+- **Prettier**: Code formatting
+- **TypeScript**: Static type checking
+- **Hot Module Replacement**: Fast development iterations
+
+## Recent Updates
+
+### Latest Updates (January 2025)
+- ✅ **PostgreSQL Integration**: Migrated from memory storage to PostgreSQL
+- ✅ **Drizzle ORM Setup**: Type-safe database operations
+- ✅ **Full-stack TypeScript**: End-to-end type safety
+- ✅ **Database Performance**: Optimized queries and indexing
+- ✅ **Production Ready**: Deployment-ready configuration
+
+### Previous Updates (July 2025)
+- ✅ **Status Calculation Fix**: Fixed dashboard calculations for Indonesian status terms
+- ✅ **Status Normalization**: System properly recognizes AKTIF/RESIGN/TERMINATED
+- ✅ **Dashboard Enhancement**: Added breakdown showing active employees by contract type
+- ✅ **Total Area Counter**: Added unique area counter in dashboard statistics
+- ✅ **Consistent Status Format**: All forms and calculations use Indonesian status terms
+
+## Database Configuration
+- **Database**: PostgreSQL (Neon serverless or Replit integrated)
+- **ORM**: Drizzle ORM for type-safe database operations
+- **Schema**: Comprehensive employee and user schemas
+- **Security**: Proper data validation and sanitization
+- **Performance**: Indexed searches and optimized queries
+
+The application is designed to be easily deployed on Replit with minimal configuration.

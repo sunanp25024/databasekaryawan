@@ -86,179 +86,183 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
         </div>
       </div>
 
-      {/* Card View */}
+      {/* Card View dengan Scroll Container */}
       <div className={viewMode === 'card' ? 'block' : 'hidden'}>
-        <div className="divide-y divide-gray-100">
-          {employees.map((employee) => (
-            <div key={employee.id} className="p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200 border-l-4 border-transparent hover:border-blue-500">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-base font-black text-gray-900 truncate">{employee.namaKaryawan}</h3>
-                  <p className="text-sm text-gray-600 truncate font-bold">{employee.posisi}</p>
-                  <p className="text-sm text-gray-500 font-semibold">{employee.klien} • {employee.area}</p>
-                </div>
-                <div className="flex items-center space-x-2 ml-3">
-                  <button
-                    onClick={() => onView(employee)}
-                    className="p-2.5 text-gray-400 hover:text-blue-600 hover:bg-blue-100 rounded-xl transition-all duration-200 hover:scale-110"
-                    title="View Details"
-                  >
-                    <Eye className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => onEdit(employee)}
-                    className="p-2.5 text-gray-400 hover:text-green-600 hover:bg-green-100 rounded-xl transition-all duration-200 hover:scale-110"
-                    title="Edit"
-                  >
-                    <Edit className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => onDelete(employee.id)}
-                    className="p-2.5 text-gray-400 hover:text-red-600 hover:bg-red-100 rounded-xl transition-all duration-200 hover:scale-110 group"
-                    title="Hapus Karyawan"
-                  >
-                    <Trash2 className="w-4 h-4 group-hover:animate-pulse" />
-                  </button>
-                </div>
-              </div>
-              <div className="flex items-center space-x-2 mb-3">
-                <span className={getStatusBadge(employee.statusI, 'primary')}>{employee.statusI}</span>
-                <span className={getStatusBadge(employee.statusII, 'secondary')}>{employee.statusII}</span>
-              </div>
-              <div className="text-xs text-gray-500 space-y-1 font-medium">
-                <p>NIK: {employee.nik}</p>
-                <p className="truncate">Email: {employee.alamatEmail}</p>
-                <p>Phone: {employee.noTelp}</p>
-                <p>Join: {formatDate(employee.tglJoint)}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      {/* Table View */}
-      <div className={`${viewMode === 'table' ? 'block' : 'hidden'} overflow-x-auto`}>
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gradient-to-r from-slate-50 to-blue-50">
-            <tr>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider sticky left-0 bg-gradient-to-r from-slate-50 to-blue-50 z-20 border-r border-gray-200">No</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider border-r border-gray-100">Klien</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[120px]">Nama PIC</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Area</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Cabang</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[140px]">NIK</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[150px]">Nama Karyawan</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">Posisi</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Source</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[100px]">Tgl Joint</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[100px]">Tgl EOC</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Status I</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Status II</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[110px]">Tgl Resign</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">Reason Resign</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">PKWT</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[120px]">No PKWT</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[160px]">BPJS Ketenagakerjaan</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[140px]">BPJS Kesehatan</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Bank</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">No Rekening</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">Nama Penerima</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[180px]">Email</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">No Telp</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[100px]">Kontrak Ke</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[120px]">Jenis Kelamin</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[150px]">Pendidikan Terakhir</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[100px]">Agama</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[140px]">Surat Peringatan</th>
-              <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider sticky right-0 bg-gradient-to-r from-slate-50 to-blue-50 z-20 border-l border-gray-200">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-100">
-            {employees.map((employee, index) => (
-              <tr key={employee.id} className={`${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'} hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200 hover:shadow-sm`}>
-                <td className={`px-4 py-5 whitespace-nowrap text-sm font-black text-gray-900 sticky left-0 ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'} z-10 border-r border-gray-200 hover:bg-blue-50`}>{employee.no}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm font-bold text-gray-900">{employee.klien}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.namaPic}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.area}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.cabang}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">{employee.nik}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm font-black text-gray-900">{employee.namaKaryawan}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.posisi}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.source}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{formatDate(employee.tglJoint)}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{formatDate(employee.tglEoc)}</td>
-                <td className="px-4 py-5 whitespace-nowrap">
-                  <span className={getStatusBadge(employee.statusI, 'primary')}>{employee.statusI}</span>
-                </td>
-                <td className="px-4 py-5 whitespace-nowrap">
-                  <span className={getStatusBadge(employee.statusII, 'secondary')}>{employee.statusII}</span>
-                </td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{formatDate(employee.tglResign)}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.reasonResign || '-'}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.pkwt}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">{employee.noPkwt}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">{employee.bpjsKetenagakerjaan}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">{employee.bpjsKesehatan}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.bank}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">{employee.noRekening}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.namaPenerima}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.alamatEmail}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.noTelp}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-bold">{employee.kontrakKe}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.jenisKelamin}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.pendidikanTerakhir}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.agama}</td>
-                <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900">
-                  {employee.suratPeringatan && employee.suratPeringatan.length > 0 ? (
-                    <div className="flex flex-wrap gap-1">
-                      {employee.suratPeringatan.map((sp) => (
-                        <span
-                          key={sp.id}
-                          className={`px-3 py-1.5 rounded-full text-xs font-bold ${
-                            sp.type === 'SP1'
-                              ? 'bg-orange-100 text-orange-800 border border-orange-200'
-                              : sp.type === 'SP2'
-                              ? 'bg-red-100 text-red-800 border border-red-200'
-                              : 'bg-red-200 text-red-900 border border-red-300'
-                          }`}
-                        >
-                          {sp.type}
-                        </span>
-                      ))}
-                    </div>
-                  ) : (
-                    '-'
-                  )}
-                </td>
-                <td className={`px-4 py-5 whitespace-nowrap text-sm text-gray-500 sticky right-0 ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'} z-10 border-l border-gray-200 hover:bg-blue-50`}>
-                  <div className="flex items-center space-x-2">
+        <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400">
+          <div className="divide-y divide-gray-100">
+            {employees.map((employee) => (
+              <div key={employee.id} className="p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200 border-l-4 border-transparent hover:border-blue-500">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base font-black text-gray-900 truncate">{employee.namaKaryawan}</h3>
+                    <p className="text-sm text-gray-600 truncate font-bold">{employee.posisi}</p>
+                    <p className="text-sm text-gray-500 font-semibold">{employee.klien} • {employee.area}</p>
+                  </div>
+                  <div className="flex items-center space-x-2 ml-3">
                     <button
                       onClick={() => onView(employee)}
-                      className="p-2.5 text-gray-400 hover:text-blue-600 hover:bg-blue-100 rounded-xl transition-all duration-200 hover:scale-110 hover:shadow-md"
+                      className="p-2.5 text-gray-400 hover:text-blue-600 hover:bg-blue-100 rounded-xl transition-all duration-200 hover:scale-110"
                       title="View Details"
                     >
                       <Eye className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => onEdit(employee)}
-                      className="p-2.5 text-gray-400 hover:text-green-600 hover:bg-green-100 rounded-xl transition-all duration-200 hover:scale-110 hover:shadow-md"
+                      className="p-2.5 text-gray-400 hover:text-green-600 hover:bg-green-100 rounded-xl transition-all duration-200 hover:scale-110"
                       title="Edit"
                     >
                       <Edit className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => onDelete(employee.id)}
-                      className="p-2.5 text-gray-400 hover:text-red-600 hover:bg-red-100 rounded-xl transition-all duration-200 hover:scale-110 hover:shadow-md group"
+                      className="p-2.5 text-gray-400 hover:text-red-600 hover:bg-red-100 rounded-xl transition-all duration-200 hover:scale-110 group"
                       title="Hapus Karyawan"
                     >
                       <Trash2 className="w-4 h-4 group-hover:animate-pulse" />
                     </button>
                   </div>
-                </td>
-              </tr>
+                </div>
+                <div className="flex items-center space-x-2 mb-3">
+                  <span className={getStatusBadge(employee.statusI, 'primary')}>{employee.statusI}</span>
+                  <span className={getStatusBadge(employee.statusII, 'secondary')}>{employee.statusII}</span>
+                </div>
+                <div className="text-xs text-gray-500 space-y-1 font-medium">
+                  <p>NIK: {employee.nik}</p>
+                  <p className="truncate">Email: {employee.alamatEmail}</p>
+                  <p>Phone: {employee.noTelp}</p>
+                  <p>Join: {formatDate(employee.tglJoint)}</p>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </div>
+      </div>
+      
+      {/* Table View dengan Scroll Container */}
+      <div className={`${viewMode === 'table' ? 'block' : 'hidden'}`}>
+        <div className="max-h-[600px] overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gradient-to-r from-slate-50 to-blue-50 sticky top-0 z-10">
+              <tr>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider sticky left-0 bg-gradient-to-r from-slate-50 to-blue-50 z-20 border-r border-gray-200">No</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider border-r border-gray-100">Klien</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[120px]">Nama PIC</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Area</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Cabang</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[140px]">NIK</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[150px]">Nama Karyawan</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">Posisi</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Source</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[100px]">Tgl Joint</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[100px]">Tgl EOC</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Status I</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Status II</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[110px]">Tgl Resign</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">Reason Resign</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">PKWT</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[120px]">No PKWT</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[160px]">BPJS Ketenagakerjaan</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[140px]">BPJS Kesehatan</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider">Bank</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">No Rekening</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">Nama Penerima</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[180px]">Email</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[130px]">No Telp</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[100px]">Kontrak Ke</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[120px]">Jenis Kelamin</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[150px]">Pendidikan Terakhir</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[100px]">Agama</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider min-w-[140px]">Surat Peringatan</th>
+                <th className="px-4 py-3 text-left text-xs font-black text-gray-700 uppercase tracking-wider sticky right-0 bg-gradient-to-r from-slate-50 to-blue-50 z-20 border-l border-gray-200">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-100">
+              {employees.map((employee, index) => (
+                <tr key={employee.id} className={`${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'} hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200 hover:shadow-sm`}>
+                  <td className={`px-4 py-5 whitespace-nowrap text-sm font-black text-gray-900 sticky left-0 ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'} z-10 border-r border-gray-200 hover:bg-blue-50`}>{employee.no}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm font-bold text-gray-900">{employee.klien}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.namaPic}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.area}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.cabang}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">{employee.nik}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm font-black text-gray-900">{employee.namaKaryawan}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.posisi}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.source}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{formatDate(employee.tglJoint)}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{formatDate(employee.tglEoc)}</td>
+                  <td className="px-4 py-5 whitespace-nowrap">
+                    <span className={getStatusBadge(employee.statusI, 'primary')}>{employee.statusI}</span>
+                  </td>
+                  <td className="px-4 py-5 whitespace-nowrap">
+                    <span className={getStatusBadge(employee.statusII, 'secondary')}>{employee.statusII}</span>
+                  </td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{formatDate(employee.tglResign)}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.reasonResign || '-'}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.pkwt}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">{employee.noPkwt}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">{employee.bpjsKetenagakerjaan}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">{employee.bpjsKesehatan}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.bank}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-mono font-semibold">{employee.noRekening}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.namaPenerima}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.alamatEmail}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.noTelp}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-bold">{employee.kontrakKe}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.jenisKelamin}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.pendidikanTerakhir}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900 font-semibold">{employee.agama}</td>
+                  <td className="px-4 py-5 whitespace-nowrap text-sm text-gray-900">
+                    {employee.suratPeringatan && employee.suratPeringatan.length > 0 ? (
+                      <div className="flex flex-wrap gap-1">
+                        {employee.suratPeringatan.map((sp: any) => (
+                          <span
+                            key={sp.id}
+                            className={`px-3 py-1.5 rounded-full text-xs font-bold ${
+                              sp.type === 'SP1'
+                                ? 'bg-orange-100 text-orange-800 border border-orange-200'
+                                : sp.type === 'SP2'
+                                ? 'bg-red-100 text-red-800 border border-red-200'
+                                : 'bg-red-200 text-red-900 border border-red-300'
+                            }`}
+                          >
+                            {sp.type}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <span className="text-gray-400">-</span>
+                    )}
+                  </td>
+                  <td className={`px-4 py-5 whitespace-nowrap text-sm font-medium sticky right-0 ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'} z-10 border-l border-gray-200 hover:bg-blue-50`}>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => onView(employee)}
+                        className="p-2.5 text-gray-400 hover:text-blue-600 hover:bg-blue-100 rounded-xl transition-all duration-200 hover:scale-110"
+                        title="View Details"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => onEdit(employee)}
+                        className="p-2.5 text-gray-400 hover:text-green-600 hover:bg-green-100 rounded-xl transition-all duration-200 hover:scale-110"
+                        title="Edit"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => onDelete(employee.id)}
+                        className="p-2.5 text-gray-400 hover:text-red-600 hover:bg-red-100 rounded-xl transition-all duration-200 hover:scale-110 group"
+                        title="Hapus Karyawan"
+                      >
+                        <Trash2 className="w-4 h-4 group-hover:animate-pulse" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       
       {employees.length === 0 && (
