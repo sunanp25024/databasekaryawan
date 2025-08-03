@@ -8,7 +8,6 @@ import { EmployeeForm } from './components/EmployeeForm';
 import { EmployeeDetail } from './components/EmployeeDetail';
 import { PWAInstallButton } from './components/PWAInstallButton';
 import { PWAStatus } from './components/PWAStatus';
-import { APKDownloadButton } from './components/APKDownloadButton';
 import { Employee, FilterOptions } from './types/Employee';
 import { mockEmployees } from './data/mockData';
 import { useLocalStorage } from './hooks/useLocalStorage';
@@ -723,7 +722,6 @@ function App() {
       {/* PWA Components */}
       <PWAStatus />
       <PWAInstallButton />
-      <APKDownloadButton />
     </div>
   );
 }
