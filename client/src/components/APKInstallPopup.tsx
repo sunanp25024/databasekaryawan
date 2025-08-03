@@ -8,13 +8,13 @@ export function APKInstallPopup() {
   const [downloadError, setDownloadError] = useState('');
 
   useEffect(() => {
-    // Show popup after 3 seconds if not on mobile PWA
+    // Show popup after 3 seconds for testing (remove mobile check for now)
     const timer = setTimeout(() => {
       const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
                            (window.navigator as any).standalone === true;
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       
-      if (!isStandalone && isMobile) {
+      if (!isStandalone) {
+        console.log('APK: Showing install popup for testing');
         setShowPopup(true);
       }
     }, 3000);
