@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertEmployeeSchema } from "@shared/schema";
 import { createZipBuffer, type ZipEntry } from "./utils/zipUtils";
+import { createSimpleValidAPK } from "./utils/simpleAPK";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Employee routes
@@ -267,8 +268,12 @@ public class MainActivity extends Activity {
         }
       ];
 
-      // Create ZIP buffer (APK is essentially a ZIP file)
-      const apkBuffer = createZipBuffer(apkEntries);
+      // Create simple valid APK
+      const apkBuffer = createSimpleValidAPK(
+        appName, 
+        packageName, 
+        `${req.protocol}://${req.get('host')}`
+      );
 
       res.setHeader('Content-Type', 'application/vnd.android.package-archive');
       res.setHeader('Content-Disposition', `attachment; filename="${appName.replace(/\s+/g, '-')}-v${version}.apk"`);
@@ -289,53 +294,130 @@ public class MainActivity extends Activity {
 
   // Helper function to create simple DEX file
   function createSimpleDex(): Buffer {
-    // DEX file header with more realistic content
-    const dexHeader = Buffer.alloc(1024); // Larger DEX file
+    // Create minimal valid DEX file
+    const dexSize = 1024;
+    const dexHeader = Buffer.alloc(dexSize);
     
-    // DEX magic number
+    // DEX magic and version
     dexHeader.write('dex\n035\0', 0, 'ascii');
-    // Checksum (placeholder)
-    dexHeader.writeUInt32LE(0x12345678, 8);
-    // SHA-1 signature (20 bytes of dummy data)
-    for (let i = 12; i < 32; i++) {
-      dexHeader[i] = Math.floor(Math.random() * 256);
-    }
+    
+    // Adler32 checksum (simplified)
+    dexHeader.writeUInt32LE(0x87654321, 8);
+    
+    // SHA-1 signature (20 bytes)
+    const sha1 = Buffer.from('0123456789abcdef0123456789abcdef01234567', 'hex');
+    sha1.copy(dexHeader, 12);
+    
     // File size
-    dexHeader.writeUInt32LE(1024, 32);
-    // Header size
+    dexHeader.writeUInt32LE(dexSize, 32);
+    
+    // Header size (standard DEX header is 112 bytes)
     dexHeader.writeUInt32LE(112, 36);
+    
     // Endian tag
     dexHeader.writeUInt32LE(0x12345678, 40);
     
-    // Fill rest with dummy bytecode
-    for (let i = 112; i < 1024; i++) {
-      dexHeader[i] = Math.floor(Math.random() * 256);
-    }
+    // Link size and offset
+    dexHeader.writeUInt32LE(0, 44);
+    dexHeader.writeUInt32LE(0, 48);
+    
+    // Map offset (point to end of file)
+    dexHeader.writeUInt32LE(dexSize - 12, 52);
+    
+    // String IDs section
+    dexHeader.writeUInt32LE(0, 56); // count
+    dexHeader.writeUInt32LE(0, 60); // offset
+    
+    // Type IDs section  
+    dexHeader.writeUInt32LE(0, 64); // count
+    dexHeader.writeUInt32LE(0, 68); // offset
+    
+    // Proto IDs section
+    dexHeader.writeUInt32LE(0, 72); // count
+    dexHeader.writeUInt32LE(0, 76); // offset
+    
+    // Field IDs section
+    dexHeader.writeUInt32LE(0, 80); // count
+    dexHeader.writeUInt32LE(0, 84); // offset
+    
+    // Method IDs section
+    dexHeader.writeUInt32LE(0, 88); // count
+    dexHeader.writeUInt32LE(0, 92); // offset
+    
+    // Class defs section
+    dexHeader.writeUInt32LE(0, 96); // count
+    dexHeader.writeUInt32LE(0, 100); // offset
+    
+    // Data section
+    dexHeader.writeUInt32LE(dexSize - 112, 104); // size
+    dexHeader.writeUInt32LE(112, 108); // offset
+    
+    // Simple map list at the end
+    const mapOffset = dexSize - 12;
+    dexHeader.writeUInt32LE(1, mapOffset); // size
+    dexHeader.writeUInt16LE(0x1000, mapOffset + 4); // type (header)
+    dexHeader.writeUInt16LE(0, mapOffset + 6); // unused
+    dexHeader.writeUInt32LE(1, mapOffset + 8); // size
     
     return dexHeader;
   }
 
   // Helper function to create simple resources
   function createSimpleResources(): Buffer {
-    // Create a more realistic ARSC file structure
-    const arsc = Buffer.alloc(2048);
-    arsc.write('ARSC', 0, 'ascii'); // Resource table header
+    // Create minimal valid ARSC (Android Resource) file
+    const arscSize = 512;
+    const arsc = Buffer.alloc(arscSize);
     
-    // Fill with dummy resource data
-    for (let i = 4; i < 2048; i++) {
-      arsc[i] = Math.floor(Math.random() * 256);
-    }
+    // Resource table type
+    arsc.writeUInt16LE(0x0002, 0); // RES_TABLE_TYPE
+    arsc.writeUInt16LE(12, 2); // Header size
+    arsc.writeUInt32LE(arscSize, 4); // Chunk size
+    arsc.writeUInt32LE(1, 8); // Package count
+    
+    // String pool chunk (minimal)
+    const stringPoolOffset = 12;
+    arsc.writeUInt16LE(0x0001, stringPoolOffset); // RES_STRING_POOL_TYPE
+    arsc.writeUInt16LE(28, stringPoolOffset + 2); // Header size
+    arsc.writeUInt32LE(100, stringPoolOffset + 4); // Chunk size
+    arsc.writeUInt32LE(2, stringPoolOffset + 8); // String count
+    arsc.writeUInt32LE(2, stringPoolOffset + 12); // Style count
+    arsc.writeUInt32LE(0, stringPoolOffset + 16); // Flags
+    arsc.writeUInt32LE(36, stringPoolOffset + 20); // Strings start
+    arsc.writeUInt32LE(60, stringPoolOffset + 24); // Styles start
+    
+    // String offsets
+    arsc.writeUInt32LE(0, stringPoolOffset + 28); // First string offset
+    arsc.writeUInt32LE(10, stringPoolOffset + 32); // Second string offset
+    
+    // Strings data ("app_name" and "SWA DATA")
+    arsc.write('app_name\0', stringPoolOffset + 36, 'utf8');
+    arsc.write('SWA DATA\0', stringPoolOffset + 46, 'utf8');
     
     return arsc;
   }
 
   // Helper function to create dummy signature
   function createDummySignature(): Buffer {
-    const signature = Buffer.alloc(1024);
-    // Fill with dummy signature data
-    for (let i = 0; i < 1024; i++) {
+    // Create minimal PKCS#7 signature structure
+    const sigSize = 256;
+    const signature = Buffer.alloc(sigSize);
+    
+    // PKCS#7 ContentInfo structure (simplified)
+    signature[0] = 0x30; // SEQUENCE
+    signature[1] = 0x82; // Length (long form)
+    signature[2] = (sigSize - 4) >> 8; // Length high byte
+    signature[3] = (sigSize - 4) & 0xFF; // Length low byte
+    
+    // ContentType OID for signed data
+    signature[4] = 0x06; // OBJECT IDENTIFIER  
+    signature[5] = 0x09; // Length
+    signature.write('\x2a\x86\x48\x86\xf7\x0d\x01\x07\x02', 6, 'binary'); // signedData OID
+    
+    // Fill rest with dummy signature data
+    for (let i = 15; i < sigSize; i++) {
       signature[i] = Math.floor(Math.random() * 256);
     }
+    
     return signature;
   }
 
