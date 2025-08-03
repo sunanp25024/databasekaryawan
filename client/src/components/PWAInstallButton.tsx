@@ -43,13 +43,25 @@ export function PWAInstallButton() {
     // Check if already installed
     if (window.matchMedia('(display-mode: standalone)').matches) {
       setIsInstalled(true);
+      return;
     }
 
+    // Check if user already dismissed install popup today
+    const dismissedToday = localStorage.getItem('pwa-install-dismissed');
+    const today = new Date().toDateString();
+    
     // Listen for beforeinstallprompt event (Chrome/Edge)
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
       setDeferredPrompt(e);
       setShowInstallPrompt(true);
+      
+      // Auto-show popup if not dismissed today
+      if (dismissedToday !== today) {
+        setTimeout(() => {
+          setShowModal(true);
+        }, 2000); // Show popup after 2 seconds
+      }
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -59,7 +71,15 @@ export function PWAInstallButton() {
       setIsInstalled(true);
       setShowInstallPrompt(false);
       setDeferredPrompt(null);
+      setShowModal(false);
     });
+
+    // For iOS/Safari - show popup after delay if not dismissed
+    if (isIOS && dismissedToday !== today) {
+      setTimeout(() => {
+        setShowModal(true);
+      }, 3000);
+    }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -69,19 +89,31 @@ export function PWAInstallButton() {
   const handleInstallClick = async () => {
     if (deferredPrompt) {
       // Chrome/Edge - use native install prompt
-      deferredPrompt.prompt();
-      const choiceResult = await deferredPrompt.userChoice;
-      
-      if (choiceResult.outcome === 'accepted') {
-        setIsInstalled(true);
-        setShowInstallPrompt(false);
+      try {
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        
+        if (choiceResult.outcome === 'accepted') {
+          setIsInstalled(true);
+          setShowInstallPrompt(false);
+          setShowModal(false);
+        }
+        
+        setDeferredPrompt(null);
+      } catch (error) {
+        console.log('Install prompt failed:', error);
       }
-      
-      setDeferredPrompt(null);
     } else {
-      // Show manual instructions
+      // For browsers without install prompt, show instructions
       setShowModal(true);
     }
+  };
+
+  const handleDismiss = () => {
+    setShowModal(false);
+    // Remember user dismissed popup for today
+    const today = new Date().toDateString();
+    localStorage.setItem('pwa-install-dismissed', today);
   };
 
   const getInstallInstructions = () => {
@@ -148,88 +180,56 @@ export function PWAInstallButton() {
         <Plus className="w-6 h-6" />
       </button>
 
-      {/* Install Instructions Modal */}
+      {/* Auto Install Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-sm w-full p-6">
             {/* Header */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-green-600 rounded-xl flex items-center justify-center text-white">
-                  {instructions.icon}
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-                    Install SWA DATA
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Akses seperti aplikasi native
-                  </p>
-                </div>
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-green-600 rounded-full flex items-center justify-center text-white mx-auto mb-4">
+                <Download className="w-8 h-8" />
               </div>
-              <button
-                onClick={() => setShowModal(false)}
-                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Instructions */}
-            <div className="mb-6">
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-                {instructions.title}
-              </h4>
-              
-              <div className="space-y-3">
-                {instructions.steps.map((step, index) => (
-                  <div key={index} className="flex items-start space-x-3">
-                    <div className="w-6 h-6 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full flex items-center justify-center text-sm font-semibold flex-shrink-0 mt-0.5">
-                      {index + 1}
-                    </div>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                      {step.replace(/^\d+\.\s*/, '')}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Benefits */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-6">
-              <div className="flex items-center space-x-2 mb-2">
-                <Info className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                <h5 className="text-sm font-semibold text-blue-900 dark:text-blue-100">
-                  Keuntungan Install PWA:
-                </h5>
-              </div>
-              <ul className="text-xs text-blue-800 dark:text-blue-200 space-y-1">
-                <li>• Akses cepat dari home screen</li>
-                <li>• Bekerja offline (sebagian fitur)</li>
-                <li>• Tampilan full screen seperti app native</li>
-                <li>• Tidak memakan storage banyak</li>
-                <li>• Update otomatis saat buka internet</li>
-              </ul>
-            </div>
-
-            {/* Device-specific tip */}
-            <div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-3">
-              <p className="text-xs text-amber-800 dark:text-amber-200">
-                <strong>Tip:</strong> {deviceInfo.isIOS ? 
-                  "Pastikan menggunakan Safari browser untuk install di iOS" :
-                  deviceInfo.isAndroid ?
-                  "Gunakan Chrome browser untuk install terbaik di Android" :
-                  "Chrome atau Edge memberikan pengalaman install terbaik"
-                }
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                Install SWA DATA
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Akses aplikasi seperti app native di home screen
               </p>
             </div>
 
-            {/* Close button */}
+            {/* Install Button */}
+            {deferredPrompt ? (
+              <button
+                onClick={handleInstallClick}
+                className="w-full bg-gradient-to-r from-blue-500 to-green-600 text-white py-4 rounded-lg font-semibold hover:from-blue-600 hover:to-green-700 transition-all duration-200 mb-3"
+              >
+                Install Sekarang
+              </button>
+            ) : (
+              <div className="text-center mb-4">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  {deviceInfo.isIOS ? 
+                    "Di Safari: Tap Share > Add to Home Screen" :
+                    deviceInfo.isAndroid ?
+                    "Di Chrome: Menu (⋮) > Add to Home screen" :
+                    "Di Chrome: Klik icon Install di address bar"
+                  }
+                </p>
+                <button
+                  onClick={handleInstallClick}
+                  className="w-full bg-gradient-to-r from-blue-500 to-green-600 text-white py-4 rounded-lg font-semibold hover:from-blue-600 hover:to-green-700 transition-all duration-200 mb-3"
+                >
+                  Lihat Cara Install
+                </button>
+              </div>
+            )}
+
+            {/* Dismiss Button */}
             <button
-              onClick={() => setShowModal(false)}
-              className="w-full mt-6 bg-gradient-to-r from-blue-500 to-green-600 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-green-700 transition-all duration-200"
+              onClick={handleDismiss}
+              className="w-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-3 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-200"
             >
-              Mengerti, Saya Akan Install
+              Nanti Saja
             </button>
           </div>
         </div>
