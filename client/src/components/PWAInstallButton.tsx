@@ -74,11 +74,11 @@ export function PWAInstallButton() {
       setShowModal(false);
     });
 
-    // For iOS/Safari - show popup after delay if not dismissed
-    if (isIOS && dismissedToday !== today) {
+    // Show popup automatically for all devices if not dismissed today
+    if (!isInstalled && dismissedToday !== today) {
       setTimeout(() => {
         setShowModal(true);
-      }, 3000);
+      }, 2500);
     }
 
     return () => {

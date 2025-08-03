@@ -2,7 +2,7 @@
   "name": "SWA DATA",
   "short_name": "SWA DATA",
   "description": "SWA DATA - Sistem Manajemen Data Karyawan",
-  "start_url": "/",
+  "start_url": "/?source=pwa",
   "display": "standalone",
   "orientation": "portrait-primary",
   "theme_color": "#ff6b6b",
