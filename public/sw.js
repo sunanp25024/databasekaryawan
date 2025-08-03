@@ -1,4 +1,4 @@
-const CACHE_NAME = 'employee-management-v1.0.0';
+const CACHE_NAME = 'swa-data-v1.0.0';
 const urlsToCache = [
   '/',
   '/static/js/bundle.js',
@@ -123,9 +123,9 @@ self.addEventListener('sync', event => {
 // Push notifications (optional for future use)
 self.addEventListener('push', event => {
   const options = {
-    body: event.data ? event.data.text() : 'Notifikasi baru dari Employee Management',
-    icon: '/icons/icon-192x192.png',
-    badge: '/icons/icon-72x72.png',
+    body: event.data ? event.data.text() : 'Notifikasi baru dari SWA DATA',
+    icon: '/icons/logo-swapro.png',
+    badge: '/icons/logo-swapro.png',
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
@@ -134,19 +134,19 @@ self.addEventListener('push', event => {
     actions: [
       {
         action: 'explore',
-        title: 'Buka Aplikasi',
-        icon: '/icons/icon-192x192.png'
+        title: 'Buka SWA DATA',
+        icon: '/icons/logo-swapro.png'
       },
       {
         action: 'close',
         title: 'Tutup',
-        icon: '/icons/icon-192x192.png'
+        icon: '/icons/logo-swapro.png'
       }
     ]
   };
 
   event.waitUntil(
-    self.registration.showNotification('Employee Management', options)
+    self.registration.showNotification('SWA DATA', options)
   );
 });
 

@@ -67,10 +67,10 @@ export function PWAInstallButton() {
     <button
       onClick={handleInstall}
       className="fixed bottom-4 right-4 z-50 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg shadow-lg flex items-center space-x-2 transition-all duration-200 hover:scale-105 font-medium animate-bounce"
-      title="Install App"
+      title="Install SWA DATA"
     >
       <Smartphone className="w-5 h-5" />
-      <span className="hidden sm:inline">Install App</span>
+      <span className="hidden sm:inline">Install SWA DATA</span>
       <Download className="w-4 h-4" />
     </button>
   );

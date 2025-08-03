@@ -45,7 +45,7 @@ export function PWAStatus() {
         </>
       )}
       
-      {isOnline && (
+      {isOnline && !isPWA && (
         <>
           <Wifi className="w-4 h-4 text-green-600" />
           <span className="text-green-600 font-medium">Online</span>

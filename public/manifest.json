@@ -1,7 +1,7 @@
 {
-  "name": "Employee Management System",
-  "short_name": "EMS",
-  "description": "Sistem Manajemen Karyawan - Kelola data karyawan dengan mudah",
+  "name": "SWA DATA",
+  "short_name": "SWA DATA",
+  "description": "SWA DATA - Sistem Manajemen Data Karyawan",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -12,63 +12,63 @@
   "categories": ["business", "productivity"],
   "icons": [
     {
-      "src": "/icons/icon-72x72.png",
+      "src": "/icons/logo-swapro.png",
       "sizes": "72x72",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-96x96.png",
+      "src": "/icons/logo-swapro.png",
       "sizes": "96x96",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-128x128.png",
+      "src": "/icons/logo-swapro.png",
       "sizes": "128x128",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-144x144.png",
+      "src": "/icons/logo-swapro.png",
       "sizes": "144x144",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-152x152.png",
+      "src": "/icons/logo-swapro.png",
       "sizes": "152x152",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-192x192.png",
+      "src": "/icons/logo-swapro.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-384x384.png",
+      "src": "/icons/logo-swapro.png",
       "sizes": "384x384",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-512x512.png",
+      "src": "/icons/logo-swapro.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "any"
     }
   ],
   "shortcuts": [
     {
-      "name": "Tambah Karyawan",
+      "name": "Tambah Data",
       "short_name": "Tambah",
-      "description": "Tambah karyawan baru",
+      "description": "Tambah data karyawan baru",
       "url": "/?action=add",
       "icons": [
         {
-          "src": "/icons/icon-96x96.png",
+          "src": "/icons/logo-swapro.png",
           "sizes": "96x96"
         }
       ]
@@ -76,11 +76,11 @@
     {
       "name": "Dashboard",
       "short_name": "Dashboard",
-      "description": "Lihat statistik karyawan",
+      "description": "Lihat statistik data karyawan",
       "url": "/?view=dashboard",
       "icons": [
         {
-          "src": "/icons/icon-96x96.png",
+          "src": "/icons/logo-swapro.png",
           "sizes": "96x96"
         }
       ]
