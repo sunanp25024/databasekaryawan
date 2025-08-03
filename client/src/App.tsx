@@ -6,6 +6,8 @@ import { FilterBar } from './components/FilterBar';
 import { EmployeeTable } from './components/EmployeeTable';
 import { EmployeeForm } from './components/EmployeeForm';
 import { EmployeeDetail } from './components/EmployeeDetail';
+import { PWAInstallButton } from './components/PWAInstallButton';
+import { PWAStatus } from './components/PWAStatus';
 import { Employee, FilterOptions } from './types/Employee';
 import { mockEmployees } from './data/mockData';
 import { useLocalStorage } from './hooks/useLocalStorage';
@@ -716,6 +718,10 @@ function App() {
           onClose={() => setViewingEmployee(undefined)}
         />
       )}
+
+      {/* PWA Components */}
+      <PWAStatus />
+      <PWAInstallButton />
     </div>
   );
 }
