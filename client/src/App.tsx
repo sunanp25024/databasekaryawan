@@ -6,7 +6,7 @@ import { FilterBar } from './components/FilterBar';
 import { EmployeeTable } from './components/EmployeeTable';
 import { EmployeeForm } from './components/EmployeeForm';
 import { EmployeeDetail } from './components/EmployeeDetail';
-import { PWAInstallButton } from './components/PWAInstallButton';
+import { PWAInstall } from './components/PWAInstall';
 import { PWAStatus } from './components/PWAStatus';
 import { Employee, FilterOptions } from './types/Employee';
 import { mockEmployees } from './data/mockData';
@@ -721,7 +721,7 @@ function App() {
 
       {/* PWA Components */}
       <PWAStatus />
-      <PWAInstallButton />
+      <PWAInstall />
     </div>
   );
 }

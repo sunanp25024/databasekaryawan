@@ -76,9 +76,13 @@ export function PWAInstallButton() {
 
     // Show popup automatically for all devices if not dismissed today
     if (!isInstalled && dismissedToday !== today) {
-      setTimeout(() => {
+      // Show popup after 2.5 seconds for auto-prompt
+      const timer = setTimeout(() => {
+        console.log('Showing auto PWA install popup');
         setShowModal(true);
       }, 2500);
+      
+      return () => clearTimeout(timer);
     }
 
     return () => {
@@ -203,24 +207,23 @@ export function PWAInstallButton() {
                 onClick={handleInstallClick}
                 className="w-full bg-gradient-to-r from-blue-500 to-green-600 text-white py-4 rounded-lg font-semibold hover:from-blue-600 hover:to-green-700 transition-all duration-200 mb-3"
               >
-                Install Sekarang
+                📱 Install PWA Sekarang
               </button>
             ) : (
               <div className="text-center mb-4">
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                   {deviceInfo.isIOS ? 
-                    "Di Safari: Tap Share > Add to Home Screen" :
+                    "📱 Safari: Share > Add to Home Screen" :
                     deviceInfo.isAndroid ?
-                    "Di Chrome: Menu (⋮) > Add to Home screen" :
-                    "Di Chrome: Klik icon Install di address bar"
+                    "📱 Chrome: Menu (⋮) > Add to Home screen" :
+                    "📱 Chrome: Install button di address bar"
                   }
                 </p>
-                <button
-                  onClick={handleInstallClick}
-                  className="w-full bg-gradient-to-r from-blue-500 to-green-600 text-white py-4 rounded-lg font-semibold hover:from-blue-600 hover:to-green-700 transition-all duration-200 mb-3"
-                >
-                  Lihat Cara Install
-                </button>
+                <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg mb-3">
+                  <p className="text-xs text-yellow-800 dark:text-yellow-200">
+                    💡 Setelah install, aplikasi akan muncul di home screen seperti app biasa!
+                  </p>
+                </div>
               </div>
             )}
 
