@@ -1,12 +1,19 @@
-const CACHE_NAME = 'swapro-pwa-v3.0.0';
+const CACHE_NAME = 'swapro-pwa-v4.0.0';
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/app-icon-72.png',
+  '/app-icon-96.png',
+  '/app-icon-128.png',
+  '/app-icon-144.png',
+  '/app-icon-152.png',
   '/app-icon-192.png',
+  '/app-icon-384.png',
   '/app-icon-512.png',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  '/favicon.ico',
+  '/favicon-16x16.png',
+  '/favicon-32x32.png'
 ];
 
 // Install service worker

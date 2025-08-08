@@ -30,10 +30,18 @@
 
 ### Build Command untuk Vercel:
 ```bash
-./build-deploy.sh
-# atau manual:
-npm run build && cp -r public/* dist/public/
+npm run build && cp -rf public/* dist/public/
 ```
+
+### Debug URL (setelah deploy):
+- Test logo: https://databasekaryawanswapro.vercel.app/test-logo.html
+- Direct logo: https://databasekaryawanswapro.vercel.app/app-icon-192.png
+- Manifest: https://databasekaryawanswapro.vercel.app/manifest.json
+
+### Service Worker Fix:
+- Cache name: swapro-pwa-v4.0.0 (menghapus error files)
+- Removed broken /icons/ references  
+- Added all actual SWAPRO icon files
 
 ## Verifikasi Deployment
 Setelah deploy, cek:
