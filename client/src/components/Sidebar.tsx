@@ -45,7 +45,7 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg border border-blue-200/50">
             <img 
-              src="/app-icon.webp" 
+              src="/app-icon-192.png" 
               alt="SWA DATA Logo" 
               className="w-8 h-8 object-contain"
             />
@@ -66,7 +66,7 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
           <div className="flex items-center space-x-4 mb-4">
             <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-xl border border-blue-200/50">
               <img 
-                src="/app-icon.webp" 
+                src="/app-icon-192.png" 
                 alt="SWA DATA Logo" 
                 className="w-10 h-10 object-contain"
               />

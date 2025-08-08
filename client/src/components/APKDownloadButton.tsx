@@ -246,7 +246,7 @@ CATATAN: APK ini berfungsi sebagai wrapper untuk mengakses website sebagai aplik
                 <div>
                   <div className="text-center mb-4">
                     <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-2xl flex items-center justify-center mx-auto mb-3">
-                      <img src="/app-icon.webp" alt="SWA DATA" className="w-12 h-12" />
+                      <img src="/app-icon-192.png" alt="SWA DATA" className="w-12 h-12" />
                     </div>
                     <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                       Download APK Android

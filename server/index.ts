@@ -1,10 +1,36 @@
 import express, { type Request, Response, NextFunction } from "express";
+import path from "path";
+import fs from "fs";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Serve PWA files with correct MIME types
+app.get("/sw.js", (req, res) => {
+  res.setHeader("Content-Type", "application/javascript");
+  res.setHeader("Cache-Control", "no-cache");
+  res.sendFile(path.resolve(process.cwd(), "public", "sw.js"));
+});
+
+app.get("/manifest.json", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.sendFile(path.resolve(process.cwd(), "public", "manifest.json"));
+});
+
+// Serve PWA icons with correct headers
+app.get("/app-icon*.png", (req, res) => {
+  const iconPath = path.resolve(process.cwd(), "public", path.basename(req.path));
+  if (fs.existsSync(iconPath)) {
+    res.setHeader("Content-Type", "image/png");
+    res.setHeader("Cache-Control", "public, max-age=31536000");
+    res.sendFile(iconPath);
+  } else {
+    res.status(404).end();
+  }
+});
 
 app.use((req, res, next) => {
   const start = Date.now();
