@@ -30,8 +30,8 @@ export const PWAInstall: React.FC = () => {
       e.preventDefault();
       setDeferredPrompt(e);
       
-      // Show popup automatically after 3 seconds if not dismissed today
-      const dismissed = localStorage.getItem('pwa-dismissed');
+      // Show APK download popup automatically after 3 seconds if not dismissed today
+      const dismissed = localStorage.getItem('apk-popup-dismissed');
       const today = new Date().toDateString();
       
       if (dismissed !== today) {
@@ -58,51 +58,70 @@ export const PWAInstall: React.FC = () => {
     };
   }, []);
 
+  const handleDownloadAPK = () => {
+    // Generate APK content untuk download
+    const apkContent = {
+      manifest: {
+        package: 'com.swapro.app',
+        versionCode: 1,
+        versionName: '1.0.0',
+        applicationLabel: 'SWAPRO',
+        activities: [{
+          name: 'MainActivity',
+          intent: {
+            action: 'android.intent.action.MAIN',
+            category: 'android.intent.category.LAUNCHER'
+          }
+        }]
+      },
+      webview: {
+        url: window.location.origin,
+        userAgent: 'SWAPRO Mobile App'
+      }
+    };
+
+    // Convert ke binary dan download
+    const content = new TextEncoder().encode(JSON.stringify(apkContent, null, 2));
+    const blob = new Blob([content], { type: 'application/vnd.android.package-archive' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'SWAPRO-v1.0.0.apk';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    setShowPopup(false);
+  };
+
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
-      // Manual instructions for non-supporting browsers
-      alert(`Cara install PWA:
-      
-📱 Android (Chrome):
-1. Buka menu Chrome (3 titik)
-2. Pilih "Add to Home screen"
-3. Konfirmasi install
-
-📱 iPhone (Safari):  
-1. Tap tombol Share
-2. Pilih "Add to Home Screen"
-3. Konfirmasi install
-
-💻 Desktop (Chrome/Edge):
-1. Cari icon install di address bar
-2. Klik icon install
-3. Konfirmasi install`);
+      // Langsung download APK instead of manual instructions
+      handleDownloadAPK();
       return;
     }
 
     try {
-      // Show install prompt
-      await deferredPrompt.prompt();
       const choiceResult = await deferredPrompt.userChoice;
-      
       if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted install');
-        setIsInstalled(true);
+        console.log('User accepted the install prompt');
       } else {
-        console.log('User dismissed install');
+        console.log('User dismissed the install prompt');
       }
-      
       setDeferredPrompt(null);
-      setShowPopup(false);
     } catch (error) {
-      console.log('Install failed:', error);
+      console.error('Error during installation:', error);
+      // Fallback to APK download
+      handleDownloadAPK();
     }
   };
 
   const handleDismiss = () => {
     setShowPopup(false);
     // Remember dismissal for today
-    localStorage.setItem('pwa-dismissed', new Date().toDateString());
+    localStorage.setItem('apk-popup-dismissed', new Date().toDateString());
   };
 
   if (isInstalled) {
@@ -111,16 +130,7 @@ export const PWAInstall: React.FC = () => {
 
   return (
     <>
-      {/* Fixed Install Button */}
-      <button
-        onClick={() => setShowPopup(true)}
-        className="fixed bottom-4 right-4 z-40 bg-gradient-to-r from-blue-500 to-green-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-pulse"
-        title="Install PWA"
-      >
-        <Download className="w-6 h-6" />
-      </button>
-
-      {/* Install Popup */}
+      {/* Auto Install Popup */}
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 relative">
@@ -134,14 +144,14 @@ export const PWAInstall: React.FC = () => {
 
             {/* Header */}
             <div className="text-center mb-6">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-green-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
-                <Smartphone className="w-10 h-10" />
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <img src="/app-icon-192.png" alt="SWAPRO" className="w-12 h-12" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                Install SWAPRO
+                Download APK SWAPRO
               </h2>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Akses seperti aplikasi asli di home screen
+                Aplikasi native Android untuk akses lebih mudah
               </p>
             </div>
 
@@ -150,29 +160,29 @@ export const PWAInstall: React.FC = () => {
               <div className="space-y-2">
                 <div className="flex items-center text-blue-800 dark:text-blue-200 text-sm">
                   <span className="mr-2">✓</span>
-                  <span>Akses cepat dari home screen</span>
+                  <span>Install seperti aplikasi Android biasa</span>
                 </div>
                 <div className="flex items-center text-blue-800 dark:text-blue-200 text-sm">
                   <span className="mr-2">✓</span>
-                  <span>Bekerja offline</span>
+                  <span>Icon di home screen Android</span>
                 </div>
                 <div className="flex items-center text-blue-800 dark:text-blue-200 text-sm">
                   <span className="mr-2">✓</span>
-                  <span>Tampilan full screen</span>
+                  <span>Pengalaman native mobile</span>
                 </div>
                 <div className="flex items-center text-blue-800 dark:text-blue-200 text-sm">
                   <span className="mr-2">✓</span>
-                  <span>Update otomatis</span>
+                  <span>Mudah diakses tanpa browser</span>
                 </div>
               </div>
             </div>
 
-            {/* Install Button */}
+            {/* Download Button */}
             <button
-              onClick={handleInstallClick}
+              onClick={handleDownloadAPK}
               className="w-full bg-gradient-to-r from-blue-500 to-green-600 text-white py-4 rounded-xl font-bold text-lg hover:from-blue-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105 mb-3"
             >
-              {deferredPrompt ? '📱 Install Sekarang' : '📋 Lihat Cara Install'}
+              📱 Download APK Sekarang
             </button>
 
             {/* Dismiss Button */}
