@@ -316,6 +316,28 @@ function App() {
             let errorCount = 0;
             const errors: string[] = [];
             
+            // First pass: collect all NIKs to check for duplicates within the file
+            const nikInFile: string[] = [];
+            const duplicateNIKs = new Set<string>();
+            
+            lines.slice(1).forEach((line, index) => {
+              try {
+                const values = parseCSVLine(line);
+                if (values.length >= 7) {
+                  const nik = values[6].trim();
+                  if (nik) {
+                    if (nikInFile.includes(nik)) {
+                      duplicateNIKs.add(nik);
+                    } else {
+                      nikInFile.push(nik);
+                    }
+                  }
+                }
+              } catch (e) {
+                // Skip invalid lines for NIK check
+              }
+            });
+            
             const processedData = lines.slice(1).map((line, index) => {
               try {
                 const values = parseCSVLine(line);
@@ -360,14 +382,22 @@ function App() {
                     (values[28].startsWith('[') ? JSON.parse(values[28]) : []) : []
                 };
                 
-                // Check if employee with same NIK already exists
+                // Check for duplicate NIK within the same file
+                if (duplicateNIKs.has(employeeData.nik)) {
+                  errors.push(`Baris ${index + 2}: ❌ NIK "${employeeData.nik}" DUPLIKAT dalam file CSV!`);
+                  errorCount++;
+                  return null;
+                }
+                
+                // Check if employee with same NIK already exists in database
                 const existingEmployeeIndex = employees.findIndex(emp => emp.nik === employeeData.nik);
                 
                 if (existingEmployeeIndex !== -1) {
-                  // Update existing employee
-                  employeeData.id = employees[existingEmployeeIndex].id; // Keep existing ID
-                  updatedCount++;
-                  return { ...employeeData, isUpdate: true, existingIndex: existingEmployeeIndex };
+                  // Found duplicate NIK - add to errors instead of auto-updating
+                  const existingEmp = employees[existingEmployeeIndex];
+                  errors.push(`Baris ${index + 2}: ❌ NIK "${employeeData.nik}" DUPLIKAT! Sudah digunakan oleh "${existingEmp.namaKaryawan}" (${existingEmp.klien} - ${existingEmp.area})`);
+                  errorCount++;
+                  return null;
                 } else {
                   // New employee
                   addedCount++;
@@ -380,9 +410,21 @@ function App() {
               }
             }).filter(item => item !== null);
             
+            // Show detailed results
+            const totalProcessed = addedCount + updatedCount;
+            const duplicateCount = errorCount;
+            
             if (processedData.length === 0) {
-              alert('Tidak ada data yang berhasil diproses.\n\nError:\n' + errors.join('\n'));
+              alert(`❌ IMPORT DIBATALKAN!\n\n${duplicateCount > 0 ? `Ditemukan ${duplicateCount} data duplikat:` : 'Tidak ada data yang valid untuk diproses:'}\n\n${errors.join('\n')}\n\n💡 Pastikan semua NIK unik sebelum import.`);
               return;
+            }
+            
+            if (duplicateCount > 0) {
+              const proceed = confirm(`⚠️ PERINGATAN DUPLIKAT!\n\n✅ Data valid: ${addedCount} baris\n❌ Data duplikat: ${duplicateCount} baris\n\nData duplikat:\n${errors.join('\n')}\n\nLanjutkan import data yang valid saja?`);
+              if (!proceed) {
+                alert('Import dibatalkan oleh user.');
+                return;
+              }
             }
             
             // Process the data based on storage mode
@@ -493,7 +535,7 @@ function App() {
               });
             }
             
-            let message = `Berhasil mengimpor data:\n- ${addedCount} karyawan baru ditambahkan\n- ${updatedCount} karyawan diperbarui\n\nTotal: ${addedCount + updatedCount} data diproses.`;
+            let message = `✅ IMPORT SELESAI!\n\n📊 ${addedCount} karyawan baru ditambahkan\n📝 ${updatedCount} karyawan diperbarui\n❌ ${duplicateCount} data duplikat ditolak\n\n📁 Total berhasil: ${addedCount + updatedCount} data${duplicateCount > 0 ? `\n💡 ${duplicateCount} data duplikat tidak diimport untuk menjaga integritas database.` : ''}`;
             
             if (errorCount > 0) {
               message += `\n\n⚠️ ${errorCount} baris gagal diproses:\n${errors.slice(0, 5).join('\n')}`;

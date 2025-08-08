@@ -175,22 +175,44 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Check for empty NIK
+    if (!formData.nik.trim()) {
+      alert('❌ NIK tidak boleh kosong');
+      return;
+    }
+    
+    // Final duplicate check before submission
+    const existingEmployee = employees.find(emp => 
+      emp.nik === formData.nik.trim() && emp.id !== employee?.id
+    );
+    
+    if (existingEmployee) {
+      alert(`❌ DATA DUPLIKAT DITOLAK!\n\nNIK "${formData.nik}" sudah digunakan oleh:\n👤 ${existingEmployee.namaKaryawan}\n🏢 ${existingEmployee.klien}\n📍 ${existingEmployee.area}\n\nSilakan gunakan NIK yang berbeda.`);
+      return;
+    }
+    
     // Prevent submission if there's NIK error
     if (nikError) {
-      alert('Tidak dapat menyimpan: ' + nikError);
+      alert('❌ Tidak dapat menyimpan: ' + nikError);
       return;
     }
     
     // Prevent submission if there's Email error
     if (emailError) {
-      alert('Tidak dapat menyimpan: ' + emailError);
+      alert('❌ Tidak dapat menyimpan: ' + emailError);
       return;
     }
     
-    // Check for empty NIK
-    if (!formData.nik.trim()) {
-      alert('NIK tidak boleh kosong');
-      return;
+    // Check for duplicate email if provided
+    if (formData.alamatEmail.trim()) {
+      const existingEmailEmployee = employees.find(emp => 
+        emp.alamatEmail.toLowerCase() === formData.alamatEmail.trim().toLowerCase() && emp.id !== employee?.id
+      );
+      
+      if (existingEmailEmployee) {
+        const proceed = confirm(`⚠️ Email "${formData.alamatEmail}" sudah digunakan oleh:\n👤 ${existingEmailEmployee.namaKaryawan}\n\nApakah Anda yakin ingin melanjutkan?`);
+        if (!proceed) return;
+      }
     }
     
     onSave(formData);
@@ -206,7 +228,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
       );
       
       if (existingEmployee) {
-        setNikError(`⚠️ NIK ${value} sudah digunakan oleh ${existingEmployee.namaKaryawan}`);
+        setNikError(`❌ NIK sudah digunakan oleh: ${existingEmployee.namaKaryawan} (${existingEmployee.klien} - ${existingEmployee.area})`);
       } else {
         setNikError('');
       }
@@ -219,7 +241,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
       );
       
       if (existingEmployee) {
-        setEmailError(`⚠️ Email ${value} sudah digunakan oleh ${existingEmployee.namaKaryawan}`);
+        setEmailError(`⚠️ Email sudah digunakan oleh: ${existingEmployee.namaKaryawan} (${existingEmployee.klien})`);
       } else {
         setEmailError('');
       }
