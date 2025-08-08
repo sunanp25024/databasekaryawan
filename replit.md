@@ -156,13 +156,12 @@ The current implementation supports both localStorage and Supabase database stor
 - ✅ **Debug Enhancement**: Added comprehensive status debugging for troubleshooting
 
 ### Recent Updates (August 8, 2025)
-- ✅ **APK Icon Updated**: New SWAPRO globe logo from user's WhatsApp image
-- ✅ **Icon Generation**: Complete set 72px-512px with high-quality conversion
-- ✅ **Vercel Deploy Ready**: Fixed regex patterns, valid configuration
-- ✅ **Logo SWAPRO Fixed**: Root cause identified - Vercel routing issue solved  
+- ✅ **Logo SWAPRO Fixed**: Root cause identified - Vercel routing issue solved
+- ✅ **Vercel Routing Fixed**: Static assets now properly served (PNG files vs HTML)
 - ✅ **Debug System Added**: Console logging and auto-retry for logo loading
 - ✅ **Build Script Fixed**: ES module compatible copy-assets.js for Vercel
-- ✅ **Asset Verification**: 14 SWAPRO files (52KB new logo) ready for deployment
+- ✅ **Loading Screen Extended**: 3 second display for logo verification
+- ✅ **Asset Verification**: 14 SWAPRO files (31KB logo) ready for deployment
 
 ### Previous Updates (August 3, 2025)
 - ✅ **PWA Install System**: Complete PWA installation with device-specific instructions
