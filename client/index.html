@@ -55,12 +55,13 @@
           margin-bottom: 20px;
         " />
         
-        <!-- Loading text simple -->
+        <!-- Loading text dengan animasi -->
         <p style="
           font-size: 16px; 
           color: #666;
           margin: 0;
-        ">Loading...</p>
+          animation: fadeInOut 1.5s ease-in-out infinite;
+        ">Memuat halaman<span id="loading-dots">...</span></p>
       </div>
       
       <style>
@@ -68,7 +69,30 @@
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
+        
+        @keyframes fadeInOut {
+          0%, 100% { opacity: 0.6; }
+          50% { opacity: 1; }
+        }
+        
+        @keyframes dotBounce {
+          0%, 20% { opacity: 0; }
+          50% { opacity: 1; }
+          100% { opacity: 0; }
+        }
       </style>
+      
+      <script>
+        // Animasi dots loading
+        let dotCount = 0;
+        setInterval(() => {
+          const dotsElement = document.getElementById('loading-dots');
+          if (dotsElement) {
+            dotCount = (dotCount % 3) + 1;
+            dotsElement.textContent = '.'.repeat(dotCount);
+          }
+        }, 500);
+      </script>
       
 
     </div>

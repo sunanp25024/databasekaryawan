@@ -23,7 +23,10 @@ export function LoadingScreen({ message = "Loading..." }: LoadingScreenProps) {
       
       {/* Teks loading */}
       <div className="text-center">
-        <p className="text-gray-600 text-lg font-medium">{message}</p>
+        <p className="text-gray-600 text-lg font-medium">
+          <span className="animate-pulse">Memuat halaman</span>
+          <span className="inline-block animate-bounce ml-1">...</span>
+        </p>
       </div>
     </div>
   );
