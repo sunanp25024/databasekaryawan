@@ -1,7 +1,6 @@
 import React from 'react';
 import { Search, Filter, X, Sparkles, Sliders } from 'lucide-react';
-import { FilterOptions } from '../types/Employee';
-import { klienOptions, statusIOptions, statusIIOptions, areaOptions } from '../data/mockData';
+import { FilterOptions, Employee } from '../types/Employee';
 
 interface FilterBarProps {
   searchTerm: string;
@@ -9,15 +8,32 @@ interface FilterBarProps {
   filters: FilterOptions;
   onFilterChange: (filters: FilterOptions) => void;
   onClearFilters: () => void;
+  employees: Employee[];
 }
+
+// Helper function to get unique values from employees
+const getUniqueValues = (employees: Employee[], field: keyof Employee): string[] => {
+  const values = employees
+    .map(emp => emp[field] as string)
+    .filter(value => value && value.trim() !== '')
+    .map(value => value.trim());
+  return Array.from(new Set(values)).sort();
+};
 
 export function FilterBar({
   searchTerm,
   onSearchChange,
   filters,
   onFilterChange,
-  onClearFilters
+  onClearFilters,
+  employees
 }: FilterBarProps) {
+  // Get dynamic options from actual employee data
+  const klienOptions = getUniqueValues(employees, 'klien');
+  const areaOptions = getUniqueValues(employees, 'area');
+  const cabangOptions = getUniqueValues(employees, 'cabang');
+  const statusIOptions = getUniqueValues(employees, 'statusI');
+  const statusIIOptions = getUniqueValues(employees, 'statusII');
   const hasActiveFilters = Object.values(filters).some(value => value !== '') || searchTerm !== '';
 
   return (
@@ -53,7 +69,7 @@ export function FilterBar({
           </div>
           <input
             type="text"
-            placeholder="Cari berdasarkan nama karyawan, NIK, email, atau posisi..."
+            placeholder="Cari nama, NIK, email, posisi, area, cabang, atau nomor telepon..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
             className="w-full pl-12 lg:pl-16 pr-12 lg:pr-16 py-3 lg:py-5 text-sm lg:text-lg border-2 border-slate-200/50 rounded-xl lg:rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-400 transition-all duration-200 bg-white/90 backdrop-blur-sm placeholder-gray-500 font-semibold shadow-md lg:shadow-lg hover:shadow-lg lg:hover:shadow-xl"
@@ -106,13 +122,16 @@ export function FilterBar({
               <div className="w-2 h-2 lg:w-3 lg:h-3 bg-purple-600 rounded-full mr-2"></div>
               Cabang
             </label>
-            <input
-              type="text"
-              placeholder="Filter berdasarkan cabang"
+            <select
               value={filters.cabang}
               onChange={(e) => onFilterChange({ ...filters, cabang: e.target.value })}
               className="w-full px-3 lg:px-4 py-2.5 lg:py-3.5 text-xs lg:text-sm border-2 border-gray-200 rounded-lg lg:rounded-xl focus:ring-4 focus:ring-purple-500/20 focus:border-purple-400 transition-all duration-200 bg-white/95 backdrop-blur-sm font-semibold shadow-sm lg:shadow-md hover:shadow-md lg:hover:shadow-lg"
-            />
+            >
+              <option value="">Semua Cabang</option>
+              {cabangOptions.map((cabang) => (
+                <option key={cabang} value={cabang}>{cabang}</option>
+              ))}
+            </select>
           </div>
 
           <div>

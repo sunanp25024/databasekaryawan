@@ -93,17 +93,40 @@ function App() {
     }
     
     return filtered.filter(employee => {
-      const matchesSearch = 
-        employee.namaKaryawan.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.nik.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.alamatEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.posisi.toLowerCase().includes(searchTerm.toLowerCase());
+      // Enhanced search functionality - searches more fields and uses flexible matching
+      const searchLower = searchTerm.toLowerCase().trim();
+      const matchesSearch = searchLower === '' || [
+        employee.namaKaryawan,
+        employee.nik,
+        employee.alamatEmail,
+        employee.posisi,
+        employee.area,
+        employee.cabang,
+        employee.klien,
+        employee.noTelp,
+        employee.statusI,
+        employee.statusII,
+        employee.jenisKelamin,
+        employee.agama,
+        employee.pendidikanTerakhir,
+        employee.source,
+        employee.bank,
+        employee.namaPenerima
+      ].some(field => 
+        field && field.toString().toLowerCase().includes(searchLower)
+      );
       
-      const matchesKlien = filters.klien === '' || employee.klien === filters.klien;
-      const matchesArea = filters.area === '' || employee.area === filters.area;
-      const matchesCabang = filters.cabang === '' || employee.cabang === filters.cabang;
-      const matchesStatusI = filters.statusI === '' || employee.statusI === filters.statusI;
-      const matchesStatusII = filters.statusII === '' || employee.statusII === filters.statusII;
+      // Enhanced filter matching - case insensitive and flexible
+      const matchesKlien = filters.klien === '' || 
+        employee.klien.toLowerCase().includes(filters.klien.toLowerCase());
+      const matchesArea = filters.area === '' || 
+        employee.area.toLowerCase().includes(filters.area.toLowerCase());
+      const matchesCabang = filters.cabang === '' || 
+        employee.cabang.toLowerCase().includes(filters.cabang.toLowerCase());
+      const matchesStatusI = filters.statusI === '' || 
+        employee.statusI.toLowerCase().includes(filters.statusI.toLowerCase());
+      const matchesStatusII = filters.statusII === '' || 
+        employee.statusII.toLowerCase().includes(filters.statusII.toLowerCase());
       
       return matchesSearch && matchesKlien && matchesArea && matchesCabang && matchesStatusI && matchesStatusII;
     });
@@ -687,6 +710,7 @@ function App() {
               filters={filters}
               onFilterChange={setFilters}
               onClearFilters={handleClearFilters}
+              employees={employees}
             />
 
             <EmployeeTable
