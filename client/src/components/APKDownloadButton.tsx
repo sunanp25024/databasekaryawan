@@ -172,14 +172,8 @@ CATATAN: APK ini berfungsi sebagai wrapper untuk mengakses website sebagai aplik
 
   return (
     <>
-      {/* APK Download Button */}
-      <button
-        onClick={() => setShowModal(true)}
-        className="fixed bottom-20 right-4 z-40 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-        title="Download APK Android"
-      >
-        <Smartphone className="w-6 h-6" />
-      </button>
+      {/* APK Download Button - DISABLED */}
+      {/* Button floating sudah dinonaktifkan sesuai permintaan user */}
 
       {/* Modal */}
       {showModal && (
