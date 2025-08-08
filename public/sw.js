@@ -1,4 +1,4 @@
-const CACHE_NAME = 'swa-data-pwa-v2.2.0';
+const CACHE_NAME = 'swapro-pwa-v3.0.0';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -124,7 +124,7 @@ self.addEventListener('sync', event => {
 // Push notifications (optional for future use)
 self.addEventListener('push', event => {
   const options = {
-    body: event.data ? event.data.text() : 'Notifikasi baru dari SWA DATA',
+    body: event.data ? event.data.text() : 'Notifikasi baru dari SWAPRO',
     icon: '/app-icon-192.png',
     badge: '/app-icon-96.png',
     vibrate: [100, 50, 100],
@@ -135,7 +135,7 @@ self.addEventListener('push', event => {
     actions: [
       {
         action: 'explore',
-        title: 'Buka SWA DATA',
+        title: 'Buka SWAPRO',
         icon: '/app-icon-96.png'
       },
       {
@@ -147,7 +147,7 @@ self.addEventListener('push', event => {
   };
 
   event.waitUntil(
-    self.registration.showNotification('SWA DATA', options)
+    self.registration.showNotification('SWAPRO', options)
   );
 });
 
