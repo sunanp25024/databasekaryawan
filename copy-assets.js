@@ -31,7 +31,8 @@ const filesToCopy = [
   'app-icon-192.png',
   'app-icon-384.png',
   'app-icon-512.png',
-  'swapro.png',
+  'swapro-icon-192.png',
+  'swapro-icon-512.png',
   '_redirects'
 ];
 

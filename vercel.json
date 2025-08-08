@@ -43,6 +43,24 @@
       ]
     },
     {
+      "source": "/swapro-icon-192.png",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/png"
+        }
+      ]
+    },
+    {
+      "source": "/swapro-icon-512.png", 
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/png"
+        }
+      ]
+    },
+    {
       "source": "/favicon.ico",
       "headers": [
         {

@@ -45,10 +45,10 @@
       "purpose": "any"
     },
     {
-      "src": "/app-icon-192.png",
+      "src": "/swapro-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "/app-icon-384.png",
@@ -57,22 +57,10 @@
       "purpose": "any"
     },
     {
-      "src": "/app-icon-512.png",
+      "src": "/swapro-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/app-icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/app-icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ],
   "shortcuts": [
@@ -83,8 +71,8 @@
       "url": "/?action=add",
       "icons": [
         {
-          "src": "/app-icon-96.png",
-          "sizes": "96x96"
+          "src": "/swapro-icon-192.png",
+          "sizes": "192x192"
         }
       ]
     },
@@ -95,8 +83,8 @@
       "url": "/?view=dashboard",
       "icons": [
         {
-          "src": "/app-icon-96.png",
-          "sizes": "96x96"
+          "src": "/swapro-icon-192.png",
+          "sizes": "192x192"
         }
       ]
     }
