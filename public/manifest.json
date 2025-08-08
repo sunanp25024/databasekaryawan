@@ -1,7 +1,7 @@
 {
-  "name": "SWA DATA",
-  "short_name": "SWA DATA",
-  "description": "SWA DATA - Sistem Manajemen Data Karyawan",
+  "name": "SWAPRO",
+  "short_name": "SWAPRO",
+  "description": "SWAPRO - Sistem Manajemen Data Karyawan Profesional",
   "start_url": "/?source=pwa",
   "display": "standalone",
   "orientation": "portrait-primary",

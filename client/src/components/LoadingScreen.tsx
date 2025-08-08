@@ -11,7 +11,7 @@ export function LoadingScreen({ message = "Loading..." }: LoadingScreenProps) {
       <div className="mb-8">
         <img 
           src="/app-icon-192.png" 
-          alt="SWA DATA Logo" 
+          alt="SWAPRO Logo" 
           className="w-24 h-24 animate-spin"
           style={{
             animationDuration: '2s',

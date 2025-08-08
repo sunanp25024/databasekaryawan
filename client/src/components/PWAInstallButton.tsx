@@ -131,7 +131,7 @@ export function PWAInstallButton() {
       <button
         onClick={handleInstallClick}
         className="fixed bottom-20 right-4 z-40 bg-gradient-to-r from-blue-500 to-green-600 hover:from-blue-600 hover:to-green-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 animate-pulse"
-        title="Install SWA DATA sebagai aplikasi"
+        title="Install SWAPRO sebagai aplikasi"
       >
         <Download className="w-6 h-6" />
       </button>
@@ -146,7 +146,7 @@ export function PWAInstallButton() {
                 <Smartphone className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                Install SWA DATA
+                Install SWAPRO
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 Gunakan seperti aplikasi asli di home screen

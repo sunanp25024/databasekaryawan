@@ -34,7 +34,7 @@ export function APKInstallPopup() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          appName: 'SWA DATA',
+          appName: 'SWAPRO',
           packageName: 'com.swadata.app',
           version: '1.0.0',
           manifestUrl: window.location.origin + '/manifest.json',
@@ -99,7 +99,7 @@ export function APKInstallPopup() {
         package: 'com.swadata.app',
         versionCode: 1,
         versionName: '1.0.0',
-        applicationLabel: 'SWA DATA',
+        applicationLabel: 'SWAPRO',
         activities: [
           {
             name: 'MainActivity',
@@ -117,7 +117,7 @@ export function APKInstallPopup() {
       },
       webview: {
         url: window.location.origin,
-        userAgent: 'SWA DATA Mobile App'
+        userAgent: 'SWAPRO Mobile App'
       }
     };
 
@@ -131,7 +131,7 @@ export function APKInstallPopup() {
 
   const handleInstallInstructions = () => {
     const instructions = `
-Cara Install APK SWA DATA:
+Cara Install APK SWAPRO:
 
 1. Download APK sudah selesai
 2. Buka file manager di Android
@@ -141,7 +141,7 @@ Cara Install APK SWA DATA:
    - Buka Settings > Security
    - Aktifkan "Unknown Sources" atau "Install Unknown Apps"
    - Kembali dan install APK
-6. Setelah install, buka app "SWA DATA" dari home screen
+6. Setelah install, buka app "SWAPRO" dari home screen
 
 Catatan: APK ini adalah wrapper PWA yang akan membuka aplikasi web dalam webview native Android.
     `;
@@ -165,7 +165,7 @@ Catatan: APK ini adalah wrapper PWA yang akan membuka aplikasi web dalam webview
                 Install APK Android
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                SWA DATA Mobile App
+                SWAPRO Mobile App
               </p>
             </div>
           </div>
@@ -186,7 +186,7 @@ Catatan: APK ini adalah wrapper PWA yang akan membuka aplikasi web dalam webview
                 Download Selesai!
               </h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                File APK sudah didownload ke perangkat Anda. Silakan install untuk menggunakan SWA DATA sebagai aplikasi native.
+                File APK sudah didownload ke perangkat Anda. Silakan install untuk menggunakan SWAPRO sebagai aplikasi native.
               </p>
               <button
                 onClick={handleInstallInstructions}
@@ -212,10 +212,10 @@ Catatan: APK ini adalah wrapper PWA yang akan membuka aplikasi web dalam webview
             <div>
               <div className="text-center mb-4">
                 <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-2xl flex items-center justify-center mx-auto mb-3">
-                  <img src="/app-icon-192.png" alt="SWA DATA" className="w-12 h-12" />
+                  <img src="/app-icon-192.png" alt="SWAPRO" className="w-12 h-12" />
                 </div>
                 <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                  Download APK SWA DATA
+                  Download APK SWAPRO
                 </h4>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   Dapatkan aplikasi native Android untuk akses yang lebih cepat dan mudah

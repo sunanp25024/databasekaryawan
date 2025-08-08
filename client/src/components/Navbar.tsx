@@ -31,7 +31,7 @@ export function Navbar({ onAddEmployee, onExport, onImport, onDownloadTemplate, 
               <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-white rounded-xl border border-blue-200/50 shadow-xl flex-shrink-0">
                 <img 
                   src="/app-icon-192.png" 
-                  alt="SWA DATA Logo" 
+                  alt="SWAPRO Logo" 
                   className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 object-contain"
                 />
               </div>
