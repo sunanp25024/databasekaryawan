@@ -10,7 +10,7 @@ export function LoadingScreen({ message = "Loading..." }: LoadingScreenProps) {
       {/* Logo dengan animasi berputar */}
       <div className="mb-8">
         <img 
-          src="/app-icon-192.png" 
+          src="/swapro-logo.webp" 
           alt="SWAPRO Logo" 
           className="w-24 h-24 animate-spin"
           style={{
