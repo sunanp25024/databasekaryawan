@@ -686,7 +686,7 @@ function App() {
                 Storage: {useDatabase ? 'Supabase Database' : 'localStorage'}
               </span>
               {isLoading && (
-                <div className="h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                <div className="text-xs text-blue-600">Loading...</div>
               )}
             </div>
             
