@@ -45,6 +45,10 @@
   ],
   "rewrites": [
     {
+      "source": "/(app-icon-.*\\.png|favicon.*\\.(png|ico)|manifest\\.json|sw\\.js)",
+      "destination": "/$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

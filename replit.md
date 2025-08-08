@@ -155,7 +155,15 @@ The current implementation supports both localStorage and Supabase database stor
 - ✅ **Consistent Status Format**: All forms and calculations use Indonesian status terms
 - ✅ **Debug Enhancement**: Added comprehensive status debugging for troubleshooting
 
-### Recent Updates (August 3, 2025)
+### Recent Updates (August 8, 2025)
+- ✅ **Logo SWAPRO Fixed**: Root cause identified - Vercel routing issue solved
+- ✅ **Vercel Routing Fixed**: Static assets now properly served (PNG files vs HTML)
+- ✅ **Debug System Added**: Console logging and auto-retry for logo loading
+- ✅ **Build Script Fixed**: ES module compatible copy-assets.js for Vercel
+- ✅ **Loading Screen Extended**: 3 second display for logo verification
+- ✅ **Asset Verification**: 14 SWAPRO files (31KB logo) ready for deployment
+
+### Previous Updates (August 3, 2025)
 - ✅ **PWA Install System**: Complete PWA installation with device-specific instructions
 - ✅ **Smart Install Detection**: Detects iOS, Android, and Desktop with appropriate steps
 - ✅ **One-Click Install**: Native browser install prompt integration for Chrome/Edge

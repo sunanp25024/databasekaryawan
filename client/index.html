@@ -53,7 +53,9 @@
           height: 100px; 
           animation: spin 2s linear infinite;
           margin-bottom: 20px;
-        " />
+          display: block;
+        " onerror="console.error('SWAPRO logo failed to load:', this.src); this.style.display='none';" 
+           onload="console.log('SWAPRO logo loaded successfully:', this.src);" />
         
         <!-- Loading text dengan animasi -->
         <p style="
@@ -83,6 +85,19 @@
       </style>
       
       <script>
+        // Debug logo loading
+        const logoImg = document.querySelector('#app-loading img');
+        if (logoImg) {
+          console.log('Loading screen logo element found:', logoImg.src);
+          // Force reload if logo fails
+          setTimeout(() => {
+            if (!logoImg.complete || logoImg.naturalHeight === 0) {
+              console.log('Logo not loaded, attempting reload...');
+              logoImg.src = logoImg.src + '?t=' + Date.now();
+            }
+          }, 1000);
+        }
+
         // Animasi dots loading
         let dotCount = 0;
         setInterval(() => {
@@ -92,6 +107,16 @@
             dotsElement.textContent = '.'.repeat(dotCount);
           }
         }, 500);
+
+        // Keep loading screen visible longer for debugging
+        window.addEventListener('load', () => {
+          setTimeout(() => {
+            const loadingScreen = document.getElementById('app-loading');
+            if (loadingScreen) {
+              loadingScreen.style.display = 'none';
+            }
+          }, 3000); // Show for 3 seconds
+        });
       </script>
       
 
