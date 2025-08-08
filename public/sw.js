@@ -1,9 +1,10 @@
-const CACHE_NAME = 'swa-data-pwa-v2.0.0';
+const CACHE_NAME = 'swa-data-pwa-v2.1.0';
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/swapro.png',
+  '/app-icon.webp',
+  '/app-icon.png',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png'
 ];
@@ -124,8 +125,8 @@ self.addEventListener('sync', event => {
 self.addEventListener('push', event => {
   const options = {
     body: event.data ? event.data.text() : 'Notifikasi baru dari SWA DATA',
-    icon: '/swapro.png',
-    badge: '/swapro.png',
+    icon: '/app-icon.webp',
+    badge: '/app-icon.webp',
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
@@ -135,12 +136,12 @@ self.addEventListener('push', event => {
       {
         action: 'explore',
         title: 'Buka SWA DATA',
-        icon: '/swapro.png'
+        icon: '/app-icon.webp'
       },
       {
         action: 'close',
         title: 'Tutup',
-        icon: '/swapro.png'
+        icon: '/app-icon.webp'
       }
     ]
   };
