@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Home, Smartphone, Download, X, CheckCircle, Info } from 'lucide-react';
+import { Download, X, CheckCircle, Smartphone } from 'lucide-react';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
@@ -17,29 +17,9 @@ export function PWAInstallButton() {
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [deviceInfo, setDeviceInfo] = useState({
-    isIOS: false,
-    isAndroid: false,
-    isDesktop: false,
-    browser: ''
-  });
+  const [isInstalling, setIsInstalling] = useState(false);
 
   useEffect(() => {
-    // Detect device and browser
-    const userAgent = navigator.userAgent;
-    const isIOS = /iPad|iPhone|iPod/.test(userAgent);
-    const isAndroid = /Android/.test(userAgent);
-    const isDesktop = !isIOS && !isAndroid;
-    
-    let browser = '';
-    if (userAgent.includes('Chrome')) browser = 'Chrome';
-    else if (userAgent.includes('Firefox')) browser = 'Firefox';
-    else if (userAgent.includes('Safari')) browser = 'Safari';
-    else if (userAgent.includes('Edge')) browser = 'Edge';
-    else browser = 'Browser';
-
-    setDeviceInfo({ isIOS, isAndroid, isDesktop, browser });
-
     // Check if already installed
     if (window.matchMedia('(display-mode: standalone)').matches) {
       setIsInstalled(true);
@@ -94,6 +74,7 @@ export function PWAInstallButton() {
     if (deferredPrompt) {
       // Chrome/Edge - use native install prompt
       try {
+        setIsInstalling(true);
         deferredPrompt.prompt();
         const choiceResult = await deferredPrompt.userChoice;
         
@@ -104,11 +85,13 @@ export function PWAInstallButton() {
         }
         
         setDeferredPrompt(null);
+        setIsInstalling(false);
       } catch (error) {
         console.log('Install prompt failed:', error);
+        setIsInstalling(false);
       }
     } else {
-      // For browsers without install prompt, show instructions
+      // For browsers without install prompt, show manual instructions
       setShowModal(true);
     }
   };
@@ -120,46 +103,17 @@ export function PWAInstallButton() {
     localStorage.setItem('pwa-install-dismissed', today);
   };
 
-  const getInstallInstructions = () => {
-    if (deviceInfo.isIOS) {
-      return {
-        title: "Install SWA DATA di iPhone/iPad",
-        steps: [
-          "1. Buka Safari browser (harus Safari, bukan Chrome)",
-          "2. Kunjungi website ini di Safari",
-          "3. Tap tombol 'Share' (kotak dengan panah ke atas)",
-          "4. Scroll ke bawah dan pilih 'Add to Home Screen'",
-          "5. Ubah nama jika perlu, lalu tap 'Add'",
-          "6. App SWA DATA akan muncul di home screen"
-        ],
-        icon: <Home className="w-8 h-8" />
-      };
-    } else if (deviceInfo.isAndroid) {
-      return {
-        title: "Install SWA DATA di Android",
-        steps: [
-          "1. Buka website ini di Chrome browser",
-          "2. Tap menu (3 titik) di pojok kanan atas",
-          "3. Pilih 'Add to Home screen' atau 'Install app'",
-          "4. Tap 'Add' atau 'Install' pada dialog yang muncul",
-          "5. App SWA DATA akan muncul di home screen",
-          "6. Buka seperti aplikasi biasa"
-        ],
-        icon: <Plus className="w-8 h-8" />
-      };
+  const getQuickInstallTip = () => {
+    const userAgent = navigator.userAgent;
+    const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+    const isAndroid = /Android/.test(userAgent);
+    
+    if (isIOS) {
+      return "Safari: Share ➜ Add to Home Screen";
+    } else if (isAndroid) {
+      return "Chrome: Menu (⋮) ➜ Add to Home screen";
     } else {
-      return {
-        title: "Install SWA DATA di Desktop",
-        steps: [
-          "1. Buka website ini di Chrome atau Edge",
-          "2. Klik icon 'Install' di address bar",
-          "3. Atau klik menu (3 titik) > 'Install SWA DATA'",
-          "4. Klik 'Install' pada dialog konfirmasi",
-          "5. App akan terbuka di window terpisah",
-          "6. Bisa diakses dari Start Menu atau Desktop"
-        ],
-        icon: <Download className="w-8 h-8" />
-      };
+      return "Chrome/Edge: Install button di address bar";
     }
   };
 
@@ -171,8 +125,6 @@ export function PWAInstallButton() {
     );
   }
 
-  const instructions = getInstallInstructions();
-
   return (
     <>
       {/* Install Button */}
@@ -181,7 +133,7 @@ export function PWAInstallButton() {
         className="fixed bottom-20 right-4 z-40 bg-gradient-to-r from-blue-500 to-green-600 hover:from-blue-600 hover:to-green-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 animate-pulse"
         title="Install SWA DATA sebagai aplikasi"
       >
-        <Plus className="w-6 h-6" />
+        <Download className="w-6 h-6" />
       </button>
 
       {/* Auto Install Modal */}
@@ -191,13 +143,13 @@ export function PWAInstallButton() {
             {/* Header */}
             <div className="text-center mb-6">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-green-600 rounded-full flex items-center justify-center text-white mx-auto mb-4">
-                <Download className="w-8 h-8" />
+                <Smartphone className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 Install SWA DATA
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Akses aplikasi seperti app native di home screen
+                Gunakan seperti aplikasi asli di home screen
               </p>
             </div>
 
@@ -205,25 +157,28 @@ export function PWAInstallButton() {
             {deferredPrompt ? (
               <button
                 onClick={handleInstallClick}
-                className="w-full bg-gradient-to-r from-blue-500 to-green-600 text-white py-4 rounded-lg font-semibold hover:from-blue-600 hover:to-green-700 transition-all duration-200 mb-3"
+                disabled={isInstalling}
+                className="w-full bg-gradient-to-r from-blue-500 to-green-600 text-white py-4 rounded-lg font-semibold hover:from-blue-600 hover:to-green-700 transition-all duration-200 mb-3 disabled:opacity-50"
               >
-                📱 Install PWA Sekarang
+                {isInstalling ? (
+                  <div className="flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    Installing...
+                  </div>
+                ) : (
+                  "📱 Install Sekarang"
+                )}
               </button>
             ) : (
               <div className="text-center mb-4">
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                  {deviceInfo.isIOS ? 
-                    "📱 Safari: Share > Add to Home Screen" :
-                    deviceInfo.isAndroid ?
-                    "📱 Chrome: Menu (⋮) > Add to Home screen" :
-                    "📱 Chrome: Install button di address bar"
-                  }
-                </p>
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg mb-3">
-                  <p className="text-xs text-yellow-800 dark:text-yellow-200">
-                    💡 Setelah install, aplikasi akan muncul di home screen seperti app biasa!
+                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg mb-4">
+                  <p className="text-sm text-blue-800 dark:text-blue-200 font-medium">
+                    {getQuickInstallTip()}
                   </p>
                 </div>
+                <p className="text-xs text-gray-600 dark:text-gray-400">
+                  💡 Akan muncul di home screen seperti app asli!
+                </p>
               </div>
             )}
 
