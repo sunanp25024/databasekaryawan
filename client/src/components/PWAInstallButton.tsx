@@ -161,8 +161,17 @@ export function PWAInstallButton() {
                 className="w-full bg-gradient-to-r from-blue-500 to-green-600 text-white py-4 rounded-lg font-semibold hover:from-blue-600 hover:to-green-700 transition-all duration-200 mb-3 disabled:opacity-50"
               >
                 {isInstalling ? (
-                  <div className="flex items-center justify-center">
-                    Installing...
+                  <div className="flex items-center justify-center space-x-2">
+                    <img 
+                      src="/app-icon-72.png" 
+                      alt="Installing" 
+                      className="w-5 h-5 animate-spin"
+                      style={{
+                        animationDuration: '2s',
+                        animationTimingFunction: 'linear'
+                      }}
+                    />
+                    <span>Installing...</span>
                   </div>
                 ) : (
                   "📱 Install Sekarang"

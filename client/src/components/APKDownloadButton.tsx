@@ -280,7 +280,18 @@ CATATAN: APK ini berfungsi sebagai wrapper untuk mengakses website sebagai aplik
                   className="w-full bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 disabled:opacity-50 text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-all duration-200"
                 >
                   {isDownloading ? (
-                    <span>Membuat APK...</span>
+                    <div className="flex items-center justify-center space-x-2">
+                      <img 
+                        src="/app-icon-72.png" 
+                        alt="Loading" 
+                        className="w-5 h-5 animate-spin"
+                        style={{
+                          animationDuration: '2s',
+                          animationTimingFunction: 'linear'
+                        }}
+                      />
+                      <span>Membuat APK...</span>
+                    </div>
                   ) : (
                     <>
                       <Download className="w-5 h-5" />

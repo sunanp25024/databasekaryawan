@@ -8,6 +8,7 @@ import { EmployeeForm } from './components/EmployeeForm';
 import { EmployeeDetail } from './components/EmployeeDetail';
 import { PWAInstall } from './components/PWAInstall';
 import { PWAStatus } from './components/PWAStatus';
+import { LoadingScreen } from './components/LoadingScreen';
 import { Employee, FilterOptions } from './types/Employee';
 import { mockEmployees } from './data/mockData';
 import { useLocalStorage } from './hooks/useLocalStorage';
@@ -660,6 +661,11 @@ function App() {
     return () => window.removeEventListener('addEmployee', handleAddEmployee);
   }, []);
 
+  // Show loading screen when database is loading
+  if (isLoading && useDatabase) {
+    return <LoadingScreen message="Loading data..." />;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 flex flex-col overflow-hidden">
       <Navbar 
@@ -685,9 +691,6 @@ function App() {
               <span className="text-sm font-medium text-gray-700">
                 Storage: {useDatabase ? 'Supabase Database' : 'localStorage'}
               </span>
-              {isLoading && (
-                <div className="text-xs text-blue-600">Loading...</div>
-              )}
             </div>
             
             <button
