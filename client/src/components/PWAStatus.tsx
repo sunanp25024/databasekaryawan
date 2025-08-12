@@ -27,30 +27,13 @@ export function PWAStatus() {
     };
   }, []);
 
-  if (!isPWA && isOnline) return null; // Only show if PWA or offline
+  // Only show when offline (hide PWA Mode indicator)
+  if (isOnline) return null;
 
   return (
     <div className="fixed top-4 left-4 z-40 bg-white rounded-lg shadow-lg border p-3 flex items-center space-x-2 text-sm">
-      {isPWA && (
-        <>
-          <Smartphone className="w-4 h-4 text-blue-600" />
-          <span className="text-blue-600 font-medium">PWA Mode</span>
-        </>
-      )}
-      
-      {!isOnline && (
-        <>
-          <WifiOff className="w-4 h-4 text-red-600" />
-          <span className="text-red-600 font-medium">Offline</span>
-        </>
-      )}
-      
-      {isOnline && !isPWA && (
-        <>
-          <Wifi className="w-4 h-4 text-green-600" />
-          <span className="text-green-600 font-medium">Online</span>
-        </>
-      )}
+      <WifiOff className="w-4 h-4 text-red-600" />
+      <span className="text-red-600 font-medium">Offline</span>
     </div>
   );
 }
