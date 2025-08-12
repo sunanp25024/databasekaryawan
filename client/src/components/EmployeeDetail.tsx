@@ -34,12 +34,8 @@ export function EmployeeDetail({ employee, onClose }: EmployeeDetailProps) {
       }
     } else {
       switch (status) {
-        case 'Permanent':
-          return `${baseClasses} bg-gradient-to-r from-blue-500 to-blue-600 text-white ring-2 ring-blue-200`;
         case 'Contract':
           return `${baseClasses} bg-gradient-to-r from-amber-500 to-orange-500 text-white ring-2 ring-amber-200`;
-        case 'Probation':
-          return `${baseClasses} bg-gradient-to-r from-yellow-500 to-yellow-600 text-white ring-2 ring-yellow-200`;
         default:
           return `${baseClasses} bg-gradient-to-r from-gray-400 to-gray-500 text-white`;
       }

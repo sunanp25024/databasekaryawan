@@ -8,8 +8,8 @@ interface DashboardProps {
 
 export function Dashboard({ employees }: DashboardProps) {
   // Debug: Log all unique status values
-  const uniqueStatusI = [...new Set(employees.map(emp => emp.statusI))];
-  const uniqueStatusII = [...new Set(employees.map(emp => emp.statusII))];
+  const uniqueStatusI = Array.from(new Set(employees.map(emp => emp.statusI)));
+  const uniqueStatusII = Array.from(new Set(employees.map(emp => emp.statusII)));
   console.log('Unique Status I values:', uniqueStatusI);
   console.log('Unique Status II values:', uniqueStatusII);
   
@@ -47,13 +47,7 @@ export function Dashboard({ employees }: DashboardProps) {
     normalizeStatus(emp.statusII).includes('CONTRACT') || normalizeStatus(emp.statusII).includes('KONTRAK')
   ).length;
   
-  const permanentEmployees = employees.filter(emp => 
-    normalizeStatus(emp.statusII).includes('PERMANENT') || normalizeStatus(emp.statusII).includes('TETAP')
-  ).length;
-  
-  const probationEmployees = employees.filter(emp => 
-    normalizeStatus(emp.statusII).includes('PROBATION') || normalizeStatus(emp.statusII).includes('PERCOBAAN')
-  ).length;
+  // Remove permanent and probation calculations
   
   const uniqueClients = new Set(employees.map(emp => emp.klien)).size;
   const uniqueArea = new Set(employees.map(emp => emp.area).filter(area => area && area.trim() !== '')).size;
@@ -64,15 +58,7 @@ export function Dashboard({ employees }: DashboardProps) {
     (normalizeStatus(emp.statusII).includes('CONTRACT') || normalizeStatus(emp.statusII).includes('KONTRAK'))
   ).length;
   
-  const activePermanent = employees.filter(emp => 
-    normalizeStatus(emp.statusI) === 'AKTIF' && 
-    (normalizeStatus(emp.statusII).includes('PERMANENT') || normalizeStatus(emp.statusII).includes('TETAP'))
-  ).length;
-  
-  const activeProbation = employees.filter(emp => 
-    normalizeStatus(emp.statusI) === 'AKTIF' && 
-    (normalizeStatus(emp.statusII).includes('PROBATION') || normalizeStatus(emp.statusII).includes('PERCOBAAN'))
-  ).length;
+  // Remove active permanent and probation calculations
   
   const stats = [
     {
@@ -130,28 +116,7 @@ export function Dashboard({ employees }: DashboardProps) {
       description: `${activeContract} aktif`,
       change: '+0%'
     },
-    {
-      name: 'Permanent',
-      value: permanentEmployees,
-      icon: Award,
-      gradient: 'from-purple-600 to-purple-700',
-      bgGradient: 'from-purple-50 to-purple-100',
-      textColor: 'text-purple-800',
-      iconBg: 'bg-purple-600',
-      description: `${activePermanent} aktif`,
-      change: '+0%'
-    },
-    {
-      name: 'Probation',
-      value: probationEmployees,
-      icon: Calendar,
-      gradient: 'from-indigo-600 to-indigo-700',
-      bgGradient: 'from-indigo-50 to-indigo-100',
-      textColor: 'text-indigo-800',
-      iconBg: 'bg-indigo-600',
-      description: `${activeProbation} aktif`,
-      change: '+0%'
-    },
+
     {
       name: 'Total Area',
       value: uniqueArea,

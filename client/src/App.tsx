@@ -572,7 +572,7 @@ function App() {
       [
         '1', 'ADIRA', 'John Doe', 'Jakarta Pusat', 'Head Office', '1234567890123456', 
         'Jane Smith', 'Manager', 'Internal Recruitment', '2024-01-15', '2024-01-20', 
-        'Active', 'Permanent', '', '', 'PKWT-001', 'PKW-2024-001', '1234567890', 
+        'Active', 'Contract', '', '', 'PKWT-001', 'PKW-2024-001', '1234567890', 
         '0987654321', 'BCA', '1234567890', 'Jane Smith', 
         'jane.smith@email.com', '+62812345678', '1', 'Perempuan', 'S1', 'Islam', '[]'
       ],

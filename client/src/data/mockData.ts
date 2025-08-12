@@ -16,9 +16,7 @@ export const statusIOptions = [
 ];
 
 export const statusIIOptions = [
-  'Permanent',
-  'Contract',
-  'Probation'
+  'Contract'
 ];
 
 export const sourceOptions = [

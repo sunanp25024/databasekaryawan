@@ -35,12 +35,8 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
       }
     } else {
       switch (status) {
-        case 'Permanent':
-          return { className: `${baseClasses} bg-blue-100 text-blue-800 border border-blue-200`, icon: <BadgeCheck className="w-3 h-3 mr-1" /> };
         case 'Contract':
           return { className: `${baseClasses} bg-orange-100 text-orange-800 border border-orange-200`, icon: <Clock className="w-3 h-3 mr-1" /> };
-        case 'Probation':
-          return { className: `${baseClasses} bg-yellow-100 text-yellow-800 border border-yellow-200`, icon: <Shield className="w-3 h-3 mr-1" /> };
         default:
           return { className: `${baseClasses} bg-gray-100 text-gray-800 border border-gray-200`, icon: <User className="w-3 h-3 mr-1" /> };
       }
