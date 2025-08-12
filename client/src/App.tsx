@@ -8,6 +8,7 @@ import { EmployeeForm } from './components/EmployeeForm';
 import { EmployeeDetail } from './components/EmployeeDetail';
 import { PWAInstall } from './components/PWAInstall';
 import { PWAStatus } from './components/PWAStatus';
+import { PWAUpdateNotifier } from './components/PWAUpdateNotifier';
 import { LoadingScreen } from './components/LoadingScreen';
 import { Employee, FilterOptions } from './types/Employee';
 import { mockEmployees } from './data/mockData';
@@ -791,6 +792,7 @@ function App() {
       {/* PWA Components */}
       <PWAStatus />
       <PWAInstall />
+      <PWAUpdateNotifier />
     </div>
   );
 }

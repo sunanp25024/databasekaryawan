@@ -1,4 +1,4 @@
-const CACHE_NAME = 'swapro-pwa-v4.0.0';
+const CACHE_NAME = 'swapro-pwa-v5.0.0';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -18,6 +18,7 @@ const urlsToCache = [
 
 // Install service worker
 self.addEventListener('install', event => {
+  console.log('Service Worker: Installing new version');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -28,7 +29,7 @@ self.addEventListener('install', event => {
         console.log('Service Worker: Cache failed', err);
       })
   );
-  self.skipWaiting();
+  // Don't skip waiting automatically - let the update notifier handle it
 });
 
 // Activate service worker
@@ -86,36 +87,62 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Static assets - Cache First
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return cached version if available
-        if (response) {
+  // Static assets - Network First for main app files, Cache First for images
+  const isMainAppFile = event.request.url.includes('index.html') || 
+                       event.request.url.endsWith('/') ||
+                       event.request.url.includes('.js') ||
+                       event.request.url.includes('.css');
+  
+  if (isMainAppFile) {
+    // Network First for main app files to ensure latest version
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          // Clone and cache the response
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME)
+            .then(cache => {
+              cache.put(event.request, responseToCache);
+            });
           return response;
-        }
-        
-        // Otherwise, fetch from network
-        return fetch(event.request)
-          .then(response => {
-            // Check if valid response
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // Clone the response
-            const responseToCache = response.clone();
-
-            // Add to cache
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              });
-
+        })
+        .catch(() => {
+          // If network fails, try cache
+          return caches.match(event.request);
+        })
+    );
+  } else {
+    // Cache First for images and other static assets
+    event.respondWith(
+      caches.match(event.request)
+        .then(response => {
+          // Return cached version if available
+          if (response) {
             return response;
-          });
-      })
-  );
+          }
+          
+          // Otherwise, fetch from network
+          return fetch(event.request)
+            .then(response => {
+              // Check if valid response
+              if (!response || response.status !== 200 || response.type !== 'basic') {
+                return response;
+              }
+
+              // Clone the response
+              const responseToCache = response.clone();
+
+              // Add to cache
+              caches.open(CACHE_NAME)
+                .then(cache => {
+                  cache.put(event.request, responseToCache);
+                });
+
+              return response;
+            });
+        })
+    );
+  }
 });
 
 // Background sync for offline data
@@ -166,5 +193,13 @@ self.addEventListener('notificationclick', event => {
     event.waitUntil(
       clients.openWindow('/')
     );
+  }
+});
+
+// Handle messages from main thread
+self.addEventListener('message', event => {
+  if (event.data && event.data.action === 'skipWaiting') {
+    console.log('Service Worker: Received skipWaiting message');
+    self.skipWaiting();
   }
 });
