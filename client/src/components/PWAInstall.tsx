@@ -145,7 +145,7 @@ export const PWAInstall: React.FC = () => {
             {/* Header */}
             <div className="text-center mb-6">
               <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <img src="/swapro-logo.webp" alt="SWAPRO" className="w-12 h-12" />
+                <img src="/app-icon-192.png" alt="SWAPRO" className="w-12 h-12" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                 Download APK SWAPRO
