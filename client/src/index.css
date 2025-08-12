@@ -57,6 +57,28 @@ body {
   overflow-x: hidden;
 }
 
+/* Hide scrollbar for mobile buttons */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile navigation improvements */
+@media (max-width: 768px) {
+  .mobile-nav-container {
+    padding: 0 8px;
+  }
+  
+  .mobile-button-group {
+    gap: 6px;
+    padding: 2px;
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
