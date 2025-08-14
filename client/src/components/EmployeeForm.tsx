@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 import { X, User, Plus, Trash2 } from 'lucide-react';
 import { Employee } from '../types/Employee';
 import { SPManager } from './SPManager';
@@ -172,7 +172,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     }
   }, [employee]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     
     // Check for empty NIK
@@ -218,7 +218,7 @@ export function EmployeeForm({ employee, onSave, onCancel, selectedKlien, employ
     onSave(formData);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     
     // Check for duplicate NIK

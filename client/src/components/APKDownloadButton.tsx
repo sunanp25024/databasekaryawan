@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Download, Smartphone, CheckCircle, AlertCircle, X } from 'lucide-react';
 
 export function APKDownloadButton() {

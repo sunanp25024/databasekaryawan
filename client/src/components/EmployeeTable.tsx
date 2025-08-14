@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Edit, Trash2, Eye, Users, Plus, UserPlus, Grid3X3, List, User, Building, Calendar, CreditCard, Phone, Mail, MapPin, Briefcase, Clock, Award, Shield, BadgeCheck, UserCheck, X, Badge } from 'lucide-react';
 import { Employee } from '../types/Employee';
 import { ClientLogo } from './ClientLogo';

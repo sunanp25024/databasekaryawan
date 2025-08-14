@@ -1,4 +1,3 @@
-import React from 'react';
 import { X, User, Building, Calendar, CreditCard, Phone, Mail, MapPin, Briefcase, Clock, Award } from 'lucide-react';
 import { Employee } from '../types/Employee';
 import { SPManager } from './SPManager';

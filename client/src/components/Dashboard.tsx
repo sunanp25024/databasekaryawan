@@ -1,5 +1,4 @@
-import React from 'react';
-import { Users, Building2, UserCheck, UserX, FileText, Calendar, TrendingUp, Award } from 'lucide-react';
+import { Users, Building2, TrendingUp, Award, UserCheck, UserX, FileText } from 'lucide-react';
 import { Employee } from '../types/Employee';
 import { ClientLogo } from './ClientLogo';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Search, Filter, X, Sparkles, Sliders } from 'lucide-react';
 import { FilterOptions, Employee } from '../types/Employee';
 

@@ -1,4 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { Menu, X, Database, HardDrive } from 'lucide-react';
+
+// Components
 import { Sidebar } from './components/Sidebar';
 import { Navbar } from './components/Navbar';
 import { Dashboard } from './components/Dashboard';
@@ -10,11 +13,14 @@ import { PWAInstall } from './components/PWAInstall';
 import { PWAStatus } from './components/PWAStatus';
 import { PWAUpdateNotifier } from './components/PWAUpdateNotifier';
 import { LoadingScreen } from './components/LoadingScreen';
+
+// Types & Data
 import { Employee, FilterOptions } from './types/Employee';
 import { mockEmployees } from './data/mockData';
+
+// Hooks
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useSupabase } from './hooks/useSupabase';
-import { Menu, X, Database, HardDrive } from 'lucide-react';
 
 function App() {
   const [localEmployees, setLocalEmployees] = useLocalStorage<Employee[]>('employees', mockEmployees);
@@ -652,7 +658,7 @@ function App() {
   };
 
   // Listen for custom event from empty state button
-  React.useEffect(() => {
+  useEffect(() => {
     const handleAddEmployee = () => {
       setEditingEmployee(undefined);
       setShowForm(true);

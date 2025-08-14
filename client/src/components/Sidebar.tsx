@@ -1,4 +1,3 @@
-import React from 'react';
 import { Database, Building2, Users, X, BarChart3, TrendingUp } from 'lucide-react';
 import { ClientLogo } from './ClientLogo';
 

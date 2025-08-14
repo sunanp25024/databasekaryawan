@@ -1,4 +1,3 @@
-import React from 'react';
 import { Users, Database, Plus, Download, Upload, Menu, X, Trash2 } from 'lucide-react';
 
 interface NavbarProps {

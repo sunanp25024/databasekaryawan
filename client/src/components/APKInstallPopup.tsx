@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Download, X, Smartphone, CheckCircle, AlertCircle } from 'lucide-react';
 
 export function APKInstallPopup() {

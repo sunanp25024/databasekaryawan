@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Plus, Trash2, Upload, Eye, X } from 'lucide-react';
 import { SuratPeringatan } from '../types/Employee';
 
