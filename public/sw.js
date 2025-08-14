@@ -1,4 +1,4 @@
-const CACHE_NAME = 'swapro-pwa-v5.0.0';
+const CACHE_NAME = 'swapro-pwa-v6.0.0';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -18,7 +18,7 @@ const urlsToCache = [
 
 // Install service worker
 self.addEventListener('install', event => {
-  console.log('Service Worker: Installing new version');
+  console.log('Service Worker: Installing new version v6.0.0');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -29,24 +29,28 @@ self.addEventListener('install', event => {
         console.log('Service Worker: Cache failed', err);
       })
   );
-  // Don't skip waiting automatically - let the update notifier handle it
+  // Force immediate activation to clear old cache
+  self.skipWaiting();
 });
 
 // Activate service worker
 self.addEventListener('activate', event => {
+  console.log('Service Worker: Activating v6.0.0');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
-            console.log('Service Worker: Clearing old cache');
+            console.log('Service Worker: Clearing old cache', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
+    }).then(() => {
+      console.log('Service Worker: All old caches cleared, claiming clients');
+      return self.clients.claim();
     })
   );
-  self.clients.claim();
 });
 
 // Fetch event - Network First strategy for API calls, Cache First for static assets

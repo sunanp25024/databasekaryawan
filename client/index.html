@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
     
     <!-- PWA Meta Tags -->
-    <title>SWAPRO</title>
+    <title>SWAPRO v6.0</title>
+    
+    <!-- Cache busting meta tags -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="version" content="6.0.0" />
     <meta name="description" content="SWAPRO - Sistem Manajemen Data Karyawan Profesional yang mudah dan efisien" />
     <meta name="theme-color" content="#ffffff" />
     <meta name="msapplication-TileColor" content="#ffffff" />
@@ -139,16 +145,37 @@
         }
       });
       
-      // Service Worker Registration
+      // Force clear all caches first
+      if ('caches' in window) {
+        caches.keys().then(cacheNames => {
+          cacheNames.forEach(cacheName => {
+            console.log('Force clearing cache:', cacheName);
+            caches.delete(cacheName);
+          });
+        });
+      }
+      
+      // Service Worker Registration with cache busting
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-              console.log('SW registered: ', registration);
-            })
-            .catch(registrationError => {
-              console.log('SW registration failed: ', registrationError);
-            });
+        // Unregister old service workers first
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          registrations.forEach(registration => {
+            console.log('Unregistering old SW');
+            registration.unregister();
+          });
+          
+          // Register new service worker after clearing old ones
+          setTimeout(() => {
+            navigator.serviceWorker.register('/sw.js?v=6.0.0&t=' + Date.now())
+              .then(registration => {
+                console.log('SW v6.0.0 registered: ', registration);
+                // Force update check
+                registration.update();
+              })
+              .catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+              });
+          }, 200);
         });
       }
     </script>
