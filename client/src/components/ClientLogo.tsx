@@ -16,6 +16,7 @@ export function ClientLogo({ client, size = 'md', showName = false, className = 
   console.log(`ClientLogo: client="${client}", logoUrl="${logoUrl}", clientName="${clientName}"`);
   
   if (!logoUrl) {
+    console.warn(`❌ No logo URL found for client: ${client}`);
     // Fallback for unknown clients
     return (
       <div className={`flex items-center ${className}`}>
