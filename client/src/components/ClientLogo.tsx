@@ -50,6 +50,7 @@ export function ClientLogo({ client, size = 'md', showName = false, className = 
         onLoad={() => {
           console.log(`✅ Logo loaded successfully for ${client}: ${logoUrl}`);
         }}
+        style={{ display: 'block' }}
         onError={(e) => {
           console.error(`❌ Failed to load logo for ${client}:`, logoUrl);
           console.error('Image error event:', e);
