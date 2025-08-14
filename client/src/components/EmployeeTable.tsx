@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Edit, Trash2, Eye, Users, Plus, UserPlus, Grid3X3, List, User, Building, Calendar, CreditCard, Phone, Mail, MapPin, Briefcase, Clock, Award, Shield, BadgeCheck, UserCheck, X, Badge } from 'lucide-react';
 import { Employee } from '../types/Employee';
+import { ClientLogo } from './ClientLogo';
 
 interface EmployeeTableProps {
   employees: Employee[];
@@ -47,13 +48,13 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
     const baseClasses = "inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold";
     switch (klien) {
       case 'ADIRA':
-        return { className: `${baseClasses} bg-blue-50 text-blue-700 border border-blue-200`, icon: <Building className="w-3 h-3 mr-1" /> };
+        return { className: `${baseClasses} bg-blue-50 text-blue-700 border border-blue-200` };
       case 'MACF':
-        return { className: `${baseClasses} bg-green-50 text-green-700 border border-green-200`, icon: <Building className="w-3 h-3 mr-1" /> };
+        return { className: `${baseClasses} bg-green-50 text-green-700 border border-green-200` };
       case 'SMSF':
-        return { className: `${baseClasses} bg-purple-50 text-purple-700 border border-purple-200`, icon: <Building className="w-3 h-3 mr-1" /> };
+        return { className: `${baseClasses} bg-purple-50 text-purple-700 border border-purple-200` };
       default:
-        return { className: `${baseClasses} bg-gray-50 text-gray-700 border border-gray-200`, icon: <Building className="w-3 h-3 mr-1" /> };
+        return { className: `${baseClasses} bg-gray-50 text-gray-700 border border-gray-200` };
     }
   };
 
@@ -158,10 +159,12 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                     
                     {/* Client & Location */}
                     <div className="flex items-center justify-between">
-                      <span className={klienBadge.className}>
-                        {klienBadge.icon}
-                        {employee.klien}
-                      </span>
+                      <div className="flex items-center space-x-2">
+                        <ClientLogo client={employee.klien} size="sm" />
+                        <span className={klienBadge.className}>
+                          {employee.klien}
+                        </span>
+                      </div>
                       <div className="flex items-center text-xs text-gray-500">
                         <MapPin className="w-3 h-3 mr-1" />
                         <span className="font-medium">{employee.area}</span>
@@ -364,10 +367,12 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                     
                     {/* Client Badge */}
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={klienBadge.className}>
-                        {klienBadge.icon}
-                        {employee.klien}
-                      </span>
+                      <div className="flex items-center space-x-2">
+                        <ClientLogo client={employee.klien} size="sm" />
+                        <span className={klienBadge.className}>
+                          {employee.klien}
+                        </span>
+                      </div>
                     </td>
                     
                     {/* Employee Name with Avatar */}
