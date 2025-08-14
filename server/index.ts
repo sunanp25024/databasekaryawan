@@ -32,22 +32,15 @@ app.get("/app-icon*.png", (req, res) => {
   }
 });
 
-// Serve client logos with correct headers (before Vite middleware)
-app.get("/:logoname(adira-logo|megafinance-logo|smsfinance-logo).png", (req, res) => {
-  const logoName = req.params.logoname + ".png";
-  const logoPath = path.resolve(process.cwd(), "public", logoName);
-  
-  console.log(`Logo request: ${logoName} -> ${logoPath}`);
-  
-  if (fs.existsSync(logoPath)) {
-    res.setHeader("Content-Type", "image/png");
-    res.setHeader("Cache-Control", "public, max-age=31536000");
-    res.sendFile(logoPath);
-  } else {
-    console.log(`Logo not found: ${logoPath}`);
-    res.status(404).end();
+// Serve static assets including logos
+app.use(express.static(path.resolve(process.cwd(), "public"), {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.png')) {
+      res.setHeader('Content-Type', 'image/png');
+      res.setHeader('Cache-Control', 'public, max-age=31536000');
+    }
   }
-});
+}));
 
 app.use((req, res, next) => {
   const start = Date.now();
