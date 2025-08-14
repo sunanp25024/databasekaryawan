@@ -13,7 +13,7 @@ export function ClientLogo({ client, size = 'md', showName = false, className = 
   const logoUrl = getClientLogo(client);
   const clientName = getClientName(client);
   
-  // Debug: console.log(`ClientLogo: client="${client}", logoUrl="${logoUrl}", clientName="${clientName}"`);
+  console.log(`ClientLogo: client="${client}", logoUrl="${logoUrl}", clientName="${clientName}"`);
   
   if (!logoUrl) {
     // Fallback for unknown clients
@@ -42,13 +42,17 @@ export function ClientLogo({ client, size = 'md', showName = false, className = 
         src={logoUrl} 
         alt={`${clientName} Logo`}
         className={`
-          ${size === 'sm' ? 'h-6' : ''}
-          ${size === 'md' ? 'h-8' : ''}
-          ${size === 'lg' ? 'h-12' : ''}
+          ${size === 'sm' ? 'h-6 w-auto max-w-16' : ''}
+          ${size === 'md' ? 'h-8 w-auto max-w-20' : ''}
+          ${size === 'lg' ? 'h-12 w-auto max-w-24' : ''}
           object-contain
         `}
+        onLoad={() => {
+          console.log(`✅ Logo loaded successfully for ${client}: ${logoUrl}`);
+        }}
         onError={(e) => {
-          console.error(`Failed to load logo for ${client}:`, logoUrl);
+          console.error(`❌ Failed to load logo for ${client}:`, logoUrl);
+          console.error('Image error event:', e);
           // Fallback to initials if image fails to load
           const target = e.target as HTMLImageElement;
           target.style.display = 'none';
