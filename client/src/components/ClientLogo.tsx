@@ -10,10 +10,12 @@ interface ClientLogoProps {
 }
 
 export function ClientLogo({ client, size = 'md', showName = false, className = '' }: ClientLogoProps) {
+  console.log(`🚀 ClientLogo CALLED with client: "${client}"`);
+  
   const logoUrl = getClientLogo(client);
   const clientName = getClientName(client);
   
-  console.log(`ClientLogo: client="${client}", logoUrl="${logoUrl}", clientName="${clientName}"`);
+  console.log(`🔍 ClientLogo: client="${client}", logoUrl="${logoUrl}", clientName="${clientName}"`);
   
   if (!logoUrl) {
     console.warn(`❌ No logo URL found for client: ${client}`);
@@ -51,7 +53,7 @@ export function ClientLogo({ client, size = 'md', showName = false, className = 
         onLoad={() => {
           console.log(`✅ Logo loaded successfully for ${client}: ${logoUrl}`);
         }}
-        style={{ display: 'block' }}
+        style={{ display: 'block', maxHeight: '100%', maxWidth: '100%' }}
         onError={(e) => {
           console.error(`❌ Failed to load logo for ${client}:`, logoUrl);
           console.error('Image error event:', e);

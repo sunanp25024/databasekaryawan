@@ -8,19 +8,19 @@ export const CLIENT_LOGOS = {
 export function getClientLogo(client: string): string | null {
   const normalizedClient = client.toUpperCase();
   
-  console.log(`getClientLogo: input="${client}", normalized="${normalizedClient}"`);
+  console.log(`🔍 getClientLogo: input="${client}", normalized="${normalizedClient}"`);
   
   // Handle different variations
   if (normalizedClient.includes('ADIRA')) {
-    console.log('Matched ADIRA, returning:', CLIENT_LOGOS.ADIRA);
+    console.log('✅ Matched ADIRA, returning:', CLIENT_LOGOS.ADIRA);
     return CLIENT_LOGOS.ADIRA;
   }
   if (normalizedClient.includes('MACF') || normalizedClient.includes('MEGA')) {
-    console.log('Matched MACF/MEGA, returning:', CLIENT_LOGOS.MACF);
+    console.log('✅ Matched MACF/MEGA, returning:', CLIENT_LOGOS.MACF);
     return CLIENT_LOGOS.MACF;
   }
   if (normalizedClient.includes('SMSF') || normalizedClient.includes('SMS')) {
-    console.log('Matched SMSF/SMS, returning:', CLIENT_LOGOS.SMSF);
+    console.log('✅ Matched SMSF/SMS, returning:', CLIENT_LOGOS.SMSF);
     return CLIENT_LOGOS.SMSF;
   }
   
