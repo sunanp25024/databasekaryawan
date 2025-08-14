@@ -7,10 +7,7 @@
     <!-- PWA Meta Tags -->
     <title>SWAPRO v6.0</title>
     
-    <!-- Cache busting meta tags -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
+    <!-- Version info -->
     <meta name="version" content="6.0.0" />
     <meta name="description" content="SWAPRO - Sistem Manajemen Data Karyawan Profesional yang mudah dan efisien" />
     <meta name="theme-color" content="#ffffff" />
@@ -145,37 +142,16 @@
         }
       });
       
-      // Force clear all caches first
-      if ('caches' in window) {
-        caches.keys().then(cacheNames => {
-          cacheNames.forEach(cacheName => {
-            console.log('Force clearing cache:', cacheName);
-            caches.delete(cacheName);
-          });
-        });
-      }
-      
-      // Service Worker Registration with cache busting
+      // Simple Service Worker Registration
       if ('serviceWorker' in navigator) {
-        // Unregister old service workers first
-        navigator.serviceWorker.getRegistrations().then(registrations => {
-          registrations.forEach(registration => {
-            console.log('Unregistering old SW');
-            registration.unregister();
-          });
-          
-          // Register new service worker after clearing old ones
-          setTimeout(() => {
-            navigator.serviceWorker.register('/sw.js?v=6.0.0&t=' + Date.now())
-              .then(registration => {
-                console.log('SW v6.0.0 registered: ', registration);
-                // Force update check
-                registration.update();
-              })
-              .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-              });
-          }, 200);
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('SW v6.0.0 registered: ', registration);
+            })
+            .catch(registrationError => {
+              console.log('SW registration failed: ', registrationError);
+            });
         });
       }
     </script>

@@ -29,8 +29,7 @@ self.addEventListener('install', event => {
         console.log('Service Worker: Cache failed', err);
       })
   );
-  // Force immediate activation to clear old cache
-  self.skipWaiting();
+  // Don't auto skip waiting - let user decide
 });
 
 // Activate service worker
@@ -46,11 +45,9 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    }).then(() => {
-      console.log('Service Worker: All old caches cleared, claiming clients');
-      return self.clients.claim();
     })
   );
+  self.clients.claim();
 });
 
 // Fetch event - Network First strategy for API calls, Cache First for static assets

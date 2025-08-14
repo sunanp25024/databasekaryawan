@@ -10,81 +10,51 @@ export function PWAUpdateNotifier({}: PWAUpdateNotifierProps) {
   useEffect(() => {
     // Check if service workers are supported
     if ('serviceWorker' in navigator) {
-      // Listen for service worker updates
+      // Listen for controller change - when new SW takes control
       navigator.serviceWorker.addEventListener('controllerchange', () => {
-        console.log('PWA: Controller changed, hard reloading page');
-        // Force hard reload to clear all caches
-        window.location.href = window.location.href + '?v=' + Date.now();
+        console.log('PWA: New service worker activated, reloading page');
+        window.location.reload();
       });
 
-      // Force unregister old service worker first
-      navigator.serviceWorker.getRegistrations().then(registrations => {
-        registrations.forEach(registration => {
-          console.log('PWA: Unregistering old service worker');
-          registration.unregister();
-        });
-        
-        // Register new service worker after clearing old ones
-        setTimeout(() => {
-          navigator.serviceWorker.register('/sw.js?v=' + Date.now())
-            .then(registration => {
-              console.log('PWA: Service Worker registered successfully v6.0.0');
+      // Register service worker
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('PWA: Service Worker registered successfully v6.0.0');
+          
+          // Listen for updates
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            if (newWorker) {
+              console.log('PWA: New service worker found');
+              setNewServiceWorker(newWorker);
               
-              // Force update check immediately
-              registration.update();
-              
-              // Listen for updates
-              registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-                if (newWorker) {
-                  console.log('PWA: New service worker found');
-                  setNewServiceWorker(newWorker);
-                  
-                  newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'installed') {
-                      console.log('PWA: New content available, showing update prompt');
-                      setShowUpdatePrompt(true);
-                    }
-                  });
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  console.log('PWA: New content available, showing update prompt');
+                  setShowUpdatePrompt(true);
                 }
               });
+            }
+          });
 
-              // Check for existing waiting service worker
-              if (registration.waiting) {
-                console.log('PWA: Service worker waiting');
-                setNewServiceWorker(registration.waiting);
-                setShowUpdatePrompt(true);
-              }
-            })
-            .catch(error => {
-              console.log('PWA: Service Worker registration failed:', error);
-            });
-        }, 100);
-      });
+          // Check for existing waiting service worker
+          if (registration.waiting) {
+            console.log('PWA: Service worker waiting');
+            setNewServiceWorker(registration.waiting);
+            setShowUpdatePrompt(true);
+          }
+        })
+        .catch(error => {
+          console.log('PWA: Service Worker registration failed:', error);
+        });
     }
   }, []);
 
   const handleUpdate = () => {
     if (newServiceWorker) {
-      console.log('PWA: Activating new service worker and clearing all caches');
-      
-      // Clear all caches first
-      if ('caches' in window) {
-        caches.keys().then(cacheNames => {
-          cacheNames.forEach(cacheName => {
-            console.log('PWA: Deleting cache', cacheName);
-            caches.delete(cacheName);
-          });
-        });
-      }
-      
+      console.log('PWA: Activating new service worker');
       newServiceWorker.postMessage({ action: 'skipWaiting' });
       setShowUpdatePrompt(false);
-      
-      // Force hard reload after a short delay
-      setTimeout(() => {
-        window.location.href = window.location.href + '?v=' + Date.now();
-      }, 500);
     }
   };
 
