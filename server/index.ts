@@ -32,6 +32,18 @@ app.get("/app-icon*.png", (req, res) => {
   }
 });
 
+// Serve client logos with correct headers
+app.get("/*-logo.png", (req, res) => {
+  const logoPath = path.resolve(process.cwd(), "public", path.basename(req.path));
+  if (fs.existsSync(logoPath)) {
+    res.setHeader("Content-Type", "image/png");
+    res.setHeader("Cache-Control", "public, max-age=31536000");
+    res.sendFile(logoPath);
+  } else {
+    res.status(404).end();
+  }
+});
+
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
