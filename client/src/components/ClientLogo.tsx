@@ -1,5 +1,7 @@
 import { getClientLogo, getClientName } from '../utils/clientLogos';
 
+console.log('ClientLogo component loaded');
+
 interface ClientLogoProps {
   client: string;
   size?: 'sm' | 'md' | 'lg';
@@ -10,6 +12,8 @@ interface ClientLogoProps {
 export function ClientLogo({ client, size = 'md', showName = false, className = '' }: ClientLogoProps) {
   const logoUrl = getClientLogo(client);
   const clientName = getClientName(client);
+  
+  console.log(`ClientLogo: client="${client}", logoUrl="${logoUrl}", clientName="${clientName}"`);
   
   if (!logoUrl) {
     // Fallback for unknown clients
