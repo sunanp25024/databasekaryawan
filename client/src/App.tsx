@@ -13,6 +13,7 @@ import { PWAInstall } from './components/PWAInstall';
 import { PWAStatus } from './components/PWAStatus';
 import { PWAUpdateNotifier } from './components/PWAUpdateNotifier';
 import { LoadingScreen } from './components/LoadingScreen';
+import { SimpleLogoTest } from './components/SimpleLogoTest';
 
 
 // Types & Data
@@ -53,8 +54,87 @@ function App() {
     clearAllData: clearDbData
   } = useSupabase();
 
+  // Add test data for logo testing
+  const testData: Employee[] = localEmployees.length === 0 ? [
+    {
+      id: 'test-adira',
+      no: 1,
+      namaKaryawan: 'Test Employee ADIRA',
+      klien: 'ADIRA',
+      nik: '1234567890123456',
+      tglJoint: '2024-01-01',
+      statusI: 'AKTIF',
+      statusII: 'Contract',
+      area: 'Jakarta',
+      cabang: 'Pusat',
+      posisi: 'Test',
+      namaPic: 'Test PIC',
+      alamatEmail: 'test@adira.com',
+      noTelp: '08123456789',
+      alamatDomisili: 'Jakarta',
+      tglLahir: '1990-01-01',
+      jenisKelamin: 'Laki-laki',
+      pendidikanTerakhir: 'S1',
+      bank: 'BCA',
+      noRekening: '1234567890',
+      namaPenerima: 'Test ADIRA',
+      source: 'Test',
+      suratPeringatan: []
+    },
+    {
+      id: 'test-macf',
+      no: 2,
+      namaKaryawan: 'Test Employee MACF',
+      klien: 'MACF',
+      nik: '2234567890123456',
+      tglJoint: '2024-01-01',
+      statusI: 'AKTIF',
+      statusII: 'Contract',
+      area: 'Jakarta',
+      cabang: 'Pusat',
+      posisi: 'Test',
+      namaPic: 'Test PIC',
+      alamatEmail: 'test@macf.com',
+      noTelp: '08123456789',
+      alamatDomisili: 'Jakarta',
+      tglLahir: '1990-01-01',
+      jenisKelamin: 'Laki-laki',
+      pendidikanTerakhir: 'S1',
+      bank: 'BCA',
+      noRekening: '1234567890',
+      namaPenerima: 'Test MACF',
+      source: 'Test',
+      suratPeringatan: []
+    },
+    {
+      id: 'test-smsf',
+      no: 3,
+      namaKaryawan: 'Test Employee SMSF',
+      klien: 'SMSF',
+      nik: '3234567890123456',
+      tglJoint: '2024-01-01',
+      statusI: 'AKTIF',
+      statusII: 'Contract',
+      area: 'Jakarta',
+      cabang: 'Pusat',
+      posisi: 'Test',
+      namaPic: 'Test PIC',
+      alamatEmail: 'test@smsf.com',
+      noTelp: '08123456789',
+      alamatDomisili: 'Jakarta',
+      tglLahir: '1990-01-01',
+      jenisKelamin: 'Laki-laki',
+      pendidikanTerakhir: 'S1',
+      bank: 'BCA',
+      noRekening: '1234567890',
+      namaPenerima: 'Test SMSF',
+      source: 'Test',
+      suratPeringatan: []
+    }
+  ] : [];
+
   // Choose data source based on mode
-  const employees = useDatabase ? dbEmployees : localEmployees;
+  const employees = useDatabase ? dbEmployees : [...localEmployees, ...testData];
   const isLoading = useDatabase ? dbLoading : false;
 
   // Initialize database when switching to database mode
@@ -800,7 +880,7 @@ function App() {
       <PWAStatus />
       <PWAInstall />
       <PWAUpdateNotifier />
-
+      <SimpleLogoTest />
     </div>
   );
 }
