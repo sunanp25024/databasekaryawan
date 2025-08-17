@@ -160,7 +160,22 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                     {/* Client & Location */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <ClientLogo client={employee.klien} size="sm" />
+                        <img 
+                          src={`/${employee.klien.toLowerCase() === 'adira' ? 'adira-logo.png' : employee.klien.toLowerCase() === 'macf' ? 'megafinance-logo.png' : 'smsfinance-logo.png'}`}
+                          alt={`${employee.klien} Logo`}
+                          className="w-6 h-6 object-contain"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            const parent = target.parentElement;
+                            if (parent) {
+                              const fallback = document.createElement('div');
+                              fallback.className = 'w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold text-gray-600';
+                              fallback.textContent = employee.klien.charAt(0);
+                              parent.insertBefore(fallback, target);
+                            }
+                          }}
+                        />
                         <span className={klienBadge.className}>
                           {employee.klien}
                         </span>
@@ -368,7 +383,22 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                     {/* Client Badge */}
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center space-x-2">
-                        <ClientLogo client={employee.klien} size="sm" />
+                        <img 
+                          src={`/${employee.klien.toLowerCase() === 'adira' ? 'adira-logo.png' : employee.klien.toLowerCase() === 'macf' ? 'megafinance-logo.png' : 'smsfinance-logo.png'}`}
+                          alt={`${employee.klien} Logo`}
+                          className="w-6 h-6 object-contain"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            const parent = target.parentElement;
+                            if (parent) {
+                              const fallback = document.createElement('div');
+                              fallback.className = 'w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold text-gray-600';
+                              fallback.textContent = employee.klien.charAt(0);
+                              parent.insertBefore(fallback, target);
+                            }
+                          }}
+                        />
                         <span className={klienBadge.className}>
                           {employee.klien}
                         </span>

@@ -141,9 +141,18 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
                     ? 'bg-white/20 backdrop-blur-sm border-2 border-white/30' 
                     : 'bg-white border border-slate-200'
                 }`}>
-                  <ClientLogo 
-                    client={klien} 
-                    size="sm"
+                  <img 
+                    src={`/${klien.toLowerCase() === 'adira' ? 'adira-logo.png' : klien.toLowerCase() === 'macf' ? 'megafinance-logo.png' : 'smsfinance-logo.png'}`}
+                    alt={`${klien} Logo`}
+                    className="w-6 h-6 object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `<div class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold text-gray-600">${klien.charAt(0)}</div>`;
+                      }
+                    }}
                   />
                 </div>
                 <div className="text-left min-w-0 flex-1">
