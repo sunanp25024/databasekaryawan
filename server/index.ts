@@ -33,7 +33,11 @@ app.get("/app-icon*.png", (req, res) => {
 });
 
 // Serve static assets including logos
-app.use(express.static(path.resolve(process.cwd(), "public"), {
+const publicPath = process.env.NODE_ENV === 'production' 
+  ? path.resolve(process.cwd(), "dist", "public")
+  : path.resolve(process.cwd(), "public");
+
+app.use(express.static(publicPath, {
   setHeaders: (res, filePath) => {
     if (filePath.endsWith('.png')) {
       res.setHeader('Content-Type', 'image/png');

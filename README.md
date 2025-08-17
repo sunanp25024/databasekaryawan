@@ -43,10 +43,25 @@ dist/
     └── ...                # Other static files
 ```
 
-### 6. Troubleshooting
-- Pastikan `copy-logos.js` ada di root directory
-- Pastikan logo files ada di folder `public/`
-- Check build logs di Vercel dashboard jika ada error
+### 6. Troubleshooting Common Issues
+
+**Error: Cannot find module 'copy-assets.js'**
+- Pastikan menggunakan `copy-logos.js` bukan `copy-assets.js`
+- File harus ada di root directory
+
+**404 Error setelah deployment**  
+- Pastikan `vercel.json` menggunakan konfigurasi full-stack (server/index.ts)
+- Bukan static site configuration
+
+**Logo tidak muncul di production**
+- Pastikan logo files ter-copy ke `dist/public/` directory
+- Jalankan `node copy-logos.js` setelah build
+- Check build logs untuk memastikan semua assets ter-copy
+
+**Build Script yang benar untuk Vercel:**
+```
+npm run build && node copy-logos.js
+```
 
 ## Local Development
 
