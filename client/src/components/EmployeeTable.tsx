@@ -159,26 +159,23 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                     
                     {/* Client & Location */}
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center">
                         <img 
                           src={`/${employee.klien.toLowerCase() === 'adira' ? 'adira-logo.png' : employee.klien.toLowerCase() === 'macf' ? 'megafinance-logo.png' : 'smsfinance-logo.png'}`}
                           alt={`${employee.klien} Logo`}
-                          className="w-6 h-6 object-contain"
+                          className="w-8 h-8 object-contain"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.style.display = 'none';
                             const parent = target.parentElement;
                             if (parent) {
                               const fallback = document.createElement('div');
-                              fallback.className = 'w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold text-gray-600';
+                              fallback.className = 'w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-600';
                               fallback.textContent = employee.klien.charAt(0);
                               parent.insertBefore(fallback, target);
                             }
                           }}
                         />
-                        <span className={klienBadge.className}>
-                          {employee.klien}
-                        </span>
                       </div>
                       <div className="flex items-center text-xs text-gray-500">
                         <MapPin className="w-3 h-3 mr-1" />
@@ -382,26 +379,23 @@ export function EmployeeTable({ employees, onEdit, onDelete, onView }: EmployeeT
                     
                     {/* Client Badge */}
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center justify-center">
                         <img 
                           src={`/${employee.klien.toLowerCase() === 'adira' ? 'adira-logo.png' : employee.klien.toLowerCase() === 'macf' ? 'megafinance-logo.png' : 'smsfinance-logo.png'}`}
                           alt={`${employee.klien} Logo`}
-                          className="w-6 h-6 object-contain"
+                          className="w-10 h-10 object-contain"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.style.display = 'none';
                             const parent = target.parentElement;
                             if (parent) {
                               const fallback = document.createElement('div');
-                              fallback.className = 'w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold text-gray-600';
+                              fallback.className = 'w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-sm font-bold text-gray-600';
                               fallback.textContent = employee.klien.charAt(0);
                               parent.insertBefore(fallback, target);
                             }
                           }}
                         />
-                        <span className={klienBadge.className}>
-                          {employee.klien}
-                        </span>
                       </div>
                     </td>
                     
