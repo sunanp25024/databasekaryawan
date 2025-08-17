@@ -13,7 +13,7 @@ import { PWAInstall } from './components/PWAInstall';
 import { PWAStatus } from './components/PWAStatus';
 import { PWAUpdateNotifier } from './components/PWAUpdateNotifier';
 import { LoadingScreen } from './components/LoadingScreen';
-import { SimpleLogoTest } from './components/SimpleLogoTest';
+
 
 
 // Types & Data
@@ -880,7 +880,6 @@ function App() {
       <PWAStatus />
       <PWAInstall />
       <PWAUpdateNotifier />
-      <SimpleLogoTest />
     </div>
   );
 }

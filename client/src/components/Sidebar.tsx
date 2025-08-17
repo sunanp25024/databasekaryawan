@@ -143,8 +143,7 @@ export function Sidebar({ selectedKlien, onKlienChange, employeeCounts, totalEmp
                 }`}>
                   <ClientLogo 
                     client={klien} 
-                    size="md" 
-                    className="w-full h-full flex items-center justify-center"
+                    size="sm"
                   />
                 </div>
                 <div className="text-left min-w-0 flex-1">
