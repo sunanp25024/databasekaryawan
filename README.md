@@ -13,7 +13,9 @@ Aplikasi ini sudah dikonfigurasi untuk deploy di Vercel. Berikut langkah-langkah
 2. Pilih "Import Project" 
 3. Pilih repository GitHub Anda
 4. Vercel akan otomatis detect konfigurasi dari `vercel.json`
-5. Click "Deploy"
+5. Pastikan Build Command: `npm run build && node copy-logos.js`
+6. Pastikan Output Directory: `dist/public`
+7. Click "Deploy"
 
 ### 3. Environment Variables
 Jika menggunakan database, tambahkan environment variables di Vercel dashboard:
@@ -62,6 +64,19 @@ dist/
 ```
 npm run build && node copy-logos.js
 ```
+
+**File Structure untuk deployment:**
+- `api/index.js` - Serverless function handler untuk Vercel
+- `dist/public/` - Static files termasuk React app
+- `dist/public/adira-logo.png` - Logo clients
+- `vercel.json` - Konfigurasi deployment
+
+**Previous Issues Fixed:**
+- ❌ Error: "Cannot find module copy-assets.js" 
+- ❌ Error: "FUNCTION_INVOCATION_FAILED" 
+- ❌ Error: "404 NOT_FOUND"
+- ✅ Fixed: Created proper serverless handler
+- ✅ Fixed: Correct build process and file paths
 
 ## Local Development
 
