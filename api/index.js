@@ -1,6 +1,6 @@
-import express from "express";
-import path from "path";
-import fs from "fs";
+const express = require("express");
+const path = require("path");
+const fs = require("fs");
 
 const app = express();
 app.use(express.json());
@@ -61,4 +61,4 @@ app.get("*", (req, res) => {
   }
 });
 
-export default app;
+module.exports = app;

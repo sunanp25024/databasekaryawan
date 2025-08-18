@@ -1,5 +1,5 @@
-const { copyFile, mkdir } = require('fs/promises');
-const { join } = require('path');
+import { copyFile, mkdir } from 'fs/promises';
+import { join } from 'path';
 
 async function copyLogos() {
   try {
