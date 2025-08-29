@@ -1,5 +1,4 @@
 import { users, employees, type User, type InsertUser, type Employee, type InsertEmployee } from "@shared/schema";
-import { db } from "./db";
 import { eq } from "drizzle-orm";
 
 // modify the interface with any CRUD methods
@@ -119,17 +118,25 @@ export class MemStorage implements IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
+  private async getDb() {
+    const { db } = await import("./db");
+    return db;
+  }
+
   async getUser(id: number): Promise<User | undefined> {
+    const db = await this.getDb();
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user || undefined;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
+    const db = await this.getDb();
     const [user] = await db.select().from(users).where(eq(users.username, username));
     return user || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
+    const db = await this.getDb();
     const [user] = await db
       .insert(users)
       .values(insertUser)
@@ -139,20 +146,24 @@ export class DatabaseStorage implements IStorage {
 
   // Employee methods
   async getAllEmployees(): Promise<Employee[]> {
+    const db = await this.getDb();
     return await db.select().from(employees);
   }
 
   async getEmployeeById(id: string): Promise<Employee | undefined> {
+    const db = await this.getDb();
     const [employee] = await db.select().from(employees).where(eq(employees.id, id));
     return employee || undefined;
   }
 
   async getEmployeeByNik(nik: string): Promise<Employee | undefined> {
+    const db = await this.getDb();
     const [employee] = await db.select().from(employees).where(eq(employees.nik, nik));
     return employee || undefined;
   }
 
   async createEmployee(employeeData: Omit<InsertEmployee, 'id'>): Promise<Employee> {
+    const db = await this.getDb();
     const id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
     const [employee] = await db
       .insert(employees)
@@ -162,6 +173,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateEmployee(id: string, updates: Partial<InsertEmployee>): Promise<Employee | undefined> {
+    const db = await this.getDb();
     const [employee] = await db
       .update(employees)
       .set(updates)
@@ -171,11 +183,13 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteEmployee(id: string): Promise<boolean> {
+    const db = await this.getDb();
     const result = await db.delete(employees).where(eq(employees.id, id));
     return (result.rowCount ?? 0) > 0;
   }
 
   async bulkCreateEmployees(employeesData: Omit<InsertEmployee, 'id'>[]): Promise<Employee[]> {
+    const db = await this.getDb();
     const employeesWithIds = employeesData.map(empData => ({
       ...empData,
       id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
