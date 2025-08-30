@@ -1,5 +1,6 @@
 import { users, employees, type User, type InsertUser, type Employee, type InsertEmployee } from "@shared/schema";
 import { eq } from "drizzle-orm";
+import { isDatabaseAvailable } from "./db";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -119,7 +120,10 @@ export class MemStorage implements IStorage {
 
 export class DatabaseStorage implements IStorage {
   private async getDb() {
-    const { db } = await import("./db");
+    const { db, isDatabaseAvailable } = await import("./db");
+    if (!isDatabaseAvailable || !db) {
+      throw new Error("Database not available");
+    }
     return db;
   }
 
@@ -204,4 +208,5 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Use memory storage by default, database storage when available
+export const storage = isDatabaseAvailable ? new DatabaseStorage() : new MemStorage();

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'swapro-pwa-v6.0.0';
+const CACHE_NAME = 'swapro-pwa-v6.1.0';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -13,28 +13,34 @@ const urlsToCache = [
   '/app-icon-512.png',
   '/favicon.ico',
   '/favicon-16x16.png',
-  '/favicon-32x32.png'
+  '/favicon-32x32.png',
+  '/adira-logo.png',
+  '/megafinance-logo.png',
+  '/smsfinance-logo.png'
 ];
 
 // Install service worker
 self.addEventListener('install', event => {
-  console.log('Service Worker: Installing new version v6.0.0');
+  console.log('Service Worker: Installing new version v6.1.0');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Service Worker: Cache opened');
-        return cache.addAll(urlsToCache);
+        return cache.addAll(urlsToCache).catch(err => {
+          console.warn('Service Worker: Some files failed to cache:', err);
+          // Continue even if some files fail to cache
+        });
       })
       .catch(err => {
         console.log('Service Worker: Cache failed', err);
       })
   );
-  // Don't auto skip waiting - let user decide
+  self.skipWaiting();
 });
 
 // Activate service worker
 self.addEventListener('activate', event => {
-  console.log('Service Worker: Activating v6.0.0');
+  console.log('Service Worker: Activating v6.1.0');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
