@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.js",
+      "src": "api/index.cjs",
       "use": "@vercel/node"
     }
   ],
@@ -15,10 +15,5 @@
   "env": {
     "NODE_ENV": "production"
   },
-  "buildCommand": "npm run build && node copy-logos.js",
-  "functions": {
-    "api/index.js": {
-      "maxDuration": 10
-    }
-  }
+  "buildCommand": "npm run build && node copy-logos.js"
 }

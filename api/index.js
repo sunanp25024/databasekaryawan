@@ -14,19 +14,13 @@ async function createApp() {
   newApp.use(express.json());
   newApp.use(express.urlencoded({ extended: false }));
 
-  // Health check endpoint
-  newApp.get("/api/health", (req, res) => {
-    res.json({ status: "ok", version: "6.1.0", timestamp: new Date().toISOString() });
-  });
-
-  // Import and register routes only if database is available
+  // Import and register routes (using dynamic import for ES modules)
   try {
     const { registerRoutes } = await import("../server/routes.js");
     await registerRoutes(newApp);
-    console.log("API routes registered successfully");
   } catch (error) {
-    console.warn("API routes not available:", error.message);
-    // Continue without API routes - app will work in localStorage mode
+    console.error("Failed to register routes:", error);
+    // Continue without API routes if import fails
   }
 
   // Serve PWA files with correct MIME types
@@ -37,22 +31,21 @@ async function createApp() {
     if (fs.existsSync(filePath)) {
       res.sendFile(filePath);
     } else {
-      res.status(404).send("Service worker not found");
+      res.status(404).end();
     }
   });
 
   newApp.get("/manifest.json", (req, res) => {
     res.setHeader("Content-Type", "application/json");
-    res.setHeader("Cache-Control", "public, max-age=3600");
     const filePath = path.resolve(process.cwd(), "dist", "public", "manifest.json");
     if (fs.existsSync(filePath)) {
       res.sendFile(filePath);
     } else {
-      res.status(404).send("Manifest not found");
+      res.status(404).end();
     }
   });
 
-  // Serve PWA icons and logos with better error handling
+  // Serve PWA icons and logos
   newApp.get("*.png", (req, res) => {
     const iconPath = path.resolve(process.cwd(), "dist", "public", path.basename(req.path));
     if (fs.existsSync(iconPath)) {
@@ -60,49 +53,28 @@ async function createApp() {
       res.setHeader("Cache-Control", "public, max-age=31536000");
       res.sendFile(iconPath);
     } else {
-      console.warn(`Image not found: ${iconPath}`);
-      res.status(404).send("Image not found");
+      res.status(404).end();
     }
   });
 
   // Serve static assets including logos
   const publicPath = path.resolve(process.cwd(), "dist", "public");
-  
-  if (fs.existsSync(publicPath)) {
-    newApp.use(express.static(publicPath, {
-      setHeaders: (res, filePath) => {
-        if (filePath.endsWith('.png')) {
-          res.setHeader('Content-Type', 'image/png');
-          res.setHeader('Cache-Control', 'public, max-age=31536000');
-        } else if (filePath.endsWith('.js')) {
-          res.setHeader('Content-Type', 'application/javascript');
-        } else if (filePath.endsWith('.css')) {
-          res.setHeader('Content-Type', 'text/css');
-        }
+  newApp.use(express.static(publicPath, {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.png')) {
+        res.setHeader('Content-Type', 'image/png');
+        res.setHeader('Cache-Control', 'public, max-age=31536000');
       }
-    }));
-  } else {
-    console.warn(`Public directory not found: ${publicPath}`);
-  }
+    }
+  }));
 
   // Catch-all handler: send back React's index.html file
   newApp.get("*", (req, res) => {
     const indexPath = path.resolve(publicPath, "index.html");
     if (fs.existsSync(indexPath)) {
-      res.setHeader("Cache-Control", "no-cache");
       res.sendFile(indexPath);
     } else {
-      console.error(`Index.html not found at: ${indexPath}`);
-      res.status(404).send(`
-        <html>
-          <head><title>SWAPRO - Application Not Found</title></head>
-          <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
-            <h1>Application Not Found</h1>
-            <p>The application files are not available. Please check the build process.</p>
-            <p>Expected location: ${indexPath}</p>
-          </body>
-        </html>
-      `);
+      res.status(404).send("Application not found");
     }
   });
 
@@ -116,10 +88,6 @@ module.exports = async (req, res) => {
     expressApp(req, res);
   } catch (error) {
     console.error("Serverless function error:", error);
-    res.status(500).json({ 
-      error: "Internal server error", 
-      details: error.message,
-      timestamp: new Date().toISOString()
-    });
+    res.status(500).json({ error: "Internal server error" });
   }
 };

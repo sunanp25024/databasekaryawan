@@ -78,21 +78,14 @@ export function useSupabase() {
       setLoading(true);
       setError(null);
       
-      try {
-        // Check if table exists first
-        const canConnect = await supabase.checkConnection();
-        if (!canConnect) {
-          throw new Error('Database table belum dibuat. Silakan buat table "employees" di Supabase dashboard terlebih dahulu.');
-        }
-        
-        const data = await supabase.getEmployees();
-        setEmployees(data.map(convertFromSupabaseFormat));
-      } catch (dbError) {
-        // If database is not available, fall back to empty array
-        console.warn('Database not available, using empty data:', dbError);
-        setEmployees([]);
-        setError('Database tidak tersedia. Menggunakan mode localStorage.');
+      // Check if table exists first
+      const canConnect = await supabase.checkConnection();
+      if (!canConnect) {
+        throw new Error('Database table belum dibuat. Silakan buat table "employees" di Supabase dashboard terlebih dahulu.');
       }
+      
+      const data = await supabase.getEmployees();
+      setEmployees(data.map(convertFromSupabaseFormat));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch employees');
       console.error('Fetch employees error:', err);

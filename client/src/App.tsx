@@ -14,6 +14,8 @@ import { PWAStatus } from './components/PWAStatus';
 import { PWAUpdateNotifier } from './components/PWAUpdateNotifier';
 import { LoadingScreen } from './components/LoadingScreen';
 
+
+
 // Types & Data
 import { Employee, FilterOptions } from './types/Employee';
 import { mockEmployees } from './data/mockData';
