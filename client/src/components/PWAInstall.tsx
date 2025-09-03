@@ -60,10 +60,17 @@ export function PWAInstall() {
       console.log('PWA successfully installed!');
     };
 
+    const handleShowPWAInstall = () => {
+      setShowInstallPrompt(true);
+    };
+
+    window.addEventListener('showPWAInstall', handleShowPWAInstall);
+
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
+      window.removeEventListener('showPWAInstall', handleShowPWAInstall);
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
     };
