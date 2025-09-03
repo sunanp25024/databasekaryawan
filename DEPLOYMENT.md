@@ -11,6 +11,8 @@ project/
 │   └── public/           # Static files yang akan di-serve
 │       ├── index.html    # React app
 │       ├── manifest.json # PWA manifest
+│       ├── sw.js         # Service worker
+│       ├── app-icon-*.png # PWA icons
 │       ├── adira-logo.png
 │       ├── megafinance-logo.png
 │       └── smsfinance-logo.png
@@ -26,6 +28,8 @@ project/
 ✅ `vercel.json` - Routing configuration untuk Vercel  
 ✅ `copy-logos.js` - Build script untuk copy assets
 ✅ `dist/public/` - Built React app dengan semua logos
+✅ PWA files - Service worker dan manifest
+✅ Error handling - Graceful fallbacks untuk missing files
 
 ### 2. Push ke GitHub
 ```bash
@@ -40,7 +44,8 @@ git push origin main
 3. Pilih repository GitHub Anda
 4. **PENTING**: Set Build Command: `npm run build && node copy-logos.js`
 5. **JANGAN** set Output Directory (biarkan kosong)
-6. Environment Variables: Tidak ada yang diperlukan
+6. Environment Variables (Optional): 
+   - `DATABASE_URL`: PostgreSQL connection string (jika menggunakan database)
 7. Click "Deploy"
 
 ### 4. Verifikasi Deployment
@@ -48,6 +53,8 @@ git push origin main
 - ✅ Logo ADIRA, MEGAFINANCE, SMSFINANCE muncul di sidebar
 - ✅ PWA manifest tersedia
 - ✅ Service worker berjalan
+- ✅ "Add to Home Screen" berfungsi di mobile
+- ✅ Aplikasi berjalan offline setelah install
 
 ## Troubleshooting
 
@@ -58,10 +65,20 @@ git push origin main
 ### Error "FUNCTION_INVOCATION_FAILED" 
 - Pastikan build berhasil dan `dist/public/` ada
 - Pastikan logos ter-copy ke `dist/public/`
+- Check console logs untuk error spesifik
 
 ### Logo tidak muncul
 - Check apakah `node copy-logos.js` berhasil
 - Verify files ada di `dist/public/adira-logo.png` dll
+
+### PWA tidak berfungsi
+- Pastikan `sw.js` dan `manifest.json` ada di `dist/public/`
+- Check browser console untuk service worker errors
+- Verify HTTPS connection (required for PWA)
+
+### Database errors
+- Aplikasi akan fallback ke localStorage jika database tidak tersedia
+- Set `DATABASE_URL` environment variable di Vercel jika ingin menggunakan database
 
 ## File Configuration
 
@@ -84,7 +101,12 @@ git push origin main
   "env": {
     "NODE_ENV": "production"
   },
-  "buildCommand": "npm run build && node copy-logos.js"
+  "buildCommand": "npm run build && node copy-logos.js",
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 10
+    }
+  }
 }
 ```
 
@@ -93,4 +115,12 @@ git push origin main
 npm run build && node copy-logos.js
 ```
 
-Status: **READY FOR DEPLOYMENT** ✅
+## Recent Fixes (v6.1.0)
+- ✅ **Removed APK Generation**: Eliminated complex APK generation that caused 500 errors
+- ✅ **Enhanced Error Handling**: Better error handling and fallbacks
+- ✅ **Database Fallback**: Graceful fallback to localStorage when database unavailable
+- ✅ **PWA Optimization**: Improved service worker caching and update handling
+- ✅ **Asset Management**: Better handling of missing assets and files
+- ✅ **Performance**: Reduced serverless function complexity
+
+Status: **OPTIMIZED FOR VERCEL** ✅

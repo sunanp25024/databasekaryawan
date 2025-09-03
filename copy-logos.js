@@ -10,17 +10,36 @@ async function copyLogos() {
     const logos = [
       'adira-logo.png',
       'megafinance-logo.png', 
-      'smsfinance-logo.png'
+      'smsfinance-logo.png',
+      // PWA icons
+      'app-icon-72.png',
+      'app-icon-96.png',
+      'app-icon-128.png',
+      'app-icon-144.png',
+      'app-icon-152.png',
+      'app-icon-192.png',
+      'app-icon-384.png',
+      'app-icon-512.png',
+      'favicon.ico',
+      'favicon-16x16.png',
+      'favicon-32x32.png',
+      // PWA files
+      'manifest.json',
+      'sw.js'
     ];
     
     for (const logo of logos) {
-      await copyFile(join('public', logo), join('dist/public', logo));
-      console.log(`✓ Copied ${logo}`);
+      try {
+        await copyFile(join('public', logo), join('dist/public', logo));
+        console.log(`✓ Copied ${logo}`);
+      } catch (error) {
+        console.warn(`⚠️ Could not copy ${logo}:`, error.message);
+      }
     }
     
-    console.log('✅ All client logos copied successfully');
+    console.log('✅ All assets copied successfully');
   } catch (error) {
-    console.error('❌ Error copying logos:', error);
+    console.error('❌ Error copying assets:', error);
     process.exit(1);
   }
 }

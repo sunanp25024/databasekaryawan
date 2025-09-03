@@ -19,7 +19,7 @@ export function PWAUpdateNotifier({}: PWAUpdateNotifierProps) {
       // Register service worker
       navigator.serviceWorker.register('/sw.js')
         .then(registration => {
-          console.log('PWA: Service Worker registered successfully v6.0.0');
+          console.log('PWA: Service Worker registered successfully v6.1.0');
           
           // Listen for updates
           registration.addEventListener('updatefound', () => {
