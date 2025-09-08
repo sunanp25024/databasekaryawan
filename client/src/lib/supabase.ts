@@ -1,5 +1,5 @@
-const SUPABASE_URL = 'https://smrcndetprrmonmzaogj.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtcmNuZGV0cHJybW9ubXphb2dqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI0Mjg2MTMsImV4cCI6MjA2ODAwNDYxM30.SsTyBGO8E2o6Jj_-NVVR-egbCFYJ87oqqgaugJ2iMKg';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export interface Employee {
   id?: string;
