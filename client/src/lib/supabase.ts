@@ -1,6 +1,11 @@
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
+// Check if Supabase is configured
+export const isSupabaseConfigured = () => {
+  return !!(SUPABASE_URL && SUPABASE_ANON_KEY);
+};
+
 export interface Employee {
   id?: string;
   no: number;
@@ -41,6 +46,9 @@ class SupabaseClient {
   private apiKey: string;
 
   constructor(url: string, key: string) {
+    if (!url || !key) {
+      throw new Error('Supabase credentials not configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.');
+    }
     this.baseUrl = url;
     this.apiKey = key;
   }
@@ -112,4 +120,7 @@ class SupabaseClient {
   }
 }
 
-export const supabase = new SupabaseClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Only create supabase client if credentials are available
+export const supabase = isSupabaseConfigured() 
+  ? new SupabaseClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;

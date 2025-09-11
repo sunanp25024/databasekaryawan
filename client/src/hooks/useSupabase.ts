@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase, Employee } from '../lib/supabase';
+import { supabase, Employee, isSupabaseConfigured } from '../lib/supabase';
 import { Employee as LocalEmployee } from '../types/Employee';
 
 // Convert between local and Supabase employee formats
@@ -78,6 +78,11 @@ export function useSupabase() {
       setLoading(true);
       setError(null);
       
+      // Check if Supabase is configured
+      if (!isSupabaseConfigured() || !supabase) {
+        throw new Error('Database tidak dikonfigurasi. Silakan set environment variables VITE_SUPABASE_URL dan VITE_SUPABASE_ANON_KEY atau gunakan mode localStorage.');
+      }
+      
       try {
         // Check if table exists first
         const canConnect = await supabase.checkConnection();
@@ -122,6 +127,12 @@ export function useSupabase() {
     try {
       setLoading(true);
       setError(null);
+      
+      // Check if Supabase is configured
+      if (!isSupabaseConfigured() || !supabase) {
+        throw new Error('Database tidak dikonfigurasi. Silakan gunakan mode localStorage atau konfigurasikan Supabase credentials.');
+      }
+      
       const supabaseUpdates = convertToSupabaseFormat(updates as LocalEmployee);
       const updated = await supabase.updateEmployee(id, supabaseUpdates);
       const updatedEmployee = convertFromSupabaseFormat(updated);
@@ -153,6 +164,12 @@ export function useSupabase() {
     try {
       setLoading(true);
       setError(null);
+      
+      // Check if Supabase is configured
+      if (!isSupabaseConfigured() || !supabase) {
+        throw new Error('Database tidak dikonfigurasi. Silakan gunakan mode localStorage atau konfigurasikan Supabase credentials.');
+      }
+      
       const supabaseEmployees = employeesData.map(emp => convertToSupabaseFormat(emp as LocalEmployee));
       const created = await supabase.bulkCreateEmployees(supabaseEmployees);
       const newEmployees = created.map(convertFromSupabaseFormat);
