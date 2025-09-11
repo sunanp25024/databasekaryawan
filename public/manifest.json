@@ -1,8 +1,8 @@
 {
-  "name": "SWAPRO v6.0 - Employee Management System",
-  "short_name": "SWAPRO v6",
+  "name": "SWAPRO v6.1 - Employee Management System",
+  "short_name": "SWAPRO v6.1",
   "description": "SWAPRO - Sistem Manajemen Data Karyawan Profesional",
-  "start_url": "/?source=pwa&v=6.0.0",
+  "start_url": "/?source=pwa&v=6.1.0",
   "display": "standalone",
   "orientation": "portrait-primary",
   "theme_color": "#ffffff",

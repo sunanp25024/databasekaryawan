@@ -1,4 +1,5 @@
 import { Users, Database, Plus, Download, Upload, Menu, X, Trash2 } from 'lucide-react';
+import { APKDownloadButton } from './APKDownloadButton';
 
 interface NavbarProps {
   onAddEmployee: () => void;
@@ -51,6 +52,7 @@ export function Navbar({ onAddEmployee, onExport, onImport, onDownloadTemplate, 
           <div className="flex items-center space-x-1 sm:space-x-2 lg:space-x-3 flex-shrink-0 overflow-hidden">
             {/* Desktop buttons */}
             <div className="hidden md:flex items-center space-x-2">
+              <APKDownloadButton />
               <button
                 onClick={onDownloadTemplate}
                 className="inline-flex items-center px-3 lg:px-4 py-2 lg:py-2.5 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white text-xs lg:text-sm font-bold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
@@ -87,6 +89,9 @@ export function Navbar({ onAddEmployee, onExport, onImport, onDownloadTemplate, 
             
             {/* Mobile buttons - Compact horizontal layout */}
             <div className="md:hidden flex items-center space-x-0.5 overflow-x-auto scrollbar-hide max-w-[200px]">
+              <div className="flex-shrink-0">
+                <APKDownloadButton />
+              </div>
               <button
                 onClick={onDownloadTemplate}
                 className="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 bg-purple-600 hover:bg-purple-700 text-white rounded-md transition-all duration-200 shadow-md hover:shadow-lg active:scale-95"
