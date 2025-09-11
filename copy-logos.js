@@ -6,21 +6,23 @@ async function copyLogos() {
     // Ensure dist/public directory exists
     await mkdir('dist/public', { recursive: true });
     
-    // Copy logo files
-    const logos = [
+    // Copy logo files and PWA files
+    const filesToCopy = [
       'adira-logo.png',
       'megafinance-logo.png', 
-      'smsfinance-logo.png'
+      'smsfinance-logo.png',
+      'manifest.json',
+      'sw.js'
     ];
     
-    for (const logo of logos) {
-      await copyFile(join('public', logo), join('dist/public', logo));
-      console.log(`✓ Copied ${logo}`);
+    for (const file of filesToCopy) {
+      await copyFile(join('public', file), join('dist/public', file));
+      console.log(`✓ Copied ${file}`);
     }
     
-    console.log('✅ All client logos copied successfully');
+    console.log('✅ All files copied successfully (logos + PWA files)');
   } catch (error) {
-    console.error('❌ Error copying logos:', error);
+    console.error('❌ Error copying files:', error);
     process.exit(1);
   }
 }
