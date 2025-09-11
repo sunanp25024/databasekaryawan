@@ -1,0 +1,25 @@
+Loading screen logo element found: https://83a61857-1cee-47b4-9f24-67de44dd5691-00-1ddv6xub1lrbq.riker.replit.dev/app-icon-192.png
+(index):186 SWAPRO logo loaded successfully: https://83a61857-1cee-47b4-9f24-67de44dd5691-00-1ddv6xub1lrbq.riker.replit.dev/app-icon-192.png
+client:495 [vite] connecting...
+client:536 WebSocket connection to 'wss://83a61857-1cee-47b4-9f24-67de44dd5691-00-1ddv6xub1lrbq.riker.replit.dev/?token=qZcM9MBnR50M' failed: 
+setupWebSocket @ client:536
+(anonymous) @ client:531Understand this error
+client:536 Uncaught (in promise) SyntaxError: Failed to construct 'WebSocket': The URL 'wss://localhost:undefined/?token=qZcM9MBnR50M' is invalid.
+    at setupWebSocket (client:536:19)
+    at fallback (client:509:16)
+    at WebSocket.<anonymous> (client:555:7)
+setupWebSocket @ client:536
+fallback @ client:509
+(anonymous) @ client:555Understand this error
+chunk-BCXODTBQ.js?v=47125c34:21549 Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+Dashboard.tsx:13 Unique Status I values: (3) ['AKTIF', 'REHIRE', 'NEW HIRE']
+Dashboard.tsx:14 Unique Status II values: ['Contract']
+Dashboard.tsx:13 Unique Status I values: (3) ['AKTIF', 'REHIRE', 'NEW HIRE']
+Dashboard.tsx:14 Unique Status II values: ['Contract']
+chunk-BCXODTBQ.js?v=47125c34:375 [Violation] 'message' handler took 309ms
+2PWAUpdateNotifier.tsx:22 PWA: Service Worker registered successfully v6.1.0
+(index):275 SW v6.1.0 registered:  ServiceWorkerRegistration {installing: null, waiting: null, active: ServiceWorker, navigationPreload: NavigationPreloadManager, scope: 'https://83a61857-1cee-47b4-9f24-67de44dd5691-00-1ddv6xub1lrbq.riker.replit.dev/', …}
+pwa.ts:29 SW registered successfully:  https://83a61857-1cee-47b4-9f24-67de44dd5691-00-1ddv6xub1lrbq.riker.replit.dev/
+(index):1 Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner.
+(index):1 The resource https://83a61857-1cee-47b4-9f24-67de44dd5691-00-1ddv6xub1lrbq.riker.replit.dev/sw.js was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.Understand this warning
+(index):1 The resource https://83a61857-1cee-47b4-9f24-67de44dd5691-00-1ddv6xub1lrbq.riker.replit.dev/sw.js was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.Understand this warning

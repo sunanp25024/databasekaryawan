@@ -33,6 +33,8 @@ export interface Employee {
   namaPenerima: string;
   alamatEmail: string;
   noTelp: string;
+  alamatDomisili: string;
+  tglLahir: string;
   kontrakKe: number;
   jenisKelamin: string;
   pendidikanTerakhir: string;
