@@ -3,7 +3,7 @@ import { supabase, Employee, isSupabaseConfigured } from '../lib/supabase';
 import { Employee as LocalEmployee } from '../types/Employee';
 
 // Convert between local and Supabase employee formats
-const convertToSupabaseFormat = (localEmp: LocalEmployee): Omit<Employee, 'id' | 'created_at' | 'updated_at'> => ({
+const convertToSupabaseFormat = (localEmp: LocalEmployee): any => ({
   no: localEmp.no,
   klien: localEmp.klien,
   nama_pic: localEmp.namaPic,
@@ -28,6 +28,8 @@ const convertToSupabaseFormat = (localEmp: LocalEmployee): Omit<Employee, 'id' |
   nama_penerima: localEmp.namaPenerima,
   alamat_email: localEmp.alamatEmail,
   no_telp: localEmp.noTelp,
+  alamat_domisili: localEmp.alamatDomisili || '',
+  tgl_lahir: localEmp.tglLahir || '',
   kontrak_ke: localEmp.kontrakKe,
   jenis_kelamin: localEmp.jenisKelamin,
   pendidikan_terakhir: localEmp.pendidikanTerakhir,
@@ -61,6 +63,8 @@ const convertFromSupabaseFormat = (supabaseEmp: Employee): LocalEmployee => ({
   namaPenerima: supabaseEmp.nama_penerima,
   alamatEmail: supabaseEmp.alamat_email,
   noTelp: supabaseEmp.no_telp,
+  alamatDomisili: (supabaseEmp as any).alamat_domisili || '',
+  tglLahir: (supabaseEmp as any).tgl_lahir || '',
   kontrakKe: supabaseEmp.kontrak_ke,
   jenisKelamin: supabaseEmp.jenis_kelamin,
   pendidikanTerakhir: supabaseEmp.pendidikan_terakhir,
@@ -110,6 +114,11 @@ export function useSupabase() {
     try {
       setLoading(true);
       setError(null);
+      
+      if (!isSupabaseConfigured() || !supabase) {
+        throw new Error('Database tidak dikonfigurasi. Silakan gunakan mode localStorage atau konfigurasikan Supabase credentials.');
+      }
+      
       const supabaseEmployee = convertToSupabaseFormat(employee as LocalEmployee);
       const created = await supabase.createEmployee(supabaseEmployee);
       const newEmployee = convertFromSupabaseFormat(created);
@@ -150,6 +159,11 @@ export function useSupabase() {
     try {
       setLoading(true);
       setError(null);
+      
+      if (!isSupabaseConfigured() || !supabase) {
+        throw new Error('Database tidak dikonfigurasi. Silakan gunakan mode localStorage atau konfigurasikan Supabase credentials.');
+      }
+      
       await supabase.deleteEmployee(id);
       setEmployees(prev => prev.filter(emp => emp.id !== id));
     } catch (err) {
@@ -188,6 +202,11 @@ export function useSupabase() {
       setLoading(true);
       setError(null);
       
+      // Check if Supabase is configured
+      if (!isSupabaseConfigured() || !supabase) {
+        throw new Error('Database tidak dikonfigurasi. Untuk migrate data ke database, silakan set environment variables VITE_SUPABASE_URL dan VITE_SUPABASE_ANON_KEY terlebih dahulu.');
+      }
+      
       if (localEmployees.length === 0) {
         return;
       }
@@ -211,6 +230,10 @@ export function useSupabase() {
     try {
       setLoading(true);
       setError(null);
+      
+      if (!isSupabaseConfigured() || !supabase) {
+        throw new Error('Database tidak dikonfigurasi. Silakan gunakan mode localStorage atau konfigurasikan Supabase credentials.');
+      }
       
       // Delete all employees one by one
       const currentEmployees = [...employees];
