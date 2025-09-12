@@ -23,15 +23,102 @@ async function createApp() {
     res.json({ status: "ok", version: "6.1.0", timestamp: new Date().toISOString() });
   });
 
-  // Import and register routes only if database is available
-  try {
-    const { registerRoutes } = await import("../server/routes.js");
-    await registerRoutes(newApp);
-    console.log("API routes registered successfully");
-  } catch (error) {
-    console.warn("API routes not available:", error.message);
-    // Continue without API routes - app will work in localStorage mode
-  }
+  // Inline API routes for Vercel compatibility
+  const storage = { 
+    employees: new Map(),
+    getAllEmployees: async () => Array.from(storage.employees.values()),
+    getEmployeeById: async (id) => storage.employees.get(id),
+    createEmployee: async (employee) => {
+      const id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+      const emp = { ...employee, id };
+      storage.employees.set(id, emp);
+      return emp;
+    },
+    updateEmployee: async (id, updates) => {
+      const existing = storage.employees.get(id);
+      if (!existing) return null;
+      const updated = { ...existing, ...updates };
+      storage.employees.set(id, updated);
+      return updated;
+    },
+    deleteEmployee: async (id) => storage.employees.delete(id),
+    bulkCreateEmployees: async (employees) => {
+      const created = [];
+      for (const emp of employees) {
+        const created_emp = await storage.createEmployee(emp);
+        created.push(created_emp);
+      }
+      return created;
+    }
+  };
+
+  // Employee API routes
+  newApp.get("/api/employees", async (req, res) => {
+    try {
+      const employees = await storage.getAllEmployees();
+      res.json(employees);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch employees" });
+    }
+  });
+
+  newApp.get("/api/employees/:id", async (req, res) => {
+    try {
+      const employee = await storage.getEmployeeById(req.params.id);
+      if (!employee) {
+        return res.status(404).json({ error: "Employee not found" });
+      }
+      res.json(employee);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch employee" });
+    }
+  });
+
+  newApp.post("/api/employees", async (req, res) => {
+    try {
+      const employee = await storage.createEmployee(req.body);
+      res.status(201).json(employee);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid employee data" });
+    }
+  });
+
+  newApp.put("/api/employees/:id", async (req, res) => {
+    try {
+      const employee = await storage.updateEmployee(req.params.id, req.body);
+      if (!employee) {
+        return res.status(404).json({ error: "Employee not found" });
+      }
+      res.json(employee);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid employee data" });
+    }
+  });
+
+  newApp.delete("/api/employees/:id", async (req, res) => {
+    try {
+      const success = await storage.deleteEmployee(req.params.id);
+      if (!success) {
+        return res.status(404).json({ error: "Employee not found" });
+      }
+      res.json({ message: "Employee deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete employee" });
+    }
+  });
+
+  newApp.post("/api/employees/bulk", async (req, res) => {
+    try {
+      const { employees } = req.body;
+      if (!Array.isArray(employees)) {
+        return res.status(400).json({ error: "Employees must be an array" });
+      }
+      const createdEmployees = await storage.bulkCreateEmployees(employees);
+      res.status(201).json(createdEmployees);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid employee data" });
+    }
+  });
 
   // Serve PWA files with correct MIME types
   newApp.get("/sw.js", (req, res) => {

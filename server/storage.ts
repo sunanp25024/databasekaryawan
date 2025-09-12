@@ -208,5 +208,11 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-// Use memory storage by default, database storage when available
-export const storage = isDatabaseAvailable ? new DatabaseStorage() : new MemStorage();
+// Use database storage when explicitly requested and available, memory storage as fallback
+// In production, prefer database for data persistence
+export const storage = (process.env.NODE_ENV === 'production' && isDatabaseAvailable) 
+  ? new DatabaseStorage() 
+  : new MemStorage();
+
+// Force memory storage in development or when DB is not available
+console.log(`Using ${storage.constructor.name} for data persistence`);
